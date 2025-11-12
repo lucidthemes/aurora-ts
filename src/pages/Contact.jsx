@@ -1,5 +1,5 @@
 import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
-import PageTitle from '@components/ui/PageTitle';
+import PageTitle from '@components/UI/PageTitle';
 import PageContent from '@components/UI/PageContent';
 import ContactForm from '@features/contactForm';
 import { Sidebar } from '@components/Layout/Sidebar';

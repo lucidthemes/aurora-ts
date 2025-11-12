@@ -6,7 +6,7 @@ import usePagination from './hooks/usePagination';
 import Filters from './components/filters';
 import Results from './components/Results';
 import Sort from './components/Sort';
-import PageTitle from '@components/ui/PageTitle';
+import PageTitle from '@components/UI/PageTitle';
 import Items from './components/items';
 import Pagination from './components/pagination';
 
