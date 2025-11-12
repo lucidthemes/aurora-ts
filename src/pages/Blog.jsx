@@ -4,7 +4,7 @@ import { getCategoryBySlug } from '@server/posts/getCategory';
 import { getTagBySlug } from '@server/posts/getTag';
 import { getAuthorBySlug } from '@server/posts/getAuthor';
 import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
-import BlogList from '@features/blog/BlogList';
+import BlogList from '@features/blog/blogList';
 import { Sidebar } from '@components/Layout/Sidebar';
 import SearchForm from '@features/searchForm';
 

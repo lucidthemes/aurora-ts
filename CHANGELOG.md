@@ -2,13 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.6] - 2025-11-12
+
+### Fixed
+
+- BlogList import path case mismatch in Blog page
+- BlogList import path case mismatch in Home page
+
 ## [1.0.5] - 2025-11-12
 
 ### Fixed
 
 - PageTitle import path case mismatch in product list
-- PageTitle import path case mismatch in about page
-- PageTitle import path case mismatch in contact page
+- PageTitle import path case mismatch in About page
+- PageTitle import path case mismatch in Contact page
 
 ## [1.0.4] - 2025-11-12
 

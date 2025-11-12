@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getCategoryBySlug } from '@server/products/getCategory';
 import { getTagBySlug } from '@server/products/getTag';
 import Container from '@components/Layout/Container';
-import ProductList from '../features/product/productList/ProductList';
+import ProductList from '@features/product/productList/ProductList';
 
 export function Shop() {
   return (

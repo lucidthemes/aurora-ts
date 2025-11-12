@@ -5,7 +5,7 @@ import { Slide } from '@features/home/slideshow/components/slide/Slide';
 import Banner from '@features/home/banner';
 import PromoBox from '@features/home/promoBox';
 import Newsletter from '@features/home/newsletter';
-import BlogList from '@features/blog/BlogList';
+import BlogList from '@features/blog/blogList';
 import { Sidebar, Sidebar2, Sidebar3 } from '@components/Layout/Sidebar';
 import SectionHeading from '@components/UI/SectionHeading';
 
