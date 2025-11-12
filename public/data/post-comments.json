@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "postId": 1,
+    "replyTo": null,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-11 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 2,
+    "postId": 1,
+    "replyTo": 1,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-12 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 3,
+    "postId": 1,
+    "replyTo": 2,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-13 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 4,
+    "postId": 1,
+    "replyTo": 3,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-14 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 5,
+    "postId": 1,
+    "replyTo": null,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-10 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 6,
+    "postId": 2,
+    "replyTo": null,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-11 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 7,
+    "postId": 2,
+    "replyTo": 6,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-12 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 8,
+    "postId": 2,
+    "replyTo": 7,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-13 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 9,
+    "postId": 2,
+    "replyTo": 8,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-14 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 10,
+    "postId": 2,
+    "replyTo": null,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-10 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 11,
+    "postId": 3,
+    "replyTo": null,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-11 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 12,
+    "postId": 3,
+    "replyTo": 11,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-12 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 13,
+    "postId": 3,
+    "replyTo": 12,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-13 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 14,
+    "postId": 3,
+    "replyTo": 13,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-14 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  },
+  {
+    "id": 10,
+    "postId": 3,
+    "replyTo": null,
+    "author": "Lucid Themes",
+    "avatar": "/images/author.jpg",
+    "datetime": "2025-09-10 12:00:00",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.",
+    "status": "approved"
+  }
+]

@@ -1,0 +1,9 @@
+export { default as AboutWidget } from './About';
+export { default as PostsWidget } from './Posts';
+export { default as InstagramWidget } from './Instagram';
+export { default as SocialWidget } from './Social';
+export { default as NewsletterWidget } from './Newsletter';
+export { default as PromoBoxWidget } from './PromoBox';
+export { default as SearchWidget } from './Search';
+export { default as TagsWidget } from './Tags';
+export { default as ProductsWidget } from './Products';

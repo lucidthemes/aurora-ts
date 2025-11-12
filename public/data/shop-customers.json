@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "email": "test@example.com",
+    "shipping": {
+      "firstName": "Matthew",
+      "lastName": "James",
+      "country": "GB",
+      "addressLine1": "68 Rose Place",
+      "addressLine2": "",
+      "city": "East Marybury",
+      "county": "Highland",
+      "postcode": "IV2 7EG",
+      "phone": "01234567890"
+    },
+    "billing": {
+      "firstName": "Matthew",
+      "lastName": "James",
+      "country": "GB",
+      "addressLine1": "68 Rose Place",
+      "addressLine2": "",
+      "city": "East Marybury",
+      "county": "Highland",
+      "postcode": "IV2 7EG",
+      "phone": "01234567890"
+    }
+  }
+]

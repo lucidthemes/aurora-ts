@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "name": "Standard",
+    "amount": 0
+  },
+  {
+    "id": 2,
+    "name": "Express",
+    "amount": 1.99
+  }
+]

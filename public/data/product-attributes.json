@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Black",
+    "slug": "black",
+    "type": "colour"
+  },
+  {
+    "id": 2,
+    "name": "Green",
+    "slug": "green",
+    "type": "colour"
+  },
+  {
+    "id": 3,
+    "name": "Red",
+    "slug": "red",
+    "type": "colour"
+  },
+  {
+    "id": 4,
+    "name": "Small",
+    "slug": "small",
+    "type": "size"
+  },
+  {
+    "id": 5,
+    "name": "Medium",
+    "slug": "medium",
+    "type": "size"
+  },
+  {
+    "id": 6,
+    "name": "Large",
+    "slug": "large",
+    "type": "size"
+  }
+]

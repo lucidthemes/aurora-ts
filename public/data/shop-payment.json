@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Direct bank transfer",
+    "description": "Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account."
+  },
+  {
+    "id": 2,
+    "name": "Cheque payment",
+    "description": "Please send a cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode."
+  },
+  {
+    "id": 3,
+    "name": "Cash on delivery",
+    "description": "Pay with cash upon delivery."
+  }
+]
