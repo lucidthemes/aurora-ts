@@ -1,5 +1,5 @@
 import Overview from './Overview';
-import OrderDetails from './OrderDetails';
+import OrderDetails from './orderDetails';
 import CustomerDetails from './CustomerDetails';
 
 export default function OrderReceived({ order, location = 'checkout' }) {
