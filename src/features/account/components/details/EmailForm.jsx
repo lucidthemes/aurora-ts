@@ -1,4 +1,4 @@
-import useEmailForm from '../../hooks/Details/useEmailForm';
+import useEmailForm from '../../hooks/details/useEmailForm';
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
 

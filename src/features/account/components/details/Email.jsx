@@ -1,4 +1,4 @@
-import useEmail from '../../hooks/Details/useEmail';
+import useEmail from '../../hooks/details/useEmail';
 import EmailForm from './EmailForm';
 
 export default function Email({ loggedInUser, handleUserUpdate }) {

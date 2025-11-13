@@ -1,5 +1,5 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useEmail from '../../hooks/Details/useEmail';
+import useEmail from '../../hooks/details/useEmail';
 
 describe('useEmail hook', () => {
   test('changes email edit form to be shown when edit button is clicked', async () => {
