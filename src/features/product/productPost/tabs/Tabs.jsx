@@ -1,5 +1,5 @@
 import List from './components/List';
-import Description from './components/description';
+import Description from './components/Description';
 import Reviews from './components/reviews';
 
 export default function Tabs({ singleProduct, activeTab, setActiveTab, tabsRef }) {

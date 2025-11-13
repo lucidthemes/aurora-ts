@@ -1,6 +1,6 @@
 import { useAuthContext } from '@contexts/AuthContext';
 import useRegisterForm from './hooks/useRegisterForm';
-import Notification from '@components/notification';
+import Notification from '@components/Notification';
 import Input from '@components/Form/Input';
 import Password from '@components/Form/Password';
 import Button from '@components/UI/Button';

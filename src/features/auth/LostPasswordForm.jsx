@@ -1,5 +1,5 @@
 import useLostPasswordForm from './hooks/useLostPasswordForm';
-import Notification from '@components/notification';
+import Notification from '@components/Notification';
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
 

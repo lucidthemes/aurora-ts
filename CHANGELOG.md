@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.7] - 2025-11-13
+
+### Fixed
+
+- Notification import path case mismatch in LoginForm
+- Notification import path case mismatch in LostPasswordForm
+- Notification import path case mismatch in RegisterForm
+- Notification import path case mismatch in ContactForm
+- Notification import path case mismatch in NewsletterForm
+
+- Description import path case mismatch in ProductPost Tabs
+
 ## [1.0.6] - 2025-11-12
 
 ### Fixed
@@ -13,7 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- PageTitle import path case mismatch in product list
+- PageTitle import path case mismatch in ProductList
 - PageTitle import path case mismatch in About page
 - PageTitle import path case mismatch in Contact page
 
