@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: node --experimental-vm-modules ./node_modules/vitest/vitest.js --run --config vite.config.js
+        run: node --experimental-vm-modules ./node_modules/vitest/vitest.mjs --run --config vite.config.js
 
   build:
     runs-on: ubuntu-latest
