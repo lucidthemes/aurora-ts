@@ -29,7 +29,7 @@ jobs:
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: --prod --meta gitBranch=main
+          vercel-args: --prod
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_STAGING_PROJECT_ID }}
           working-directory: ./
