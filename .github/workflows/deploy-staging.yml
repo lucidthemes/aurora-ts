@@ -2,8 +2,10 @@ name: Deploy to Staging
 
 on:
   pull_request:
-    types: [closed]
-    branches: [main]
+    types:
+      - closed
+    branches:
+      - main
 
 jobs:
   deploy:
