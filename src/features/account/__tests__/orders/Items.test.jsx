@@ -115,6 +115,33 @@ describe('Items component', () => {
     },
   ];
 
+  const mockAttributeMap = {
+    1: {
+      id: 1,
+      name: 'Black',
+      slug: 'black',
+      type: 'colour',
+    },
+    2: {
+      id: 2,
+      name: 'Green',
+      slug: 'green',
+      type: 'colour',
+    },
+    4: {
+      id: 4,
+      name: 'Small',
+      slug: 'small',
+      type: 'size',
+    },
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+
+    getAttributeMap.mockResolvedValue(mockAttributeMap);
+  });
+
   test('renders list of orders', () => {
     render(<Items orders={mockOrders} />);
 

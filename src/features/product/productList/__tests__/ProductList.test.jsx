@@ -135,15 +135,87 @@ describe('ProductList component', () => {
     },
   ];
 
+  const mockPriceFilterMinMax = {
+    minPrice: 10,
+    maxPrice: 40,
+  };
+
+  const mockFilterCategories = [
+    {
+      id: 1,
+      name: 'Bags',
+      slug: 'bags',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
+    },
+    {
+      id: 2,
+      name: 'Gloves',
+      slug: 'gloves',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
+    },
+    {
+      id: 3,
+      name: 'Hats',
+      slug: 'hats',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
+    },
+    {
+      id: 4,
+      name: 'Jeans',
+      slug: 'jeans',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
+    },
+    {
+      id: 5,
+      name: 'Scarves',
+      slug: 'scarves',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
+    },
+    {
+      id: 6,
+      name: 'Sweaters',
+      slug: 'sweaters',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
+    },
+  ];
+
+  const mockFilterColours = [
+    {
+      id: 1,
+      name: 'Black',
+      slug: 'black',
+      type: 'colour',
+    },
+    {
+      id: 2,
+      name: 'Green',
+      slug: 'green',
+      type: 'colour',
+    },
+    {
+      id: 3,
+      name: 'Red',
+      slug: 'red',
+      type: 'colour',
+    },
+  ];
+
   beforeEach(() => {
     vi.clearAllMocks();
 
-    //getProducts.mockResolvedValue(mockProducts);
+    getProducts.mockResolvedValue(mockProducts);
+    getProductsMinMaxPrices.mockResolvedValue(mockPriceFilterMinMax);
+    getCategories.mockResolvedValue(mockFilterCategories);
+    getAttributesByType.mockResolvedValue(mockFilterColours);
   });
 
   test('renders list when post data is fetched', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList />
@@ -158,8 +230,6 @@ describe('ProductList component', () => {
   });
 
   test('renders product information', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList />
@@ -182,8 +252,6 @@ describe('ProductList component', () => {
   });
 
   test('renders pagination when product data is fetched', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList />
@@ -198,8 +266,6 @@ describe('ProductList component', () => {
   });
 
   test('updates list when pagination link is clicked', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList />
@@ -224,8 +290,6 @@ describe('ProductList component', () => {
   });
 
   test('hides pagination when showPagination is set to false', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList showPagination={false} />
@@ -239,8 +303,6 @@ describe('ProductList component', () => {
   });
 
   test('renders results count when product data is fetched', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList />
@@ -255,8 +317,6 @@ describe('ProductList component', () => {
   });
 
   test('hides results count when showResults is set to false', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList showResults={false} />
@@ -269,8 +329,6 @@ describe('ProductList component', () => {
   });
 
   test('renders sort dropdown when product data is fetched', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList />
@@ -283,8 +341,6 @@ describe('ProductList component', () => {
   });
 
   test('hides sort dropdown when showSort is set to false', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList showSort={false} />
@@ -297,8 +353,6 @@ describe('ProductList component', () => {
   });
 
   test('renders filters when product data is fetched', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList />
@@ -311,8 +365,6 @@ describe('ProductList component', () => {
   });
 
   test('hides filters when showFilter is set to false', async () => {
-    getProducts.mockResolvedValue(mockProducts);
-
     render(
       <MemoryRouter>
         <ProductList showFilter={false} />

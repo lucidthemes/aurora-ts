@@ -129,10 +129,8 @@ describe('useVariations hook', () => {
   test('fetches variation attributes data and sets attributeArray state', async () => {
     getAttributeArray.mockResolvedValue(mockAttributes);
 
-    let result;
-
     await act(async () => {
-      result = renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock)).result;
+      renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock));
     });
 
     const mockAttributeIds = mockSingleProduct.variationAttributes.flatMap((variation) => variation.options).filter(Boolean);
