@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "code": "COUPON-5",
+    "type": "fixed",
+    "amount": 5,
+    "expires": ""
+  },
+  {
+    "id": 2,
+    "code": "COUPON-10",
+    "type": "percentage",
+    "amount": 10,
+    "expires": ""
+  },
+  {
+    "id": 3,
+    "code": "COUPON-20",
+    "type": "percentage",
+    "amount": 20,
+    "expires": "2024-02-13"
+  }
+]
