@@ -5,7 +5,7 @@ import { AppProviders } from './contexts/AppProviders';
 import '@styles/main.css';
 import App from './App.jsx';
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppProviders>
       <BrowserRouter>
