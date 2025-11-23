@@ -5,7 +5,11 @@ const MobileMenuContext = createContext();
 export const MobileMenuProvider = ({ children }) => {
   const [mobileMenuActive, setMobileMenuActive] = useState(false);
 
-  return <MobileMenuContext.Provider value={{ mobileMenuActive, setMobileMenuActive }}>{children}</MobileMenuContext.Provider>;
+  const handleMobileMenuClick = () => {
+    setMobileMenuActive((prev) => !prev);
+  };
+
+  return <MobileMenuContext.Provider value={{ mobileMenuActive, handleMobileMenuClick }}>{children}</MobileMenuContext.Provider>;
 };
 
 export const useMobileMenuContext = () => useContext(MobileMenuContext);

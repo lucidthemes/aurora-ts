@@ -1,17 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 import { useMobileMenuContext } from '@contexts/MobileMenuContext';
 
-interface MobileMenuContextType{
-  mobileMenuActive: boolean
-  setMobileMenuActive: Dispatch<SetStateAction<boolean>>;
+interface MobileMenuContextType {
+  mobileMenuActive: boolean;
+  handleMobileMenuClick: () => void;
 }
 
 export default function MobileMenuIcon() {
-  const { mobileMenuActive, setMobileMenuActive } = useMobileMenuContext() as MobileMenuContextType;
-
-  const handleMobileMenuClick = () => {
-    setMobileMenuActive((prev) => !prev);
-  };
+  const { mobileMenuActive, handleMobileMenuClick } = useMobileMenuContext() as MobileMenuContextType;
 
   const hiddenIconClass = mobileMenuActive ? '!top-2 opacity-0' : '';
   const rotateLeftClass = mobileMenuActive ? '-rotate-45' : '';
