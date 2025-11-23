@@ -2,8 +2,16 @@ import { useHeaderLayoutContext } from '@contexts/HeaderLayoutContext';
 import HeaderMainBlog from './Blog';
 import HeaderMainMinimal from './Minimal';
 
-export default function HeaderMain({ handleHeaderSearchActive }) {
-  const { headerMainLayout } = useHeaderLayoutContext();
+interface HeaderMainProps {
+  handleHeaderSearchActive: () => void;
+}
+
+interface HeaderLayoutContextType{
+  headerMainLayout: string
+}
+
+export default function HeaderMain({ handleHeaderSearchActive }: HeaderMainProps) {
+  const { headerMainLayout } = useHeaderLayoutContext() as HeaderLayoutContextType;
 
   return (
     <div className="header-main bg-white">

@@ -1,11 +1,17 @@
+import { Dispatch, SetStateAction } from 'react';
 import { useHeaderLayoutContext } from '@contexts/HeaderLayoutContext';
 import { useLocation } from 'react-router-dom';
 import MenuItem from './MenuItem';
 import SubMenu from './SubMenu';
 import SubMenuItem from './SubMenuItem';
 
+interface HeaderLayoutContextType {
+  setHeaderTopShown: Dispatch<SetStateAction<boolean>>;
+  setHeaderMainLayout: Dispatch<SetStateAction<string>>;
+}
+
 export default function NavRightItems() {
-  const { setHeaderTopShown, setHeaderMainLayout } = useHeaderLayoutContext();
+  const { setHeaderTopShown, setHeaderMainLayout } = useHeaderLayoutContext() as HeaderLayoutContextType;
   const currentPage = useLocation();
 
   return (
@@ -39,7 +45,7 @@ export default function NavRightItems() {
               <SubMenuItem url="/" text="Header style">
                 <SubMenu>
                   <SubMenuItem
-                    url={currentPage}
+                    url={currentPage.pathname}
                     onClick={() => {
                       setHeaderTopShown(true);
                       setHeaderMainLayout('blog');
@@ -47,7 +53,7 @@ export default function NavRightItems() {
                     text="Blog"
                   ></SubMenuItem>
                   <SubMenuItem
-                    url={currentPage}
+                    url={currentPage.pathname}
                     onClick={() => {
                       setHeaderTopShown(false);
                       setHeaderMainLayout('minimal');
@@ -58,8 +64,8 @@ export default function NavRightItems() {
               </SubMenuItem>
               <SubMenuItem url="/" text="Header top">
                 <SubMenu>
-                  <SubMenuItem url={currentPage} onClick={() => setHeaderTopShown(true)} text="Shown"></SubMenuItem>
-                  <SubMenuItem url={currentPage} onClick={() => setHeaderTopShown(false)} text="Hidden"></SubMenuItem>
+                  <SubMenuItem url={currentPage.pathname} onClick={() => setHeaderTopShown(true)} text="Shown"></SubMenuItem>
+                  <SubMenuItem url={currentPage.pathname} onClick={() => setHeaderTopShown(false)} text="Hidden"></SubMenuItem>
                 </SubMenu>
               </SubMenuItem>
             </SubMenu>

@@ -1,7 +1,13 @@
+import { Dispatch, SetStateAction } from "react";
 import { useMobileMenuContext } from '@contexts/MobileMenuContext';
 
+interface MobileMenuContextType{
+  mobileMenuActive: boolean
+  setMobileMenuActive: Dispatch<SetStateAction<boolean>>;
+}
+
 export default function MobileMenuIcon() {
-  const { mobileMenuActive, setMobileMenuActive } = useMobileMenuContext();
+  const { mobileMenuActive, setMobileMenuActive } = useMobileMenuContext() as MobileMenuContextType;
 
   const handleMobileMenuClick = () => {
     setMobileMenuActive((prev) => !prev);
