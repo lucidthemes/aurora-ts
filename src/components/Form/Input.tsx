@@ -1,33 +1,29 @@
-interface InputProps {
-  type: string;
-  name: string;
-  value: string;
-  onChange?: (e: object) => void;
-  placeholder?: string;
-  required?: boolean;
-  autoComplete?: string;
-  className?: string;
-  maxLength?: number;
+import { InputHTMLAttributes, forwardRef } from 'react';
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   labelSrOnly?: boolean;
   error?: string;
 }
 
-export default function Input({
-  type = 'text',
-  name,
-  value,
-  onChange,
-  placeholder,
-  required = false,
-  autoComplete = 'on',
-  className = '',
-  maxLength,
-  label,
-  labelSrOnly = true,
-  error,
-  ...props
-}: InputProps) {
+const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+  {
+    type = 'text',
+    name,
+    value,
+    onChange,
+    placeholder,
+    required = false,
+    autoComplete = 'on',
+    className = '',
+    maxLength,
+    label,
+    labelSrOnly = true,
+    error,
+    ...props
+  },
+  ref
+) {
   const labelSrOnlyClass = labelSrOnly ? 'sr-only' : '';
 
   return (
@@ -48,6 +44,7 @@ export default function Input({
         autoComplete={autoComplete}
         className={`h-12.5 w-full rounded-sm border-1 bg-white px-5 text-lg/8 text-boulder transition-colors duration-300 ease-in-out outline-none placeholder:text-boulder hover:border-boulder focus:border-boulder ${className} ${error ? 'border-red-500' : 'border-pearl-bush'}`}
         maxLength={maxLength}
+        ref={ref}
         {...props} // any additional props
       />
 
@@ -58,4 +55,6 @@ export default function Input({
       )}
     </div>
   );
-}
+});
+
+export default Input;
