@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-interface DesktopLogoProps{
-  headerLayout: string
+interface DesktopLogoProps {
+  headerLayout?: string;
 }
 
 export default function DesktopLogo({ headerLayout = 'blog' }: DesktopLogoProps) {
