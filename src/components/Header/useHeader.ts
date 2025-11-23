@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-export default function useHeader() {
+interface UseHeaderReturn {
+  headerSearchActive: boolean;
+  handleHeaderSearchActive: () => void;
+}
+
+export default function useHeader(): UseHeaderReturn {
   const [headerSearchActive, setheaderSearchActive] = useState(false);
 
   const handleHeaderSearchActive = () => {

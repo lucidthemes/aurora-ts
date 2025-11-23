@@ -6,12 +6,8 @@ import DesktopLogo from '../DesktopLogo';
 import MobileLogo from '../MobileLogo';
 import MobileMenuIcon from '../MobileMenuIcon';
 
-interface MobileMenuContextType {
-  mobileMenuActive: boolean;
-}
-
 export default function HeaderMainBlog() {
-  const { mobileMenuActive } = useMobileMenuContext() as MobileMenuContextType;
+  const { mobileMenuActive } = useMobileMenuContext();
   const mobileMenuClasses = mobileMenuActive ? 'right-0' : '-right-[75%] md:-right-75';
 
   return (

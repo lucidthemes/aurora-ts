@@ -10,12 +10,8 @@ interface HeaderMainMinimalProps {
   handleHeaderSearchActive: () => void;
 }
 
-interface MobileMenuContextType {
-  mobileMenuActive: boolean;
-}
-
 export default function HeaderMainMinimal({ handleHeaderSearchActive }: HeaderMainMinimalProps) {
-  const { mobileMenuActive } = useMobileMenuContext() as MobileMenuContextType;
+  const { mobileMenuActive } = useMobileMenuContext();
   const mobileMenuClasses = mobileMenuActive ? 'right-0' : '-right-[75%] md:-right-75';
 
   return (

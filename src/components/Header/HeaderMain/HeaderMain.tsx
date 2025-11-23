@@ -6,12 +6,8 @@ interface HeaderMainProps {
   handleHeaderSearchActive: () => void;
 }
 
-interface HeaderLayoutContextType{
-  headerMainLayout: string
-}
-
 export default function HeaderMain({ handleHeaderSearchActive }: HeaderMainProps) {
-  const { headerMainLayout } = useHeaderLayoutContext() as HeaderLayoutContextType;
+  const { headerMainLayout } = useHeaderLayoutContext();
 
   return (
     <div className="header-main bg-white">

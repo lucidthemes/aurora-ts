@@ -1,17 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useHeaderLayoutContext } from '@contexts/HeaderLayoutContext';
 import { useLocation } from 'react-router-dom';
 import MenuItem from './MenuItem';
 import SubMenu from './SubMenu';
 import SubMenuItem from './SubMenuItem';
 
-interface HeaderLayoutContextType {
-  setHeaderTopShown: Dispatch<SetStateAction<boolean>>;
-  setHeaderMainLayout: Dispatch<SetStateAction<string>>;
-}
-
 export default function NavRightItems() {
-  const { setHeaderTopShown, setHeaderMainLayout } = useHeaderLayoutContext() as HeaderLayoutContextType;
+  const { setHeaderTopShown, setHeaderMainLayout } = useHeaderLayoutContext();
   const currentPage = useLocation();
 
   return (

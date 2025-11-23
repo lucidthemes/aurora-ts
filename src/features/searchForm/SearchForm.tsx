@@ -6,7 +6,7 @@ import Button from '@components/UI/Button';
 interface SearchFormProps {
   term?: string;
   location?: 'page' | 'widget' | 'header';
-  overlayInputRef?: RefObject<HTMLInputElement> | null;
+  overlayInputRef?: React.RefObject<HTMLInputElement | null> | null;
   headerSearchActive?: boolean;
   handleHeaderSearchActive?: () => void;
 }

@@ -7,12 +7,8 @@ interface HeaderTopProps {
   handleHeaderSearchActive: () => void;
 }
 
-interface HeaderLayoutContextType {
-  headerTopShown: boolean;
-}
-
 export default function HeaderTop({ handleHeaderSearchActive }: HeaderTopProps) {
-  const { headerTopShown } = useHeaderLayoutContext() as HeaderLayoutContextType;
+  const { headerTopShown } = useHeaderLayoutContext();
   const headerTopClasses = !headerTopShown ? 'hidden' : '';
 
   return (
