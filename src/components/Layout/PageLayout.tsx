@@ -1,10 +1,21 @@
+import { ReactNode } from 'react';
 import Container from '@components/Layout/Container';
 
-export function PageLayout({ children }) {
+interface PageLayoutProps {
+  children: ReactNode;
+}
+
+interface PageSidebarLayoutProps {
+  content?: ReactNode;
+  sidebar?: ReactNode;
+  sidebarPosition?: 'left' | 'right';
+}
+
+export function PageLayout({ children }: PageLayoutProps) {
   return <Container>{children}</Container>;
 }
 
-export function PageSidebarLayout({ content, sidebar, sidebarPosition = 'right' }) {
+export function PageSidebarLayout({ content, sidebar, sidebarPosition = 'right' }: PageSidebarLayoutProps) {
   const isLeft = sidebarPosition === 'left';
 
   return (

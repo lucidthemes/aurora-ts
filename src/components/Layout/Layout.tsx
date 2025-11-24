@@ -1,10 +1,14 @@
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useMobileMenuContext } from '@contexts/MobileMenuContext';
 import { useLocation } from 'react-router-dom';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 
-export default function Layout({ children }) {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
   const { mobileMenuActive, setMobileMenuActive } = useMobileMenuContext();
   const { pathname } = useLocation();
 
