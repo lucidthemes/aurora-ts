@@ -1,3 +1,13 @@
+import { InputHTMLAttributes } from 'react';
+
+interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
+  options: { value: string; text: string }[];
+  placeholderDisabled?: boolean;
+  label?: string;
+  labelSrOnly?: boolean;
+  error?: string;
+}
+
 export default function Select({
   name,
   options,
@@ -11,7 +21,7 @@ export default function Select({
   labelSrOnly = true,
   error,
   ...props
-}) {
+}: SelectProps) {
   if (!options) return null;
 
   const labelSrOnlyClass = labelSrOnly ? 'sr-only' : '';
