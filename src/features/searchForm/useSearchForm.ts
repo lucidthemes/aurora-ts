@@ -1,13 +1,6 @@
 import { useState, useEffect, ChangeEventHandler, FormEventHandler } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface UseSearchFormParams {
-  term: string;
-  location: 'page' | 'widget' | 'header';
-  headerSearchActive?: boolean;
-  handleHeaderSearchActive?: () => void;
-}
-
 interface UseSearchFormReturn {
   searchFormTerm: string;
   searchFormError: string;
@@ -15,12 +8,12 @@ interface UseSearchFormReturn {
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
 }
 
-export default function useSearchForm({
-  term,
-  location,
-  headerSearchActive = false,
-  handleHeaderSearchActive = () => {},
-}: UseSearchFormParams): UseSearchFormReturn {
+export default function useSearchForm(
+  term: string,
+  location: 'page' | 'widget' | 'header',
+  headerSearchActive: boolean = false,
+  handleHeaderSearchActive: () => void = () => {}
+): UseSearchFormReturn {
   const [searchFormTerm, setSearchFormTerm] = useState('');
   const [searchFormError, setSearchFormError] = useState('');
   const navigate = useNavigate();

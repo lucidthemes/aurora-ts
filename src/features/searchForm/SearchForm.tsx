@@ -6,7 +6,7 @@ import Button from '@components/UI/Button';
 interface SearchFormProps {
   term?: string;
   location?: 'page' | 'widget' | 'header';
-  overlayInputRef?: React.RefObject<HTMLInputElement | null> | null;
+  overlayInputRef?: RefObject<HTMLInputElement | null> | null;
   headerSearchActive?: boolean;
   handleHeaderSearchActive?: () => void;
 }
@@ -18,12 +18,7 @@ export default function SearchForm({
   headerSearchActive = false,
   handleHeaderSearchActive = () => {},
 }: SearchFormProps) {
-  const { searchFormTerm, searchFormError, handleFormChange, handleFormSubmit } = useSearchForm({
-    term,
-    location,
-    headerSearchActive,
-    handleHeaderSearchActive,
-  });
+  const { searchFormTerm, searchFormError, handleFormChange, handleFormSubmit } = useSearchForm(term, location, headerSearchActive, handleHeaderSearchActive);
 
   const searchFormClasses = location === 'page' ? 'justify-between' : location === 'widget' ? 'flex-col' : '';
   const searchInputClasses = location === 'header' ? 'bg-transparent! !border-0 !text-4xl !text-white text-center placeholder:text-white' : '';
