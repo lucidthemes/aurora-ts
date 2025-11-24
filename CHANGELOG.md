@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Convert header to TypeScript
-- Convert footer to TypeScript
+- Header components to TypeScript
+- Footer components to TypeScript
 
 ## [0.0.0] - 2025-11-21
 
