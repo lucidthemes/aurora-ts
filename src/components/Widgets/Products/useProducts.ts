@@ -1,8 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getProducts } from '@server/products/getProducts';
 
-export default function useProducts(limit, category) {
-  const [products, setProducts] = useState([]);
+interface Product {
+  id: number;
+  title: string;
+  slug: string;
+  image: string;
+  price: number;
+  averageReview: number;
+}
+
+export default function useProducts(limit: number, category: string) {
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {

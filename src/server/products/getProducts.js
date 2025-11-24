@@ -1,4 +1,4 @@
-export async function getProducts(limit = null, category = null, tag = null) {
+export async function getProducts(limit, category, tag = null) {
   try {
     const res = await fetch('/data/products.json');
 

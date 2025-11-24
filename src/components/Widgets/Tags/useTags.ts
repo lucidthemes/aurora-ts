@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import { getTags } from '@server/posts/getTags';
 
-export default function useTags(limit) {
-  const [tags, setTags] = useState([]);
+interface Tag {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+export default function useTags(limit: number) {
+  const [tags, setTags] = useState<Tag[]>([]);
 
   useEffect(() => {
     const fetchTags = async () => {

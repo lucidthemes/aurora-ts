@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
 import { getPosts } from '@server/posts/getPosts';
 
-export default function usePosts(limit, category) {
-  const [posts, setPosts] = useState([]);
+interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  date: string;
+  image: string;
+}
+
+export default function usePosts(limit: number, category: string) {
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
