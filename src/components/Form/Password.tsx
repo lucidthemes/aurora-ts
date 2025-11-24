@@ -1,4 +1,10 @@
-import { useState } from 'react';
+import { useState, InputHTMLAttributes, MouseEventHandler } from 'react';
+
+interface PasswordProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  labelSrOnly?: boolean;
+  error?: string;
+}
 
 export default function Password({
   name,
@@ -12,12 +18,12 @@ export default function Password({
   labelSrOnly = true,
   error,
   ...props
-}) {
+}: PasswordProps) {
   const labelSrOnlyClass = labelSrOnly ? 'sr-only' : '';
 
   const [passwordShow, setPasswordShow] = useState(false);
 
-  const handlePasswordShow = (e) => {
+  const handlePasswordShow: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
 
     setPasswordShow((prevState) => !prevState);

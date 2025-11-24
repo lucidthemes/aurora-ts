@@ -1,3 +1,11 @@
+import { InputHTMLAttributes } from 'react';
+
+interface TextareaProps extends InputHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  labelSrOnly?: boolean;
+  error?: string;
+}
+
 export default function Textarea({
   name,
   value,
@@ -11,7 +19,7 @@ export default function Textarea({
   labelSrOnly = true,
   error,
   ...props
-}) {
+}: TextareaProps) {
   const labelSrOnlyClass = labelSrOnly ? 'sr-only' : '';
 
   return (

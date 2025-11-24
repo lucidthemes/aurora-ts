@@ -1,4 +1,12 @@
-export default function Checkbox({ name, checked, onChange, required = false, className = '', label, labelSrOnly = false, error, ...props }) {
+import { InputHTMLAttributes } from 'react';
+
+interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  labelSrOnly?: boolean;
+  error?: string;
+}
+
+export default function Checkbox({ name, checked, onChange, required = false, className = '', label, labelSrOnly = false, error, ...props }: CheckboxProps) {
   const labelSrOnlyClass = labelSrOnly ? 'sr-only' : '';
 
   return (
