@@ -1,7 +1,16 @@
 import WidgetTitle from '@components/Widgets/Title';
 import PromoBox from '@features/home/promoBox';
 
-export default function PromoBoxWidget({ title = '', image, heading, subHeading, link, position = 'bottom' }) {
+interface PromoBoxWidgetProps {
+  title?: string;
+  image?: string;
+  heading?: string;
+  subHeading?: string;
+  link?: string;
+  position?: 'bottom' | 'top' | 'center';
+}
+
+export default function PromoBoxWidget({ title = '', image, heading, subHeading, link, position = 'bottom' }: PromoBoxWidgetProps) {
   return (
     <section>
       <WidgetTitle>{title}</WidgetTitle>

@@ -2,6 +2,17 @@ import { Link } from 'react-router-dom';
 import WidgetTitle from '@components/Widgets/Title';
 import SocialIcons from '@components/UI/SocialIcons';
 
+interface AboutWidgetProps {
+  title?: string;
+  bgImage?: string;
+  authorImage?: string;
+  heading?: string;
+  content?: string;
+  social?: boolean;
+  centered?: boolean;
+  padding?: boolean;
+}
+
 export default function AboutWidget({
   title = '',
   bgImage = '',
@@ -11,7 +22,7 @@ export default function AboutWidget({
   social = true,
   centered = false,
   padding = false,
-}) {
+}: AboutWidgetProps) {
   return (
     <section className={`about-widget ${centered ? 'text-center' : ''} ${padding ? 'rounded-md bg-pampas p-5' : ''} `}>
       <WidgetTitle>{title}</WidgetTitle>

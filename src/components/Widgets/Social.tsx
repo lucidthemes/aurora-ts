@@ -1,7 +1,11 @@
 import WidgetTitle from '@components/Widgets/Title';
 import SocialIcons from '@components/UI/SocialIcons';
 
-export default function SocialWidget({ title = '' }) {
+interface SocialWidgetProps {
+  title?: string;
+}
+
+export default function SocialWidget({ title = '' }: SocialWidgetProps) {
   return (
     <section>
       <WidgetTitle>{title}</WidgetTitle>

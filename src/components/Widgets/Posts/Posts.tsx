@@ -3,7 +3,14 @@ import usePosts from './usePosts';
 import WidgetTitle from '@components/Widgets/Title';
 import MetaList from '@features/blog/MetaList';
 
-export default function PostsWidget({ title = '', limit = 3, category = '', style = 'wide' }) {
+interface PostsWidgetProps {
+  title?: string;
+  limit?: number;
+  category?: string;
+  style?: 'small' | 'wide';
+}
+
+export default function PostsWidget({ title = '', limit = 3, category = '', style = 'wide' }: PostsWidgetProps) {
   const posts = usePosts(limit, category);
 
   return (

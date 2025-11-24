@@ -3,7 +3,14 @@ import useProducts from './useProducts';
 import WidgetTitle from '@components/Widgets/Title';
 import StarRating from '@features/product/starRating';
 
-export default function ProductsWidget({ title = '', limit = 3, category = '', style = 'wide' }) {
+interface ProductsWidgetProps {
+  title?: string;
+  limit?: number;
+  category?: string;
+  style?: 'small' | 'wide';
+}
+
+export default function ProductsWidget({ title = '', limit = 3, category = '', style = 'wide' }: ProductsWidgetProps) {
   const products = useProducts(limit, category);
 
   return (

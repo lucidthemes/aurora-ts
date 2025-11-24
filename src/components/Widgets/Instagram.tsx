@@ -1,7 +1,14 @@
 import WidgetTitle from '@components/Widgets/Title';
 import InstagramFeed from '@features/instagramFeed';
 
-export default function InstagramWidget({ title = '', limit, columns, link }) {
+interface InstagramWidgetProps {
+  title?: string;
+  limit?: number;
+  columns?: number;
+  link?: string;
+}
+
+export default function InstagramWidget({ title = '', limit, columns, link }: InstagramWidgetProps) {
   return (
     <section>
       <WidgetTitle>{title}</WidgetTitle>

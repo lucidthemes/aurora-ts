@@ -1,4 +1,4 @@
-export async function getPosts(limit = null, category = null, tag = null, author = null, search = null) {
+export async function getPosts(limit, category, tag = null, author = null, search = null) {
   try {
     const res = await fetch('/data/posts.json');
 
