@@ -6,9 +6,25 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Header components to TypeScript
-- Footer components to TypeScript
-- Form components (checkbox, password, select, textarea) to TypeScript
+#### Components
+
+- Header to TypeScript
+- Footer to TypeScript
+- Form (checkbox, password, select, textarea) to TypeScript
+- Layout components (container, layout, pagelayout, sidebar) to TypeScript
+- Widgets (posts, products, tags, about, instagram, newsletter, promobox, search, social, title) to TypeScript
+
+#### Features
+
+- blog MetaList to TypeScript
+
+### Removed
+
+#### Server
+
+- posts getPosts limit and category defaults of null
+- posts getTags limit default of null
+- products getProducts limit and category defaults of null
 - Layout components (container, layout, pagelayout, sidebar) to TypeScript
 
 ## [0.0.0] - 2025-11-21

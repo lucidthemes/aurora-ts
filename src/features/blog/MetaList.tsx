@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import { dateFormat } from '@utils/formatters';
 
-export default function MetaList({ author, date }) {
+interface MetaListProps {
+  author?: { slug: string; name: string };
+  date?: string;
+}
+
+export default function MetaList({ author, date }: MetaListProps) {
   const formattedDate = dateFormat(date);
 
   return (

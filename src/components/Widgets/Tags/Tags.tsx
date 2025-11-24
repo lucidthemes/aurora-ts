@@ -2,7 +2,12 @@ import { Link } from 'react-router-dom';
 import useTags from './useTags';
 import WidgetTitle from '@components/Widgets/Title';
 
-export default function TagsWidget({ title = '', limit = '' }) {
+interface TagsWidgetProps {
+  title?: string;
+  limit?: number;
+}
+
+export default function TagsWidget({ title = '', limit = 10 }: TagsWidgetProps) {
   const tags = useTags(limit);
 
   return (

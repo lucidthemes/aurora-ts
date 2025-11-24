@@ -1,7 +1,11 @@
 import WidgetTitle from '@components/Widgets/Title';
 import NewsletterForm from '@features/newsletterForm';
 
-export default function NewsletterWidget({ title = '' }) {
+interface NewsletterWidgetProps {
+  title?: string;
+}
+
+export default function NewsletterWidget({ title = '' }: NewsletterWidgetProps) {
   return (
     <section className="rounded-md bg-pampas p-5">
       <WidgetTitle>{title}</WidgetTitle>

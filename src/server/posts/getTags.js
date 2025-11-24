@@ -1,4 +1,4 @@
-export async function getTags(limit = null) {
+export async function getTags(limit) {
   try {
     const res = await fetch('/data/post-tags.json');
 

@@ -1,7 +1,11 @@
 import WidgetTitle from '@components/Widgets/Title';
 import SearchForm from '@features/searchForm';
 
-export default function SearchWidget({ title = '' }) {
+interface SearchWidgetProps {
+  title?: string;
+}
+
+export default function SearchWidget({ title = '' }: SearchWidgetProps) {
   return (
     <section>
       <WidgetTitle>{title}</WidgetTitle>
