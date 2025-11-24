@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 - Header to TypeScript
 - Footer to TypeScript
 - Form (checkbox, password, select, textarea) to TypeScript
-- Layout components (container, layout, pagelayout, sidebar) to TypeScript
+- Layout (container, layout, pagelayout, sidebar) to TypeScript
 - Widgets (posts, products, tags, about, instagram, newsletter, promobox, search, social, title) to TypeScript
 
 #### Features
