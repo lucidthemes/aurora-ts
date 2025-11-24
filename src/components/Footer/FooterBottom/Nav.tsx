@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export default function Nav() {
-  const navLinks = [
+  const navLinks: { id: number; link: string; text: string }[] = [
     { id: 1, link: '/', text: 'Privacy Policy' },
     { id: 2, link: '/', text: 'Cookie policy' },
     { id: 3, link: '/contact', text: 'Contact' },
