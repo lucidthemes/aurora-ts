@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Header components to TypeScript
 - Footer components to TypeScript
 - Form components (checkbox, password, select, textarea) to TypeScript
+- Layout components (container, layout, pagelayout, sidebar) to TypeScript
 
 ## [0.0.0] - 2025-11-21
 
