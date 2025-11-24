@@ -2,7 +2,12 @@ import { useCartContext } from '@features/cart/CartContext';
 import { Link } from 'react-router-dom';
 import SocialIcons from '@components/UI/SocialIcons';
 
-export default function Icons({ location, handleHeaderSearchActive }) {
+interface IconsProps {
+  location?: string;
+  handleHeaderSearchActive: () => void;
+}
+
+export default function Icons({ location, handleHeaderSearchActive }: IconsProps) {
   const { cartItems } = useCartContext();
 
   const headerIconsClasses = location === 'top' ? 'flex w-full justify-between lg:w-auto' : 'hidden lg:hidden xl:flex';

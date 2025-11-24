@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 
-export default function DesktopLogo({ headerLayout = 'blog' }) {
+interface DesktopLogoProps {
+  headerLayout?: string;
+}
+
+export default function DesktopLogo({ headerLayout = 'blog' }: DesktopLogoProps) {
   const logoClasses = headerLayout === 'blog' ? 'max-w-62' : 'max-w-44';
 
   return (

@@ -1,4 +1,8 @@
-export default function SocialIcons({ centered }) {
+interface SocialIconsProps {
+  centered?: boolean;
+}
+
+export default function SocialIcons({ centered }: SocialIconsProps) {
   return (
     <ul className={`flex items-center gap-x-6 ${centered ? 'justify-center' : ''}`}>
       <li>

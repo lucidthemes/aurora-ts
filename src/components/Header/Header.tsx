@@ -3,7 +3,11 @@ import HeaderTop from './HeaderTop';
 import HeaderMain from './HeaderMain';
 import Search from './Search';
 
-export default function Header({ mobileMenuClasses }) {
+interface HeaderProps {
+  mobileMenuClasses: string;
+}
+
+export default function Header({ mobileMenuClasses }: HeaderProps) {
   const { headerSearchActive, handleHeaderSearchActive } = useHeader();
 
   return (

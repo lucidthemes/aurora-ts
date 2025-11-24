@@ -3,7 +3,11 @@ import Container from '@components/Layout/Container';
 import Nav from './Nav';
 import Icons from '../Icons';
 
-export default function HeaderTop({ handleHeaderSearchActive }) {
+interface HeaderTopProps {
+  handleHeaderSearchActive: () => void;
+}
+
+export default function HeaderTop({ handleHeaderSearchActive }: HeaderTopProps) {
   const { headerTopShown } = useHeaderLayoutContext();
   const headerTopClasses = !headerTopShown ? 'hidden' : '';
 

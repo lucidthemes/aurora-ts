@@ -6,7 +6,11 @@ import Icons from '../../Icons';
 import MobileLogo from '../MobileLogo';
 import MobileMenuIcon from '../MobileMenuIcon';
 
-export default function HeaderMainMinimal({ handleHeaderSearchActive }) {
+interface HeaderMainMinimalProps {
+  handleHeaderSearchActive: () => void;
+}
+
+export default function HeaderMainMinimal({ handleHeaderSearchActive }: HeaderMainMinimalProps) {
   const { mobileMenuActive } = useMobileMenuContext();
   const mobileMenuClasses = mobileMenuActive ? 'right-0' : '-right-[75%] md:-right-75';
 

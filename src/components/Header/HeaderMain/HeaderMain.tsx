@@ -2,7 +2,11 @@ import { useHeaderLayoutContext } from '@contexts/HeaderLayoutContext';
 import HeaderMainBlog from './Blog';
 import HeaderMainMinimal from './Minimal';
 
-export default function HeaderMain({ handleHeaderSearchActive }) {
+interface HeaderMainProps {
+  handleHeaderSearchActive: () => void;
+}
+
+export default function HeaderMain({ handleHeaderSearchActive }: HeaderMainProps) {
   const { headerMainLayout } = useHeaderLayoutContext();
 
   return (

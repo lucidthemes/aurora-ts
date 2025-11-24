@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function MenuItem({ url = '', text = '', children, level = 1 }) {
+interface MenuItemProps {
+  url: string;
+  text: string;
+  children?: React.ReactNode;
+  level?: number;
+}
+
+export default function MenuItem({ url = '', text = '', children, level = 1 }: MenuItemProps) {
   const [mobileSubMenuActive, setMobileSubMenuActive] = useState(false);
 
   const mobileSubMenuClickClass = mobileSubMenuActive ? 'rotate-180' : '';
 
   const groupClass = children ? `group group/sub-${level} relative` : '';
 
-  const childrenWithProps = React.Children.map(children, (child) =>
-    React.isValidElement(child) ? React.cloneElement(child, { mobileSubMenuActive, level }) : child
-  );
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child as React.ReactElement<any>, {
+        mobileSubMenuActive,
+        level,
+      });
+    }
+    return child;
+  });
 
   return (
     <li className={groupClass}>

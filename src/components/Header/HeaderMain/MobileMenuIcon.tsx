@@ -1,11 +1,7 @@
 import { useMobileMenuContext } from '@contexts/MobileMenuContext';
 
 export default function MobileMenuIcon() {
-  const { mobileMenuActive, setMobileMenuActive } = useMobileMenuContext();
-
-  const handleMobileMenuClick = () => {
-    setMobileMenuActive((prev) => !prev);
-  };
+  const { mobileMenuActive, handleMobileMenuClick } = useMobileMenuContext();
 
   const hiddenIconClass = mobileMenuActive ? '!top-2 opacity-0' : '';
   const rotateLeftClass = mobileMenuActive ? '-rotate-45' : '';

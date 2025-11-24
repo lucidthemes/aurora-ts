@@ -1,4 +1,12 @@
-export default function SubMenu({ level = 1, children, mobileSubMenuActive }) {
+import React from 'react';
+
+interface SubMenuProps {
+  level?: number;
+  children?: React.ReactNode;
+  mobileSubMenuActive?: boolean;
+}
+
+export default function SubMenu({ level = 1, children, mobileSubMenuActive }: SubMenuProps) {
   const hoverClass =
     level === 1
       ? 'lg:group-hover:visible lg:group-hover:opacity-100 lg:group-hover:mt-0 lg:group-focus-within:visible lg:group-focus-within:opacity-100 lg:group-focus-within:mt-0'

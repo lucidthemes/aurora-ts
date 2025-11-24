@@ -39,7 +39,7 @@ export default function NavRightItems() {
               <SubMenuItem url="/" text="Header style">
                 <SubMenu>
                   <SubMenuItem
-                    url={currentPage}
+                    url={currentPage.pathname}
                     onClick={() => {
                       setHeaderTopShown(true);
                       setHeaderMainLayout('blog');
@@ -47,7 +47,7 @@ export default function NavRightItems() {
                     text="Blog"
                   ></SubMenuItem>
                   <SubMenuItem
-                    url={currentPage}
+                    url={currentPage.pathname}
                     onClick={() => {
                       setHeaderTopShown(false);
                       setHeaderMainLayout('minimal');
@@ -58,8 +58,8 @@ export default function NavRightItems() {
               </SubMenuItem>
               <SubMenuItem url="/" text="Header top">
                 <SubMenu>
-                  <SubMenuItem url={currentPage} onClick={() => setHeaderTopShown(true)} text="Shown"></SubMenuItem>
-                  <SubMenuItem url={currentPage} onClick={() => setHeaderTopShown(false)} text="Hidden"></SubMenuItem>
+                  <SubMenuItem url={currentPage.pathname} onClick={() => setHeaderTopShown(true)} text="Shown"></SubMenuItem>
+                  <SubMenuItem url={currentPage.pathname} onClick={() => setHeaderTopShown(false)} text="Hidden"></SubMenuItem>
                 </SubMenu>
               </SubMenuItem>
             </SubMenu>

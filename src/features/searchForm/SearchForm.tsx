@@ -1,8 +1,23 @@
+import { RefObject } from 'react';
 import useSearchForm from './useSearchForm';
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
 
-export default function SearchForm({ term = '', location = 'page', overlayInputRef = null, headerSearchActive = null, handleHeaderSearchActive = null }) {
+interface SearchFormProps {
+  term?: string;
+  location?: 'page' | 'widget' | 'header';
+  overlayInputRef?: RefObject<HTMLInputElement | null> | null;
+  headerSearchActive?: boolean;
+  handleHeaderSearchActive?: () => void;
+}
+
+export default function SearchForm({
+  term = '',
+  location = 'page',
+  overlayInputRef = null,
+  headerSearchActive = false,
+  handleHeaderSearchActive = () => {},
+}: SearchFormProps) {
   const { searchFormTerm, searchFormError, handleFormChange, handleFormSubmit } = useSearchForm(term, location, headerSearchActive, handleHeaderSearchActive);
 
   const searchFormClasses = location === 'page' ? 'justify-between' : location === 'widget' ? 'flex-col' : '';

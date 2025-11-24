@@ -1,7 +1,12 @@
 import useSearch from './useSearch';
 import SearchForm from '@features/searchForm';
 
-export default function Search({ headerSearchActive, handleHeaderSearchActive }) {
+interface SearchProps {
+  headerSearchActive: boolean;
+  handleHeaderSearchActive: () => void;
+}
+
+export default function Search({ headerSearchActive, handleHeaderSearchActive }: SearchProps) {
   if (!headerSearchActive) return null;
 
   const overlayInputRef = useSearch(headerSearchActive);
