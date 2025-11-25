@@ -30,6 +30,7 @@ All notable changes to this project will be documented in this file.
 - Form (checkbox, password, select, textarea) to TypeScript
 - Layout (container, layout, pagelayout, sidebar) to TypeScript
 - Widgets (posts, products, tags, about, instagram, newsletter, promobox, search, social, title) to TypeScript
+- Notification to TypeScript
 
 #### Features
 

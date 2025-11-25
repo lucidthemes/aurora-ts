@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useNotification(duration, onClose) {
+export default function useNotification(duration: number, onClose: () => void) {
   const [notificationVisible, setNotificationVisible] = useState(false);
 
   useEffect(() => {
