@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 - posts post type
 - posts tag type
 - products product type
+- contentBlock type
 
 #### Root
 

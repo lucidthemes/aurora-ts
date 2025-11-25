@@ -1,4 +1,4 @@
-import { ContentBlocks } from '@typings/contentBlocks';
+import { ContentBlock } from '@typings/contentBlock';
 
 export interface Post {
   id: number;
@@ -9,7 +9,7 @@ export interface Post {
   categories?: number[];
   tags?: number[];
   excerpt?: string;
-  content?: ContentBlocks;
+  content?: ContentBlock;
   image?: string;
   relatedPosts?: number[];
   postHeader: {
