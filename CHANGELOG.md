@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.0] - [Unreleased]
 
+### Added
+
+#### Types
+
+- Types folder
+- posts sub folder
+- products sub folder
+- posts post type
+- posts tag type
+- products product type
+
+#### Root
+
+- Types path to Vite config using @typings
+- Types path to tsconfig using @typings
+
 ### Changed
 
 #### Components
