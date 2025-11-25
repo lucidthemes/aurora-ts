@@ -1,6 +1,13 @@
 import useNotification from './useNotification';
 
-export default function Notification({ type = '', message = '', duration = 5000, onClose }) {
+interface NotificationProps {
+  type: string;
+  message: string;
+  duration: number;
+  onClose: () => void;
+}
+
+export default function Notification({ type = '', message = '', duration = 5000, onClose }: NotificationProps) {
   const notificationVisible = useNotification(duration, onClose);
   const notificationVisibleClass = notificationVisible ? 'opacity-100' : 'opacity-0';
   const notificationColorClass = type === 'success' ? 'bg-green-100' : type === 'error' ? 'bg-red-100' : 'bg-gray-100';
