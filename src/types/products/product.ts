@@ -1,4 +1,4 @@
-import { ContentBlocks } from '@typings/contentBlocks';
+import { ContentBlock } from '@typings/contentBlock';
 
 export interface Product {
   id: number;
@@ -10,7 +10,7 @@ export interface Product {
   image?: string;
   gallery?: string[];
   shortDescription?: string;
-  description?: ContentBlocks;
+  description?: ContentBlock;
   price: number;
   inStock: boolean;
   SKU: string;

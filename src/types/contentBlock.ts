@@ -1,4 +1,4 @@
-export interface ContentBlocks {
+export interface ContentBlock {
   id: number;
   type: 'paragraph' | 'pullquote' | 'blockquote';
   level?: number;
