@@ -1,7 +1,18 @@
-function PageContentBlock({ block }) {
+import { ElementType } from 'react';
+import { ContentBlock } from '@typings/contentBlock';
+
+interface PageContentProps {
+  content: ContentBlock[];
+}
+
+interface PageContentBlockProps {
+  block: ContentBlock;
+}
+
+function PageContentBlock({ block }: PageContentBlockProps) {
   switch (block.type) {
     case 'heading':
-      const HeadingTag = `h${block.level || 2}`;
+      const HeadingTag = `h${block.level || 2}` as ElementType;
       return <HeadingTag>{block.text}</HeadingTag>;
 
     case 'paragraph':
@@ -34,7 +45,7 @@ function PageContentBlock({ block }) {
   }
 }
 
-export default function PageContent({ content }) {
+export default function PageContent({ content }: PageContentProps) {
   if (!Array.isArray(content)) return null;
   return (
     <div className="post-content">

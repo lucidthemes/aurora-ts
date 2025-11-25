@@ -1,7 +1,16 @@
+import { ElementType } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function SectionHeading({ heading, headingLevel = '2', align = 'left', link = '', linkButton = '' }) {
-  const HeadingTag = `h${headingLevel || 2}`;
+interface SectionHeadingProps {
+  heading: string;
+  headingLevel?: '1' | '2' | '3' | '4' | '5' | '6';
+  align?: 'left' | 'center' | 'right';
+  link?: string;
+  linkButton?: string;
+}
+
+export default function SectionHeading({ heading, headingLevel = '2', align = 'left', link = '', linkButton = '' }: SectionHeadingProps) {
+  const HeadingTag = `h${headingLevel || 2}` as ElementType;
 
   let sectionAlignClasses = 'justify-start';
   let headingAlignClasses = 'justify-items-start';
