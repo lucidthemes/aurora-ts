@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Product } from '@typings/products/product';
 import { getProducts } from '@server/products/getProducts';
-
-interface Product {
-  id: number;
-  title: string;
-  slug: string;
-  image: string;
-  price: number;
-  averageReview: number;
-}
 
 export default function useProducts(limit: number, category: string) {
   const [products, setProducts] = useState<Product[]>([]);
