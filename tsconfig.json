@@ -9,6 +9,7 @@
       "@routes/*": ["src/routes/*"],
       "@server/*": ["src/server/*"],
       "@styles/*": ["src/styles/*"],
+      "@typings/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"]
     },
     "allowJs": true,
