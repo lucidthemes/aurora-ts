@@ -5,12 +5,12 @@ import MetaList from '@features/blog/MetaList';
 
 interface PostsWidgetProps {
   title?: string;
-  limit?: number;
-  category?: string;
+  limit: number;
+  category?: number;
   style?: 'small' | 'wide';
 }
 
-export default function PostsWidget({ title = '', limit = 3, category = '', style = 'wide' }: PostsWidgetProps) {
+export default function PostsWidget({ title = '', limit = 3, category, style = 'wide' }: PostsWidgetProps) {
   const posts = usePosts(limit, category);
 
   return (
