@@ -15,6 +15,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+#### Components
+
+- Tags widget limit parameter to optional so that all tags are shown by default
+
 #### Contexts
 
 - AppProviders to TypeScript
@@ -23,6 +27,12 @@ All notable changes to this project will be documented in this file.
 #### Server
 
 - Convert posts fetch files to TypeScript
+
+### Fixed
+
+#### Components
+
+- Posts widget category incorrect type
 
 ## [0.1.0] - 2025-11-25
 
