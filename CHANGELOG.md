@@ -13,6 +13,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+#### Components
+
+- Tags widget limit parameter to optional so that all tags are shown by default
+
 #### Contexts
 
 - AppProviders to TypeScript
