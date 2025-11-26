@@ -1,4 +1,6 @@
-export async function getComments(field, value) {
+import { Comment } from '@typings/posts/comment';
+
+export async function getComments<K extends 'postId'>(field: K, value: Comment[K]): Promise<Comment[] | undefined> {
   try {
     const res = await fetch('/data/post-comments.json');
 
@@ -6,10 +8,8 @@ export async function getComments(field, value) {
       throw new Error(`Failed to fetch post-comments.json: ${res.status}`);
     }
 
-    const allComments = await res.json();
+    const allComments: Comment[] = await res.json();
     const comments = allComments.filter((comment) => comment[field] === value);
-
-    if (!comments) return;
 
     return comments;
   } catch (error) {
@@ -18,6 +18,6 @@ export async function getComments(field, value) {
   }
 }
 
-export function getCommentsById(id) {
+export function getCommentsById(id: number) {
   return getComments('postId', id);
 }

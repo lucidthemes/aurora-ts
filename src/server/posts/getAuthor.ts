@@ -1,4 +1,6 @@
-export async function getAuthor(field, value) {
+import { Author } from '@typings/posts/author';
+
+export async function getAuthor<K extends 'id' | 'slug'>(field: K, value: Author[K]): Promise<Author | undefined> {
   try {
     const res = await fetch('/data/post-authors.json');
 
@@ -6,10 +8,8 @@ export async function getAuthor(field, value) {
       throw new Error(`Failed to fetch post-authors.json: ${res.status}`);
     }
 
-    const authors = await res.json();
+    const authors: Author[] = await res.json();
     const author = authors.find((author) => author[field] === value);
-
-    if (!author) return;
 
     return author;
   } catch (error) {
@@ -18,15 +18,15 @@ export async function getAuthor(field, value) {
   }
 }
 
-export function getAuthorById(id) {
+export function getAuthorById(id: number) {
   return getAuthor('id', id);
 }
 
-export function getAuthorBySlug(slug) {
+export function getAuthorBySlug(slug: string) {
   return getAuthor('slug', slug);
 }
 
-export async function getAuthorMap(authorIds) {
+export async function getAuthorMap(authorIds: number[]): Promise<Record<number, Author>> {
   try {
     const res = await fetch('/data/post-authors.json');
 
@@ -34,9 +34,9 @@ export async function getAuthorMap(authorIds) {
       throw new Error(`Failed to fetch post-authors.json: ${res.status}`);
     }
 
-    const authors = await res.json();
+    const authors: Author[] = await res.json();
 
-    const authorMap = {};
+    const authorMap: Record<number, Author> = {};
 
     if (Array.isArray(authors) && Array.isArray(authorIds)) {
       const idSet = new Set(authorIds);

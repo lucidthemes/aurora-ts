@@ -1,4 +1,6 @@
-export async function getTags(limit) {
+import { Tag } from '@typings/posts/tag';
+
+export async function getTags(limit?: number): Promise<Tag[] | undefined> {
   try {
     const res = await fetch('/data/post-tags.json');
 
@@ -6,15 +8,13 @@ export async function getTags(limit) {
       throw new Error(`Failed to fetch post-tags.json: ${res.status}`);
     }
 
-    const tags = await res.json();
+    const tags: Tag[] = await res.json();
 
     let limitedTags = tags;
 
     if (limit && limit > 0) {
       limitedTags = limitedTags.slice(0, limit);
     }
-
-    if (!limitedTags) return;
 
     return limitedTags;
   } catch (error) {
@@ -23,7 +23,7 @@ export async function getTags(limit) {
   }
 }
 
-export async function getTagsArray(tagIds) {
+export async function getTagsArray(tagIds: number[]): Promise<Tag[] | undefined> {
   try {
     const res = await fetch('/data/post-tags.json');
 
@@ -31,11 +31,9 @@ export async function getTagsArray(tagIds) {
       throw new Error(`Failed to fetch post-tags.json: ${res.status}`);
     }
 
-    const tags = await res.json();
+    const tags: Tag[] = await res.json();
     const idSet = new Set(tagIds);
     const tagArray = tags.filter((tag) => idSet.has(tag.id));
-
-    if (!tagArray) return;
 
     return tagArray;
   } catch (error) {

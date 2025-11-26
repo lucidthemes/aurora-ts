@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
 
 #### Types
 
+- posts author type
+- posts category type
 - shop sub folder
 - shop customer type
 
@@ -17,6 +19,10 @@ All notable changes to this project will be documented in this file.
 
 - AppProviders to TypeScript
 - AuthContext to TypeScript
+
+#### Server
+
+- Convert posts fetch files to TypeScript
 
 ## [0.1.0] - 2025-11-25
 
