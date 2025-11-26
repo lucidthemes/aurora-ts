@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - [Unreleased]
+
+### Added
+
+#### Types
+
+- shop sub folder
+- shop customer type
+
+### Changed
+
+#### Contexts
+
+- AppProviders to TypeScript
+- AuthContext to TypeScript
+
 ## [0.1.0] - 2025-11-25
 
 ### Added
@@ -44,7 +60,6 @@ All notable changes to this project will be documented in this file.
 - posts getPosts limit and category defaults of null
 - posts getTags limit default of null
 - products getProducts limit and category defaults of null
-- Layout components (container, layout, pagelayout, sidebar) to TypeScript
 
 ## [0.0.0] - 2025-11-21
 
