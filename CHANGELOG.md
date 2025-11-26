@@ -18,6 +18,12 @@ All notable changes to this project will be documented in this file.
 - AppProviders to TypeScript
 - AuthContext to TypeScript
 
+### Fixed
+
+#### Components
+
+- Posts widget category incorrect type
+
 ## [0.1.0] - 2025-11-25
 
 ### Added
