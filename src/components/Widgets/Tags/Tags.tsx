@@ -7,7 +7,7 @@ interface TagsWidgetProps {
   limit?: number;
 }
 
-export default function TagsWidget({ title = '', limit = 10 }: TagsWidgetProps) {
+export default function TagsWidget({ title = '', limit }: TagsWidgetProps) {
   const tags = useTags(limit);
 
   return (
