@@ -5,12 +5,12 @@ import StarRating from '@features/product/starRating';
 
 interface ProductsWidgetProps {
   title?: string;
-  limit?: number;
-  category?: string;
+  limit: number;
+  category?: number;
   style?: 'small' | 'wide';
 }
 
-export default function ProductsWidget({ title = '', limit = 3, category = '', style = 'wide' }: ProductsWidgetProps) {
+export default function ProductsWidget({ title = '', limit = 3, category, style = 'wide' }: ProductsWidgetProps) {
   const products = useProducts(limit, category);
 
   return (
