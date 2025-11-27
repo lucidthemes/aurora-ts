@@ -1,4 +1,6 @@
-export async function getCategories() {
+import { Category } from '@typings/products/category';
+
+export async function getCategories(): Promise<Category[] | undefined> {
   try {
     const res = await fetch('/data/product-categories.json');
 
@@ -6,9 +8,7 @@ export async function getCategories() {
       throw new Error(`Failed to fetch product-categories.json: ${res.status}`);
     }
 
-    const categories = await res.json();
-
-    if (!categories) return;
+    const categories: Category[] = await res.json();
 
     return categories;
   } catch (error) {

@@ -1,4 +1,6 @@
-export async function getTagsArray(tagIds) {
+import { Tag } from '@typings/products/tag';
+
+export async function getTagsArray(tagIds: number[]): Promise<Tag[] | undefined> {
   try {
     const res = await fetch('/data/product-tags.json');
 
@@ -6,11 +8,9 @@ export async function getTagsArray(tagIds) {
       throw new Error(`Failed to fetch product-tags.json: ${res.status}`);
     }
 
-    const tags = await res.json();
+    const tags: Tag[] = await res.json();
     const idSet = new Set(tagIds);
     const tagArray = tags.filter((tag) => idSet.has(tag.id));
-
-    if (!tagArray) return;
 
     return tagArray;
   } catch (error) {

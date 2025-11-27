@@ -1,4 +1,6 @@
-export async function getPost(field, value) {
+import { Post } from '@typings/posts/post';
+
+export async function getPost<K extends 'id' | 'slug'>(field: K, value: Post[K]): Promise<Post | undefined> {
   try {
     const res = await fetch('/data/posts.json');
 
@@ -6,10 +8,8 @@ export async function getPost(field, value) {
       throw new Error(`Failed to fetch posts.json: ${res.status}`);
     }
 
-    const posts = await res.json();
+    const posts: Post[] = await res.json();
     const post = posts.find((post) => post[field] === value);
-
-    if (!post) return;
 
     return post;
   } catch (error) {
@@ -18,15 +18,15 @@ export async function getPost(field, value) {
   }
 }
 
-export function getPostById(id) {
+export function getPostById(id: number) {
   return getPost('id', id);
 }
 
-export function getPostBySlug(slug) {
+export function getPostBySlug(slug: string) {
   return getPost('slug', slug);
 }
 
-export async function getPostArray(postIds) {
+export async function getPostArray(postIds: number[]): Promise<Post[] | undefined> {
   try {
     const res = await fetch('/data/posts.json');
 
@@ -34,13 +34,9 @@ export async function getPostArray(postIds) {
       throw new Error(`Failed to fetch posts.json: ${res.status}`);
     }
 
-    const posts = await res.json();
+    const posts: Post[] = await res.json();
     const idSet = new Set(postIds);
     const postArray = posts.filter((post) => idSet.has(post.id));
-
-    if (!postArray) {
-      throw new Error(`Posts not found with ids: ${postIds}`);
-    }
 
     return postArray;
   } catch (error) {

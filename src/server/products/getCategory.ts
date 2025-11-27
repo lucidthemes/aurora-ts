@@ -1,4 +1,6 @@
-export async function getCategory(field, value) {
+import { Category } from '@typings/products/category';
+
+export async function getCategory<K extends 'id' | 'slug'>(field: K, value: Category[K]): Promise<Category | undefined> {
   try {
     const res = await fetch('/data/product-categories.json');
 
@@ -6,10 +8,8 @@ export async function getCategory(field, value) {
       throw new Error(`Failed to fetch product-categories.json: ${res.status}`);
     }
 
-    const categories = await res.json();
+    const categories: Category[] = await res.json();
     const category = categories.find((category) => category[field] === value);
-
-    if (!category) return;
 
     return category;
   } catch (error) {
@@ -18,10 +18,10 @@ export async function getCategory(field, value) {
   }
 }
 
-export function getCategoryById(id) {
+export function getCategoryById(id: number) {
   return getCategory('id', id);
 }
 
-export function getCategoryBySlug(slug) {
+export function getCategoryBySlug(slug: string) {
   return getCategory('slug', slug);
 }

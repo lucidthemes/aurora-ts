@@ -1,17 +1,7 @@
-interface Address {
-  firstName: string;
-  lastName: string;
-  country: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  county?: string;
-  postcode: string;
-  phone?: number;
-}
+import { Address } from './address';
 
 export interface Customer {
-  id: string;
+  id: number;
   email: string;
   shipping?: Address;
   billing?: Address;

@@ -1,4 +1,6 @@
-export async function getCoupon(field, value) {
+import { Coupon } from '@typings/shop/coupon';
+
+export async function getCoupon<K extends 'code'>(field: K, value: Coupon[K]): Promise<Coupon | undefined> {
   try {
     const res = await fetch('/data/shop-coupons.json');
 
@@ -6,10 +8,8 @@ export async function getCoupon(field, value) {
       throw new Error(`Failed to fetch shop-coupons.json: ${res.status}`);
     }
 
-    const coupons = await res.json();
+    const coupons: Coupon[] = await res.json();
     const coupon = coupons.find((coupon) => coupon[field].toLowerCase() === value);
-
-    if (!coupon) return;
 
     return coupon;
   } catch (error) {
@@ -18,6 +18,6 @@ export async function getCoupon(field, value) {
   }
 }
 
-export function getCouponByCode(code) {
+export function getCouponByCode(code: string) {
   return getCoupon('code', code);
 }

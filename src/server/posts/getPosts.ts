@@ -1,4 +1,6 @@
-export async function getPosts(limit, category, tag = null, author = null, search = null) {
+import { Post } from '@typings/posts/post';
+
+export async function getPosts(limit?: number, category?: number, tag?: number, author?: number, search?: string): Promise<Post[] | undefined> {
   try {
     const res = await fetch('/data/posts.json');
 
@@ -6,7 +8,7 @@ export async function getPosts(limit, category, tag = null, author = null, searc
       throw new Error(`Failed to fetch posts.json: ${res.status}`);
     }
 
-    const posts = await res.json();
+    const posts: Post[] = await res.json();
 
     let filteredPosts = posts;
 
@@ -30,8 +32,6 @@ export async function getPosts(limit, category, tag = null, author = null, searc
       const lowerSearch = search.toLowerCase();
       filteredPosts = filteredPosts.filter((post) => post.title.toLowerCase().includes(lowerSearch));
     }
-
-    if (!filteredPosts) return;
 
     return filteredPosts;
   } catch (error) {

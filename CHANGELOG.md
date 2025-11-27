@@ -8,8 +8,21 @@ All notable changes to this project will be documented in this file.
 
 #### Types
 
+- posts author type
+- posts category type
 - shop sub folder
 - shop customer type
+- shop address type
+- shop coupon type
+- shop paymentOption type
+- shop shippingOption type
+- shop order type
+- instagram sub folder
+- instagram feed type
+- products tag type
+- products category type
+- products review type
+- products attribute type
 
 ### Changed
 
@@ -21,6 +34,12 @@ All notable changes to this project will be documented in this file.
 
 - AppProviders to TypeScript
 - AuthContext to TypeScript
+
+#### Server
+
+- Convert posts fetch files to TypeScript
+- Convert instagram fetch feed file to TypeScript
+- Convert products fetch files to TypeScript
 
 ### Fixed
 

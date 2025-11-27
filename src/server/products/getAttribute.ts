@@ -1,4 +1,6 @@
-export async function getAttribute(field, value) {
+import { Attribute } from '@typings/products/attribute';
+
+export async function getAttribute<K extends 'id'>(field: K, value: Attribute[K]): Promise<Attribute | undefined> {
   try {
     const res = await fetch('/data/product-attributes.json');
 
@@ -6,10 +8,8 @@ export async function getAttribute(field, value) {
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const attributes = await res.json();
+    const attributes: Attribute[] = await res.json();
     const attribute = attributes.find((attribute) => attribute[field] === value);
-
-    if (!attribute) return;
 
     return attribute;
   } catch (error) {
@@ -18,11 +18,11 @@ export async function getAttribute(field, value) {
   }
 }
 
-export function getAttributeById(id) {
+export function getAttributeById(id: number) {
   return getAttribute('id', id);
 }
 
-export async function getAttributeMap(attributeIds) {
+export async function getAttributeMap(attributeIds: number[]): Promise<Record<number, Attribute>> {
   try {
     const res = await fetch('/data/product-attributes.json');
 
@@ -30,9 +30,9 @@ export async function getAttributeMap(attributeIds) {
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const attributes = await res.json();
+    const attributes: Attribute[] = await res.json();
 
-    const attributesMap = {};
+    const attributesMap: Record<number, Attribute> = {};
 
     if (Array.isArray(attributes) && Array.isArray(attributeIds)) {
       const idSet = new Set(attributeIds);
@@ -50,7 +50,7 @@ export async function getAttributeMap(attributeIds) {
   }
 }
 
-export async function getAttributeArray(attributeIds) {
+export async function getAttributeArray(attributeIds: number[]): Promise<Attribute[] | undefined> {
   try {
     const res = await fetch('/data/product-attributes.json');
 
@@ -58,11 +58,9 @@ export async function getAttributeArray(attributeIds) {
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const attributes = await res.json();
+    const attributes: Attribute[] = await res.json();
     const idSet = new Set(attributeIds);
     const attributeArray = attributes.filter((attribute) => idSet.has(attribute.id));
-
-    if (!attributeArray) return;
 
     return attributeArray;
   } catch (error) {

@@ -1,4 +1,6 @@
-export async function getCategory(field, value) {
+import { Category } from '@typings/posts/category';
+
+export async function getCategory<K extends 'id' | 'slug'>(field: K, value: Category[K]): Promise<Category | undefined> {
   try {
     const res = await fetch('/data/post-categories.json');
 
@@ -6,10 +8,8 @@ export async function getCategory(field, value) {
       throw new Error(`Failed to fetch post-categories.json: ${res.status}`);
     }
 
-    const categories = await res.json();
+    const categories: Category[] = await res.json();
     const category = categories.find((category) => category[field] === value);
-
-    if (!category) return;
 
     return category;
   } catch (error) {
@@ -18,15 +18,15 @@ export async function getCategory(field, value) {
   }
 }
 
-export function getCategoryById(id) {
+export function getCategoryById(id: number) {
   return getCategory('id', id);
 }
 
-export function getCategoryBySlug(slug) {
+export function getCategoryBySlug(slug: string) {
   return getCategory('slug', slug);
 }
 
-export async function getCategoryMap(categoryIds) {
+export async function getCategoryMap(categoryIds: number[]): Promise<Record<number, Category>> {
   try {
     const res = await fetch('/data/post-categories.json');
 
@@ -34,9 +34,9 @@ export async function getCategoryMap(categoryIds) {
       throw new Error(`Failed to fetch post-categories.json: ${res.status}`);
     }
 
-    const categories = await res.json();
+    const categories: Category[] = await res.json();
 
-    const categoryMap = {};
+    const categoryMap: Record<number, Category> = {};
 
     if (Array.isArray(categories) && Array.isArray(categoryIds)) {
       const idSet = new Set(categoryIds);
