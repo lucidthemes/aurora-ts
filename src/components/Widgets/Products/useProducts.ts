@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Product } from '@typings/products/product';
 import { getProducts } from '@server/products/getProducts';
 
-export default function useProducts(limit: number, category: string) {
+export default function useProducts(limit: number, category?: number) {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
