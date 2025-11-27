@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.2.0] - [Unreleased]
+## [0.2.0] - 2025-11-27
 
 ### Added
 
@@ -40,6 +40,7 @@ All notable changes to this project will be documented in this file.
 - Convert posts fetch files to TypeScript
 - Convert instagram fetch feed file to TypeScript
 - Convert products fetch files to TypeScript
+- Convert shop fetch files to TypeScript
 
 ### Fixed
 
