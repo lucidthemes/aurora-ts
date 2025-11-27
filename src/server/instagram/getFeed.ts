@@ -1,4 +1,6 @@
-export async function getFeed(limit = null) {
+import { Feed } from '@typings/instagram/feed';
+
+export async function getFeed(limit?: number): Promise<Feed[] | undefined> {
   try {
     const res = await fetch('/data/instagram.json');
 
@@ -6,15 +8,13 @@ export async function getFeed(limit = null) {
       throw new Error(`Failed to fetch instagram.json: ${res.status}`);
     }
 
-    const feed = await res.json();
+    const feed: Feed[] = await res.json();
 
     let limitedFeed = feed;
 
     if (limit && limit > 0) {
       limitedFeed = limitedFeed.slice(0, limit);
     }
-
-    if (!limitedFeed) return;
 
     return limitedFeed;
   } catch (error) {
