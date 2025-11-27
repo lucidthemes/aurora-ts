@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 - shop customer type
 - instagram sub folder
 - instagram feed type
+- products tag type
+- products category type
+- products review type
+- products attribute type
 
 ### Changed
 
@@ -30,6 +34,7 @@ All notable changes to this project will be documented in this file.
 
 - Convert posts fetch files to TypeScript
 - Convert instagram fetch feed file to TypeScript
+- Convert products fetch files to TypeScript
 
 ### Fixed
 

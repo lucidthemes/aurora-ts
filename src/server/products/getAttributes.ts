@@ -1,4 +1,6 @@
-export async function getAttributes(field, value) {
+import { Attribute } from '@typings/products/attribute';
+
+export async function getAttributes<K extends 'type'>(field: K, value: Attribute[K]): Promise<Attribute[] | undefined> {
   try {
     const res = await fetch('/data/product-attributes.json');
 
@@ -6,10 +8,8 @@ export async function getAttributes(field, value) {
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const allAttributes = await res.json();
+    const allAttributes: Attribute[] = await res.json();
     const attributes = allAttributes.filter((attribute) => attribute[field] === value);
-
-    if (!attributes) return;
 
     return attributes;
   } catch (error) {
@@ -18,6 +18,6 @@ export async function getAttributes(field, value) {
   }
 }
 
-export function getAttributesByType(type) {
+export function getAttributesByType(type: Attribute['type']) {
   return getAttributes('type', type);
 }

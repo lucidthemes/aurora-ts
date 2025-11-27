@@ -1,4 +1,6 @@
-export async function getProducts(limit, category, tag = null) {
+import { Product } from '@typings/products/product';
+
+export async function getProducts(limit?: number, category?: number, tag?: number): Promise<Product[] | undefined> {
   try {
     const res = await fetch('/data/products.json');
 
@@ -6,7 +8,7 @@ export async function getProducts(limit, category, tag = null) {
       throw new Error(`Failed to fetch products.json: ${res.status}`);
     }
 
-    const products = await res.json();
+    const products: Product[] = await res.json();
 
     let filteredProducts = products;
 
@@ -22,8 +24,6 @@ export async function getProducts(limit, category, tag = null) {
       filteredProducts = filteredProducts.filter((product) => product.tags?.includes(tag));
     }
 
-    if (!filteredProducts) return;
-
     return filteredProducts;
   } catch (error) {
     console.error('getProducts', error);
@@ -31,7 +31,7 @@ export async function getProducts(limit, category, tag = null) {
   }
 }
 
-export async function getProductsMinMaxPrices() {
+export async function getProductsMinMaxPrices(): Promise<{ minPrice: number; maxPrice: number } | undefined> {
   try {
     const res = await fetch('/data/products.json');
 
@@ -39,15 +39,17 @@ export async function getProductsMinMaxPrices() {
       throw new Error(`Failed to fetch products.json: ${res.status}`);
     }
 
-    const products = await res.json();
+    const products: Product[] = await res.json();
 
     const prices = products.map((product) => product.price);
     const minPrice = Math.min(...prices);
     const maxPrice = Math.max(...prices);
 
-    if (!minPrice && !maxPrice) return;
+    if (!Number.isFinite(minPrice) || !Number.isFinite(maxPrice)) {
+      return;
+    }
 
-    return { minPrice: minPrice, maxPrice: maxPrice };
+    return { minPrice, maxPrice };
   } catch (error) {
     console.error('getProductsMinMaxPrices', error);
     throw error;

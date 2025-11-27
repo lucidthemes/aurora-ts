@@ -1,4 +1,6 @@
-export async function getReviews(field, value) {
+import { Review } from '@typings/products/review';
+
+export async function getReviews<K extends 'productId'>(field: K, value: Review[K]): Promise<Review[] | undefined> {
   try {
     const res = await fetch('/data/product-reviews.json');
 
@@ -6,10 +8,8 @@ export async function getReviews(field, value) {
       throw new Error(`Failed to fetch product-reviews.json: ${res.status}`);
     }
 
-    const allReviews = await res.json();
+    const allReviews: Review[] = await res.json();
     const reviews = allReviews.filter((review) => review[field] === value);
-
-    if (!reviews) return;
 
     return reviews;
   } catch (error) {
@@ -18,6 +18,6 @@ export async function getReviews(field, value) {
   }
 }
 
-export function getReviewsById(id) {
+export function getReviewsById(id: number) {
   return getReviews('productId', id);
 }

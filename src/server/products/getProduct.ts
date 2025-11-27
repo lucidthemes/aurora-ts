@@ -1,4 +1,6 @@
-export async function getProduct(field, value) {
+import { Product } from '@typings/products/product';
+
+export async function getProduct<K extends 'id' | 'slug'>(field: K, value: Product[K]): Promise<Product | undefined> {
   try {
     const res = await fetch('/data/products.json');
 
@@ -6,10 +8,8 @@ export async function getProduct(field, value) {
       throw new Error(`Failed to fetch products.json: ${res.status}`);
     }
 
-    const products = await res.json();
+    const products: Product[] = await res.json();
     const product = products.find((product) => product[field] === value);
-
-    if (!product) return;
 
     return product;
   } catch (error) {
@@ -18,15 +18,15 @@ export async function getProduct(field, value) {
   }
 }
 
-export function getProductById(id) {
+export function getProductById(id: number) {
   return getProduct('id', id);
 }
 
-export function getProductBySlug(slug) {
+export function getProductBySlug(slug: string) {
   return getProduct('slug', slug);
 }
 
-export async function getProductArray(productIds) {
+export async function getProductArray(productIds: number[]): Promise<Product[] | undefined> {
   try {
     const res = await fetch('/data/products.json');
 
@@ -34,11 +34,9 @@ export async function getProductArray(productIds) {
       throw new Error(`Failed to fetch products.json: ${res.status}`);
     }
 
-    const products = await res.json();
+    const products: Product[] = await res.json();
     const idSet = new Set(productIds);
     const productArray = products.filter((product) => idSet.has(product.id));
-
-    if (!productArray) return;
 
     return productArray;
   } catch (error) {
