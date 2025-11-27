@@ -1,4 +1,6 @@
-export async function getOrder(field, value) {
+import { Order } from '@typings/shop/order';
+
+export async function getOrder<K extends 'id'>(field: K, value: Order[K]): Promise<Order | undefined> {
   try {
     const res = await fetch('/data/shop-orders.json');
 
@@ -6,10 +8,8 @@ export async function getOrder(field, value) {
       throw new Error(`Failed to fetch shop-orders.json: ${res.status}`);
     }
 
-    const orders = await res.json();
+    const orders: Order[] = await res.json();
     const order = orders.find((order) => order[field] === value);
-
-    if (!order) return;
 
     return order;
   } catch (error) {
@@ -18,6 +18,6 @@ export async function getOrder(field, value) {
   }
 }
 
-export function getOrderById(id) {
+export function getOrderById(id: number) {
   return getOrder('id', id);
 }

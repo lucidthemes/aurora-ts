@@ -1,4 +1,6 @@
-export async function getPaymentOptions() {
+import { PaymentOption } from '@typings/shop/paymentOption';
+
+export async function getPaymentOptions(): Promise<PaymentOption[] | undefined> {
   try {
     const res = await fetch('/data/shop-payment.json');
 
@@ -6,9 +8,7 @@ export async function getPaymentOptions() {
       throw new Error(`Failed to fetch shop-payment.json: ${res.status}`);
     }
 
-    const paymentOptions = await res.json();
-
-    if (!paymentOptions) return;
+    const paymentOptions: PaymentOption[] = await res.json();
 
     return paymentOptions;
   } catch (error) {

@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 - posts category type
 - shop sub folder
 - shop customer type
+- shop address type
+- shop coupon type
+- shop paymentOption type
+- shop shippingOption type
+- shop order type
 - instagram sub folder
 - instagram feed type
 - products tag type
