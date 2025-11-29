@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import { Category } from '@typings/posts/category';
+import { CategorySchema } from '@schemas/posts/category.schema';
 
 export async function getCategory<K extends 'id' | 'slug'>(field: K, value: Category[K]): Promise<Category | undefined> {
   try {
@@ -8,7 +10,15 @@ export async function getCategory<K extends 'id' | 'slug'>(field: K, value: Cate
       throw new Error(`Failed to fetch post-categories.json: ${res.status}`);
     }
 
-    const categories: Category[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(CategorySchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const categories = parsed.data;
     const category = categories.find((category) => category[field] === value);
 
     return category;
@@ -34,8 +44,15 @@ export async function getCategoryMap(categoryIds: number[]): Promise<Record<numb
       throw new Error(`Failed to fetch post-categories.json: ${res.status}`);
     }
 
-    const categories: Category[] = await res.json();
+    const unparsed = await res.json();
 
+    const parsed = z.array(CategorySchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const categories = parsed.data;
     const categoryMap: Record<number, Category> = {};
 
     if (Array.isArray(categories) && Array.isArray(categoryIds)) {
