@@ -10,7 +10,7 @@ export const PostSchema = z.object({
   categories: z.array(z.number().int().positive()).optional(),
   tags: z.array(z.number().int().positive()).optional(),
   excerpt: z.string().optional(),
-  content: ContentBlockSchema.optional(),
+  content: z.array(ContentBlockSchema).optional(),
   image: z.string().optional(),
   relatedPosts: z.array(z.number().int().positive()).optional(),
   postHeader: z.object({
