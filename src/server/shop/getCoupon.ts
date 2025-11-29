@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import { Coupon } from '@typings/shop/coupon';
+import { CouponSchema } from '@schemas/shop/coupon.schema';
 
 export async function getCoupon<K extends 'code'>(field: K, value: Coupon[K]): Promise<Coupon | undefined> {
   try {
@@ -8,7 +10,15 @@ export async function getCoupon<K extends 'code'>(field: K, value: Coupon[K]): P
       throw new Error(`Failed to fetch shop-coupons.json: ${res.status}`);
     }
 
-    const coupons: Coupon[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(CouponSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const coupons = parsed.data;
     const coupon = coupons.find((coupon) => coupon[field].toLowerCase() === value);
 
     return coupon;
