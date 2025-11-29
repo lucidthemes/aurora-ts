@@ -10,10 +10,16 @@ All notable changes to this project will be documented in this file.
 
 - schemas folder
 - instagram sub folder
+- posts sub folder
+- products sub folder
+- shop sub folder
 
 #### Server
 
 - schema validation to instagram fetch file
+- schema validation to posts fetch files
+- schema validation to products fetch files
+- schema validation to shop fetch files
 
 #### Root
 
