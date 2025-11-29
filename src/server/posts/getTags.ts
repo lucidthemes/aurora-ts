@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import { Tag } from '@typings/posts/tag';
+import { TagSchema } from '@schemas/posts/tag.schema';
 
-export async function getTags(limit?: number): Promise<Tag[] | undefined> {
+export async function getTags(limit?: number): Promise<Tag[]> {
   try {
     const res = await fetch('/data/post-tags.json');
 
@@ -8,22 +10,28 @@ export async function getTags(limit?: number): Promise<Tag[] | undefined> {
       throw new Error(`Failed to fetch post-tags.json: ${res.status}`);
     }
 
-    const tags: Tag[] = await res.json();
+    const unparsed = await res.json();
 
-    let limitedTags = tags;
+    const parsed = z.array(TagSchema).safeParse(unparsed);
 
-    if (limit && limit > 0) {
-      limitedTags = limitedTags.slice(0, limit);
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
     }
 
-    return limitedTags;
+    let tags = parsed.data;
+
+    if (limit && limit > 0) {
+      tags = tags.slice(0, limit);
+    }
+
+    return tags;
   } catch (error) {
     console.error('getTags', error);
     throw error;
   }
 }
 
-export async function getTagsArray(tagIds: number[]): Promise<Tag[] | undefined> {
+export async function getTagsArray(tagIds: number[]): Promise<Tag[]> {
   try {
     const res = await fetch('/data/post-tags.json');
 
@@ -31,7 +39,15 @@ export async function getTagsArray(tagIds: number[]): Promise<Tag[] | undefined>
       throw new Error(`Failed to fetch post-tags.json: ${res.status}`);
     }
 
-    const tags: Tag[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(TagSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const tags = parsed.data;
     const idSet = new Set(tagIds);
     const tagArray = tags.filter((tag) => idSet.has(tag.id));
 

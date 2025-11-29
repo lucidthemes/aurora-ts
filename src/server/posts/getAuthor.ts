@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import { Author } from '@typings/posts/author';
+import { AuthorSchema } from '@schemas/posts/author.schema';
 
 export async function getAuthor<K extends 'id' | 'slug'>(field: K, value: Author[K]): Promise<Author | undefined> {
   try {
@@ -8,7 +10,15 @@ export async function getAuthor<K extends 'id' | 'slug'>(field: K, value: Author
       throw new Error(`Failed to fetch post-authors.json: ${res.status}`);
     }
 
-    const authors: Author[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(AuthorSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const authors = parsed.data;
     const author = authors.find((author) => author[field] === value);
 
     return author;
@@ -34,8 +44,15 @@ export async function getAuthorMap(authorIds: number[]): Promise<Record<number, 
       throw new Error(`Failed to fetch post-authors.json: ${res.status}`);
     }
 
-    const authors: Author[] = await res.json();
+    const unparsed = await res.json();
 
+    const parsed = z.array(AuthorSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${[parsed.error]}`);
+    }
+
+    const authors = parsed.data;
     const authorMap: Record<number, Author> = {};
 
     if (Array.isArray(authors) && Array.isArray(authorIds)) {

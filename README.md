@@ -47,7 +47,9 @@ Staging site: [demo](https://aurora-ts-staging.vercel.app/)
 Frontend
 
 - [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Zod](https://zod.dev/)
 - [Embla Carousel](https://www.embla-carousel.com/)
 - [Google fonts (EB Garamond)](https://fonts.google.com/specimen/EB+Garamond)
 

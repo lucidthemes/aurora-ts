@@ -9,7 +9,7 @@ export interface Post {
   categories?: number[];
   tags?: number[];
   excerpt?: string;
-  content?: ContentBlock;
+  content?: ContentBlock[];
   image?: string;
   relatedPosts?: number[];
   postHeader: {

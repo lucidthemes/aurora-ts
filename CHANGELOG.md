@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - [Unreleased]
+
+### Added
+
+#### Schemas
+
+- schemas folder
+- instagram sub folder
+- posts sub folder
+- products sub folder
+- shop sub folder
+
+#### Server
+
+- schema validation to instagram fetch file
+- schema validation to posts fetch files
+- schema validation to products fetch files
+- schema validation to shop fetch files
+
+#### Root
+
+- Zod dependency to package
+- Schemas path to Vite config using @schemas
+- Schemas path to tsconfig using @schemas
+
 ## [0.2.0] - 2025-11-27
 
 ### Added
@@ -55,7 +80,7 @@ All notable changes to this project will be documented in this file.
 
 #### Types
 
-- Types folder
+- types folder
 - posts sub folder
 - products sub folder
 - posts post type

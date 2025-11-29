@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import { Feed } from '@typings/instagram/feed';
+import { FeedSchema } from '@schemas/instagram/feed.schema';
 
-export async function getFeed(limit?: number): Promise<Feed[] | undefined> {
+export async function getFeed(limit?: number): Promise<Feed[]> {
   try {
     const res = await fetch('/data/instagram.json');
 
@@ -8,15 +10,21 @@ export async function getFeed(limit?: number): Promise<Feed[] | undefined> {
       throw new Error(`Failed to fetch instagram.json: ${res.status}`);
     }
 
-    const feed: Feed[] = await res.json();
+    const unparsed = await res.json();
 
-    let limitedFeed = feed;
+    const parsed = z.array(FeedSchema).safeParse(unparsed);
 
-    if (limit && limit > 0) {
-      limitedFeed = limitedFeed.slice(0, limit);
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
     }
 
-    return limitedFeed;
+    let feed = parsed.data;
+
+    if (limit && limit > 0) {
+      feed = feed.slice(0, limit);
+    }
+
+    return feed;
   } catch (error) {
     console.error('getFeed', error);
     throw error;

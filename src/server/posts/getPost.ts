@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import { Post } from '@typings/posts/post';
+import { PostSchema } from '@schemas/posts/post.schema';
 
 export async function getPost<K extends 'id' | 'slug'>(field: K, value: Post[K]): Promise<Post | undefined> {
   try {
@@ -8,7 +10,15 @@ export async function getPost<K extends 'id' | 'slug'>(field: K, value: Post[K])
       throw new Error(`Failed to fetch posts.json: ${res.status}`);
     }
 
-    const posts: Post[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(PostSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const posts = parsed.data;
     const post = posts.find((post) => post[field] === value);
 
     return post;
@@ -26,7 +36,7 @@ export function getPostBySlug(slug: string) {
   return getPost('slug', slug);
 }
 
-export async function getPostArray(postIds: number[]): Promise<Post[] | undefined> {
+export async function getPostArray(postIds: number[]): Promise<Post[]> {
   try {
     const res = await fetch('/data/posts.json');
 
@@ -34,7 +44,15 @@ export async function getPostArray(postIds: number[]): Promise<Post[] | undefine
       throw new Error(`Failed to fetch posts.json: ${res.status}`);
     }
 
-    const posts: Post[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(PostSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const posts = parsed.data;
     const idSet = new Set(postIds);
     const postArray = posts.filter((post) => idSet.has(post.id));
 

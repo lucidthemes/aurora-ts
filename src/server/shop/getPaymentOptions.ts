@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import { PaymentOption } from '@typings/shop/paymentOption';
+import { PaymentOptionSchema } from '@schemas/shop/paymentOption.schema';
 
-export async function getPaymentOptions(): Promise<PaymentOption[] | undefined> {
+export async function getPaymentOptions(): Promise<PaymentOption[]> {
   try {
     const res = await fetch('/data/shop-payment.json');
 
@@ -8,7 +10,15 @@ export async function getPaymentOptions(): Promise<PaymentOption[] | undefined> 
       throw new Error(`Failed to fetch shop-payment.json: ${res.status}`);
     }
 
-    const paymentOptions: PaymentOption[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(PaymentOptionSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const paymentOptions = parsed.data;
 
     return paymentOptions;
   } catch (error) {

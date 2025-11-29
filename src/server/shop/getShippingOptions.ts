@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import { ShippingOption } from '@typings/shop/shippingOption';
+import { ShippingOptionSchema } from '@schemas/shop/shippingOption.schema';
 
-export async function getShippingOptions(): Promise<ShippingOption[] | undefined> {
+export async function getShippingOptions(): Promise<ShippingOption[]> {
   try {
     const res = await fetch('/data/shop-shipping.json');
 
@@ -8,7 +10,15 @@ export async function getShippingOptions(): Promise<ShippingOption[] | undefined
       throw new Error(`Failed to fetch shop-shipping.json: ${res.status}`);
     }
 
-    const shippingOptions: ShippingOption[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(ShippingOptionSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const shippingOptions = parsed.data;
 
     return shippingOptions;
   } catch (error) {
