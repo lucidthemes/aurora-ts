@@ -1,7 +1,7 @@
 export interface Comment {
   id: number;
   postId: number;
-  replyTo?: boolean;
+  replyTo?: number | null;
   author: string;
   avatar?: string;
   datetime: string;
