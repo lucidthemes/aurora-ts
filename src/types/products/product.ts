@@ -10,7 +10,7 @@ export interface Product {
   image?: string;
   gallery?: string[];
   shortDescription?: string;
-  description?: ContentBlock;
+  description?: ContentBlock[];
   price: number;
   inStock: boolean;
   SKU: string;
