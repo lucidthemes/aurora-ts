@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import { Attribute } from '@typings/products/attribute';
+import { AttributeSchema } from '@schemas/products/attribute.schema';
 
-export async function getAttributes<K extends 'type'>(field: K, value: Attribute[K]): Promise<Attribute[] | undefined> {
+export async function getAttributes<K extends 'type'>(field: K, value: Attribute[K]): Promise<Attribute[]> {
   try {
     const res = await fetch('/data/product-attributes.json');
 
@@ -8,7 +10,15 @@ export async function getAttributes<K extends 'type'>(field: K, value: Attribute
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const allAttributes: Attribute[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(AttributeSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const allAttributes = parsed.data;
     const attributes = allAttributes.filter((attribute) => attribute[field] === value);
 
     return attributes;

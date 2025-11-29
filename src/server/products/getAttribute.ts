@@ -1,4 +1,6 @@
+import { z } from 'zod';
 import { Attribute } from '@typings/products/attribute';
+import { AttributeSchema } from '@schemas/products/attribute.schema';
 
 export async function getAttribute<K extends 'id'>(field: K, value: Attribute[K]): Promise<Attribute | undefined> {
   try {
@@ -8,7 +10,15 @@ export async function getAttribute<K extends 'id'>(field: K, value: Attribute[K]
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const attributes: Attribute[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(AttributeSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid date: ${parsed.error}`);
+    }
+
+    const attributes = parsed.data;
     const attribute = attributes.find((attribute) => attribute[field] === value);
 
     return attribute;
@@ -30,8 +40,15 @@ export async function getAttributeMap(attributeIds: number[]): Promise<Record<nu
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const attributes: Attribute[] = await res.json();
+    const unparsed = await res.json();
 
+    const parsed = z.array(AttributeSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const attributes = parsed.data;
     const attributesMap: Record<number, Attribute> = {};
 
     if (Array.isArray(attributes) && Array.isArray(attributeIds)) {
@@ -50,7 +67,7 @@ export async function getAttributeMap(attributeIds: number[]): Promise<Record<nu
   }
 }
 
-export async function getAttributeArray(attributeIds: number[]): Promise<Attribute[] | undefined> {
+export async function getAttributeArray(attributeIds: number[]): Promise<Attribute[]> {
   try {
     const res = await fetch('/data/product-attributes.json');
 
@@ -58,7 +75,15 @@ export async function getAttributeArray(attributeIds: number[]): Promise<Attribu
       throw new Error(`Failed to fetch product-attributes.json: ${res.status}`);
     }
 
-    const attributes: Attribute[] = await res.json();
+    const unparsed = await res.json();
+
+    const parsed = z.array(AttributeSchema).safeParse(unparsed);
+
+    if (!parsed.success) {
+      throw new Error(`Invalid data: ${parsed.error}`);
+    }
+
+    const attributes = parsed.data;
     const idSet = new Set(attributeIds);
     const attributeArray = attributes.filter((attribute) => idSet.has(attribute.id));
 
