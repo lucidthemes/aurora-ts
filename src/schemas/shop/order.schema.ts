@@ -10,21 +10,23 @@ const ItemSchema = z.object({
   slug: z.string(),
   image: z.string(),
   price: z.number(),
-  variation: z.object({
-    id: z.number().int().positive(),
-    colourId: z.number().int().positive().optional(),
-    sizeId: z.number().int().positive().optional(),
-    price: z.number(),
-    stock: z.number().optional(),
-    SKU: z.string(),
-  }),
+  variation: z
+    .object({
+      id: z.number().int().positive(),
+      colourId: z.number().int().positive().optional(),
+      sizeId: z.number().int().positive().optional(),
+      price: z.number(),
+      stock: z.number().optional(),
+      SKU: z.string(),
+    })
+    .optional(),
   quantity: z.number().int().positive(),
 });
 
 export const OrderSchema = z.object({
   id: z.number().int().positive(),
   customerId: z.number().int().positive(),
-  date: z.iso.date(),
+  date: z.iso.datetime(),
   checkoutData: z.object({
     contact: z.object({ email: z.email() }),
     shipping: AddressSchema,
