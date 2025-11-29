@@ -15,7 +15,7 @@ export interface Product {
   inStock: boolean;
   SKU: string;
   variationAttributes?: { type: string; options: number[] }[];
-  variations?: { id: number; sizeId: number; price: number; stock: number; SKU: string }[];
+  variations?: { id: number; colourId?: number; sizeId?: number; price: number; stock: number; SKU: string }[];
   reviewCount?: number;
   averageReview?: number;
   relatedProducts?: number[];
