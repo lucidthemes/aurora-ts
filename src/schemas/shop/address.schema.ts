@@ -9,5 +9,5 @@ export const AddressSchema = z.object({
   city: z.string(),
   county: z.string().optional(),
   postcode: z.string(),
-  phone: z.number().optional(),
+  phone: z.string().optional(),
 });
