@@ -5,7 +5,7 @@ export const PostSchema = z.object({
   id: z.number().int().positive(),
   title: z.string(),
   slug: z.string(),
-  date: z.string(),
+  date: z.iso.date(),
   authorId: z.number().int().positive(),
   categories: z.array(z.number().int().positive()).optional(),
   tags: z.array(z.number().int().positive()).optional(),

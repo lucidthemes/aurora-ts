@@ -6,7 +6,7 @@ export const CommentSchema = z.object({
   replyTo: z.number().nullable().optional(),
   author: z.string(),
   avatar: z.string().optional(),
-  datetime: z.string(),
+  datetime: z.iso.datetime(),
   comment: z.string(),
   status: z.string(),
 });
