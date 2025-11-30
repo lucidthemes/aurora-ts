@@ -1,3 +1,4 @@
+import { ContentBlock } from '@typings/contentBlock';
 import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
 import PageTitle from '@components/UI/PageTitle';
 import PageContent from '@components/UI/PageContent';
@@ -6,7 +7,7 @@ import { Sidebar } from '@components/Layout/Sidebar';
 
 const contactTitle = 'Contact';
 
-const contactContent = [
+const contactContent: ContentBlock[] = [
   {
     id: 1,
     type: 'paragraph',

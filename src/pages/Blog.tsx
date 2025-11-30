@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { Category } from '@typings/posts/category';
+import { Tag } from '@typings/posts/tag';
+import { Author } from '@typings/posts/author';
 import { getCategoryBySlug } from '@server/posts/getCategory';
 import { getTagBySlug } from '@server/posts/getTag';
 import { getAuthorBySlug } from '@server/posts/getAuthor';
@@ -29,7 +32,7 @@ export function BlogHiddenSidebar() {
 
 export function BlogCategory() {
   const { slug } = useParams();
-  const [category, setCategory] = useState([]);
+  const [blogCategory, setBlogCategory] = useState<Category | null>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -37,7 +40,7 @@ export function BlogCategory() {
     const fetchCategory = async () => {
       try {
         const category = await getCategoryBySlug(slug);
-        if (category) setCategory(category);
+        if (category) setBlogCategory(category);
       } catch (error) {
         console.error('Failed to fetch category.', error);
       }
@@ -49,13 +52,13 @@ export function BlogCategory() {
   return (
     <PageSidebarLayout
       content={
-        category.length !== 0 ? (
+        blogCategory ? (
           <>
             <header className="mb-10 flex flex-col gap-y-5">
-              <h1>{category.name}</h1>
-              <p>{category.description}</p>
+              <h1>{blogCategory.name}</h1>
+              <p>{blogCategory.description}</p>
             </header>
-            <BlogList category={category.id} style="wide-small-small" />
+            <BlogList category={blogCategory.id} style="wide-small-small" />
           </>
         ) : (
           <p className="rounded-sm bg-white p-5 text-center">Category not found</p>
@@ -69,7 +72,7 @@ export function BlogCategory() {
 
 export function BlogTag() {
   const { slug } = useParams();
-  const [tag, setTag] = useState([]);
+  const [blogTag, setBlogTag] = useState<Tag | null>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -77,7 +80,7 @@ export function BlogTag() {
     const fetchTag = async () => {
       try {
         const tag = await getTagBySlug(slug);
-        if (tag) setTag(tag);
+        if (tag) setBlogTag(tag);
       } catch (error) {
         console.error('Failed to fetch tag.', error);
       }
@@ -89,13 +92,13 @@ export function BlogTag() {
   return (
     <PageSidebarLayout
       content={
-        tag.length !== 0 ? (
+        blogTag ? (
           <>
             <header className="mb-10 flex flex-col gap-y-5">
-              <h1>{tag.name}</h1>
-              <p>{tag.description}</p>
+              <h1>{blogTag.name}</h1>
+              <p>{blogTag.description}</p>
             </header>
-            <BlogList tag={tag.id} style="wide-small-small" />
+            <BlogList tag={blogTag.id} style="wide-small-small" />
           </>
         ) : (
           <p className="rounded-sm bg-white p-5 text-center">Tag not found</p>
@@ -129,7 +132,7 @@ export function BlogSearch() {
 
 export function BlogAuthor() {
   const { slug } = useParams();
-  const [author, setAuthor] = useState([]);
+  const [blogAuthor, setBlogAuthor] = useState<Author | null>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -137,7 +140,7 @@ export function BlogAuthor() {
     const fetchAuthor = async () => {
       try {
         const author = await getAuthorBySlug(slug);
-        if (author) setAuthor(author);
+        if (author) setBlogAuthor(author);
       } catch (error) {
         console.error('Failed to fetch author.', error);
       }
@@ -149,13 +152,13 @@ export function BlogAuthor() {
   return (
     <PageSidebarLayout
       content={
-        author.length !== 0 ? (
+        blogAuthor ? (
           <>
             <header className="mb-10 flex flex-col gap-y-5">
-              <h1>{author.name}</h1>
-              <p>{author.description}</p>
+              <h1>{blogAuthor.name}</h1>
+              <p>{blogAuthor.description}</p>
             </header>
-            <BlogList author={author.id} style="wide-small-small" />
+            <BlogList author={blogAuthor.id} style="wide-small-small" />
           </>
         ) : (
           <p className="rounded-sm bg-white p-5 text-center">Author not found</p>

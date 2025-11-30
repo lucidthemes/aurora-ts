@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - [Unreleased]
+
+### Changed
+
+#### Pages
+
+- pages (home, blog, singlePost, about, contact, shop, singleProduct, cart, checkout, orderReceived, login, lostPassword, account, notFound) to TypeScript
+
+#### Routes
+
+- AppRoutes to TypeScript
+
 ## [0.3.0] - 2025-11-29
 
 ### Added
@@ -24,8 +36,8 @@ All notable changes to this project will be documented in this file.
 #### Root
 
 - Zod dependency to package
-- Schemas path to Vite config using @schemas
-- Schemas path to tsconfig using @schemas
+- schemas path to Vite config using @schemas
+- schemas path to tsconfig using @schemas
 
 ## [0.2.0] - 2025-11-27
 
@@ -53,7 +65,7 @@ All notable changes to this project will be documented in this file.
 
 #### Components
 
-- Tags widget limit parameter to optional so that all tags are shown by default
+- tags widget limit parameter to optional so that all tags are shown by default
 
 #### Contexts
 
@@ -62,17 +74,17 @@ All notable changes to this project will be documented in this file.
 
 #### Server
 
-- Convert posts fetch files to TypeScript
-- Convert instagram fetch feed file to TypeScript
-- Convert products fetch files to TypeScript
-- Convert shop fetch files to TypeScript
+- posts fetch files to TypeScript
+- instagram fetch feed file to TypeScript
+- products fetch files to TypeScript
+- shop fetch files to TypeScript
 
 ### Fixed
 
 #### Components
 
-- Posts widget category incorrect type
-- Products widget category incorrect type
+- posts widget category incorrect type
+- products widget category incorrect type
 
 ## [0.1.0] - 2025-11-25
 
@@ -90,19 +102,19 @@ All notable changes to this project will be documented in this file.
 
 #### Root
 
-- Types path to Vite config using @typings
-- Types path to tsconfig using @typings
+- types path to Vite config using @typings
+- types path to tsconfig using @typings
 
 ### Changed
 
 #### Components
 
-- Header to TypeScript
-- Footer to TypeScript
-- Form (checkbox, password, select, textarea) to TypeScript
-- Layout (container, layout, pageLayout, sidebar) to TypeScript
-- Widgets (posts, products, tags, about, instagram, newsletter, promobox, search, social, title) to TypeScript
-- Notification to TypeScript
+- header to TypeScript
+- footer to TypeScript
+- form (checkbox, password, select, textarea) to TypeScript
+- layout (container, layout, pageLayout, sidebar) to TypeScript
+- widgets (posts, products, tags, about, instagram, newsletter, promobox, search, social, title) to TypeScript
+- notification to TypeScript
 - UI (pageContent, pageTitle, sectionHeading) to TypeScript
 
 #### Features
@@ -119,4 +131,4 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.0] - 2025-11-21
 
-- Initial development
+- initial development
