@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Category } from '@typings/products/category';
+import { Tag } from '@typings/products/tag';
 import { getCategoryBySlug } from '@server/products/getCategory';
 import { getTagBySlug } from '@server/products/getTag';
 import Container from '@components/Layout/Container';
@@ -15,7 +17,7 @@ export function Shop() {
 
 export function ShopCategory() {
   const { slug } = useParams();
-  const [category, setCategory] = useState([]);
+  const [shopCategory, setShopCategory] = useState<Category | null>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -23,7 +25,7 @@ export function ShopCategory() {
     const fetchCategory = async () => {
       try {
         const category = await getCategoryBySlug(slug);
-        if (category) setCategory(category);
+        if (category) setShopCategory(category);
       } catch (error) {
         console.error('Failed to fetch category.', error);
       }
@@ -34,14 +36,18 @@ export function ShopCategory() {
 
   return (
     <Container>
-      <ProductList category={category.id} pageTitle={category.name} pageDescription={category.description} />
+      {shopCategory ? (
+        <ProductList category={shopCategory.id} pageTitle={shopCategory.name} pageDescription={shopCategory.description} />
+      ) : (
+        <p className="rounded-sm bg-white p-5 text-center">Category not found</p>
+      )}
     </Container>
   );
 }
 
 export function ShopTag() {
   const { slug } = useParams();
-  const [tag, setTag] = useState([]);
+  const [shopTag, setShopTag] = useState<Tag | null>(null);
 
   useEffect(() => {
     if (!slug) return;
@@ -49,7 +55,7 @@ export function ShopTag() {
     const fetchTag = async () => {
       try {
         const tag = await getTagBySlug(slug);
-        if (tag) setTag(tag);
+        if (tag) setShopTag(tag);
       } catch (error) {
         console.error('Failed to fetch tag.', error);
       }
@@ -60,7 +66,11 @@ export function ShopTag() {
 
   return (
     <Container>
-      <ProductList tag={tag.id} pageTitle={tag.name} pageDescription={tag.description} />
+      {shopTag ? (
+        <ProductList tag={shopTag.id} pageTitle={shopTag.name} pageDescription={shopTag.description} />
+      ) : (
+        <p className="rounded-sm bg-white p-5 text-center">Tag not found</p>
+      )}
     </Container>
   );
 }
