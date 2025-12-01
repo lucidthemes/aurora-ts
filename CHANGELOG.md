@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [0.5.0] - [Unreleased]
 
+### Added
+
+#### Utils
+
+- tests sub folder for utils used only in tests
+
+#### Root
+
+- vitest/globals to tsconfig for vitest to work with TypeScript test files
+- vitest.d.ts file for vitest to work with TypeScript test files
+
 ### Changed
 
 #### ContactForm
