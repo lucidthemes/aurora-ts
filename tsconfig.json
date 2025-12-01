@@ -27,7 +27,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["vitest/globals", "node"]
   },
   "include": ["src", "src/types"]
 }

@@ -29,6 +29,8 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
     "@vitejs/plugin-react": "^4.5.2",
     "@vitest/ui": "^4.0.14",
     "autoprefixer": "^10.4.22",
@@ -45,6 +47,6 @@
     "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^4.1.11",
     "vite": "^7.2.6",
-    "vitest": "^4.0.12"
+    "vitest": "^4.0.14"
   }
 }
