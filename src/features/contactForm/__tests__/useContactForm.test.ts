@@ -1,24 +1,25 @@
 import { renderHook, act } from '@testing-library/react';
 import useContactForm from '../useContactForm';
+import { createChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
 
 describe('useContactForm hook', () => {
   test('updates form data on handleFormChange', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'name', value: 'John Doe' } });
+      result.current.handleFormChange(createChangeEvent('name', 'John Doe'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'subject', value: 'Test subject' } });
+      result.current.handleFormChange(createChangeEvent('subject', 'Test subject'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'message', value: 'Test message' } });
+      result.current.handleFormChange(createChangeEvent('message', 'Test message'));
     });
 
     expect(result.current.contactFormData.name).toBe('John Doe');
@@ -31,23 +32,23 @@ describe('useContactForm hook', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'name', value: '' } });
+      result.current.handleFormChange(createChangeEvent('name', ''));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: '' } });
+      result.current.handleFormChange(createChangeEvent('email', ''));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'subject', value: '' } });
+      result.current.handleFormChange(createChangeEvent('subject', ''));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'message', value: '' } });
+      result.current.handleFormChange(createChangeEvent('message', ''));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.contactFormErrors.name).toBe('Please enter a name');
@@ -60,11 +61,11 @@ describe('useContactForm hook', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'invalid-email' } });
+      result.current.handleFormChange(createChangeEvent('email', 'invalid-email'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.contactFormErrors.email).toBe('Please enter a valid email address');
@@ -74,23 +75,23 @@ describe('useContactForm hook', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'name', value: 'John Doe' } });
+      result.current.handleFormChange(createChangeEvent('name', 'John Doe'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'subject', value: 'Test subject' } });
+      result.current.handleFormChange(createChangeEvent('subject', 'Test subject'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'message', value: 'Test message' } });
+      result.current.handleFormChange(createChangeEvent('message', 'Test message'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.contactFormNotification.type).toBe('success');
