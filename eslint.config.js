@@ -6,63 +6,25 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import prettier from 'eslint-config-prettier';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
+import babelParser from '@babel/eslint-parser';
 
 export default defineConfig([
   {
     ignores: ['dist'],
   },
-
-  // JS/JSX files
   {
-    files: ['**/*.js', '**/*.jsx'],
+    files: ['**/*.test.{js,jsx,ts,tsx}'],
+
     languageOptions: {
-      parser: '@babel/eslint-parser',
+      parser: babelParser,
       parserOptions: {
         requireConfigFile: false,
         babelOptions: {
           presets: ['@babel/preset-react'],
         },
-        ecmaVersion: 'latest',
-        sourceType: 'module',
       },
-      globals: {
-        ...globals.browser,
-      },
-    },
-    plugins: {
-      prettier: eslintPluginPrettier,
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-    },
-    rules: {
-      ...js.configs.recommended.rules,
-      ...react.configs.recommended.rules,
-      ...reactHooks.configs['recommended-latest'].rules,
-      ...reactRefresh.configs.vite.rules,
-
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      'prettier/prettier': 'warn',
-      'react/react-in-jsx-scope': 'off',
-      'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
-  },
-
-  // TS/TSX files (including tests)
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.test.ts', '**/*.test.tsx'],
-    languageOptions: {
-      parser: '@typescript-eslint/parser',
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: { jsx: true },
-      },
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: {
         ...globals.browser,
         vi: 'readonly',
@@ -74,23 +36,26 @@ export default defineConfig([
         afterEach: 'readonly',
       },
     },
+
     plugins: {
       prettier: eslintPluginPrettier,
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
     },
+
     rules: {
       ...js.configs.recommended.rules,
       ...react.configs.recommended.rules,
       ...reactHooks.configs['recommended-latest'].rules,
+      ...reactRefresh.configs.vite.rules,
 
-      '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'prettier/prettier': 'warn',
       'react/react-in-jsx-scope': 'off',
       'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
     },
+
     settings: {
       react: {
         version: 'detect',
