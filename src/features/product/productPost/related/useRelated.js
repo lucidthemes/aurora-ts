@@ -5,15 +5,15 @@ export default function useRelated(singleProduct) {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
-    if (!singleProduct || !singleProduct.relatedProducts) {
-      setRelatedProducts([]);
-      return;
-    }
-
     const fetchRelated = async () => {
+      if (!singleProduct?.relatedProducts) {
+        setRelatedProducts([]);
+        return;
+      }
+
       try {
         const products = await getProductArray(singleProduct.relatedProducts);
-        if (products) setRelatedProducts(products);
+        setRelatedProducts(products);
       } catch (error) {
         console.error('Failed to fetch related products.', error);
       }
