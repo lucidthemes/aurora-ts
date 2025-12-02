@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.1] - [Unreleased]
+
+### Changed
+
+#### Root
+
+- eslint config to better handle linting JS/JSX, TS/TSX and test files
+
+### Fixed
+
+#### Features
+
+##### Account
+
+- useOrders eslint error message of calling setState synchronously within an effect
+
+##### BlogPost
+
+- useSinglePost eslint error message of calling setState synchronously within an effect
+
+###### Navigation
+
+- useNavigation eslint error message of calling setState synchronously within an effect
+
+###### Related
+
+- useRelated eslint error message of calling setState synchronously within an effect
+
+###### Tags
+
+- useTags eslint error message of calling setState synchronously within an effect
+
+##### Checkout
+
+- useCheckout eslint error message of calling setState synchronously within an effect by replacing with useMemo
+- useOrderReceived eslint error message of calling setState synchronously within an effect
+
+##### ProductPost
+
+useSingleProduct eslint error message of calling setState synchronously within an effect
+
+###### Breadcrumb
+
+- useBreadcrumb eslint error message of calling setState synchronously within an effect
+
+###### Tabs
+
+- useList eslint error message of calling setState synchronously within an effect
+
+###### Related
+
+- useRelated eslint error message of calling setState synchronously within an effect
+
+##### SearchForm
+
+- useSearchForm eslint error message of calling setState synchronously within an effect by removing unnecessary useEffect
+
 ## [0.5.0] - 2025-12-01
 
 ### Added
