@@ -9,19 +9,15 @@ export default function useSinglePost(slug) {
   const [author, setAuthor] = useState(null);
 
   useEffect(() => {
-    if (!slug) {
-      setSinglePost(null);
-      return;
-    }
-
     const fetchPost = async () => {
+      if (!slug) {
+        setSinglePost(null);
+        return;
+      }
+
       try {
         const post = await getPostBySlug(slug);
-        if (post) {
-          setSinglePost(post);
-        } else {
-          setSinglePost(false);
-        }
+        setSinglePost(post || false);
       } catch (error) {
         console.error('Failed to fetch post.', error);
       }
@@ -31,14 +27,13 @@ export default function useSinglePost(slug) {
   }, [slug]);
 
   useEffect(() => {
-    if (!singlePost) return;
-
     const fetchCategoryMap = async () => {
+      if (!singlePost?.categories) return;
+
       try {
         const categoryIds = singlePost.categories;
-
         const map = await getCategoryMap(categoryIds);
-        if (map) setCategoryMap(map);
+        setCategoryMap(map);
       } catch (error) {
         console.error('Failed to fetch categories.', error);
       }
@@ -47,9 +42,11 @@ export default function useSinglePost(slug) {
     fetchCategoryMap();
 
     const fetchAuthor = async () => {
+      if (!singlePost?.authorId) return;
+
       try {
         const authorInfo = await getAuthorById(singlePost.authorId);
-        if (authorInfo) setAuthor(authorInfo);
+        setAuthor(authorInfo);
       } catch (error) {
         console.error('Failed to fetch author.', error);
       }

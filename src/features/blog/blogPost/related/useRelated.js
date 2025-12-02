@@ -5,15 +5,15 @@ export default function useRelated(singlePost) {
   const [relatedPosts, setRelatedPosts] = useState([]);
 
   useEffect(() => {
-    if (!singlePost || !singlePost.relatedPosts) {
-      setRelatedPosts([]);
-      return;
-    }
-
     const fetchRelated = async () => {
+      if (!singlePost?.relatedPosts) {
+        setRelatedPosts([]);
+        return;
+      }
+
       try {
         const posts = await getPostArray(singlePost.relatedPosts);
-        if (posts) setRelatedPosts(posts);
+        setRelatedPosts(posts);
       } catch (error) {
         console.error('Failed to fetch related posts.', error);
       }
