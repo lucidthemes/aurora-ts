@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEventHandler, FormEventHandler } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface UseSearchFormReturn {
@@ -14,15 +14,9 @@ export default function useSearchForm(
   headerSearchActive: boolean = false,
   handleHeaderSearchActive: () => void = () => {}
 ): UseSearchFormReturn {
-  const [searchFormTerm, setSearchFormTerm] = useState('');
+  const [searchFormTerm, setSearchFormTerm] = useState(term || '');
   const [searchFormError, setSearchFormError] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!term) return;
-
-    setSearchFormTerm(term);
-  }, [term]);
 
   const handleFormChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
@@ -35,7 +29,6 @@ export default function useSearchForm(
     const trimmedSearchTerm = searchFormTerm.trim();
 
     if (trimmedSearchTerm) {
-      setSearchFormTerm('');
       setSearchFormError('');
       navigate(`/search/${trimmedSearchTerm}`);
 
