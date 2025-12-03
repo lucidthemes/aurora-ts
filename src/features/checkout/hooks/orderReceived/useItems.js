@@ -5,6 +5,8 @@ export default function useItems(items) {
   const [attributeMap, setAttributeMap] = useState([]);
 
   useEffect(() => {
+    if (!items) return;
+
     const fetchAttributeMap = async () => {
       try {
         const attributeIds = items.flatMap((item) => [item.variation?.colourId, item.variation?.sizeId]);
