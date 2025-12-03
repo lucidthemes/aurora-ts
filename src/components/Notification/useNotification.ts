@@ -8,6 +8,8 @@ export default function useNotification(duration: number, onClose: () => void) {
       setNotificationVisible(true);
     };
 
+    showNotification();
+
     const hideNotification = setTimeout(() => {
       setNotificationVisible(false);
     }, duration - 300);
@@ -17,7 +19,6 @@ export default function useNotification(duration: number, onClose: () => void) {
     }, duration);
 
     return () => {
-      showNotification();
       clearTimeout(hideNotification);
       clearTimeout(removeNotification);
     };
