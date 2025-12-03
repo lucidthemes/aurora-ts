@@ -9,14 +9,18 @@ export default function useFilterPrice(priceFilterMinMax, handleFilterListPrices
   const [rangeInputChanged, setRangeInputChanged] = useState(false);
 
   useEffect(() => {
-    if (priceFilterMinMax?.minPrice != null && priceFilterMinMax?.maxPrice != null) {
+    const setDefaultFilterPrices = () => {
       setFilterPrices((prev) => ({
         ...prev,
         filterMinPrice: priceFilterMinMax.minPrice,
         filterMaxPrice: priceFilterMinMax.maxPrice,
       }));
+    };
+
+    if (!rangeInputChanged && priceFilterMinMax?.minPrice != null && priceFilterMinMax?.maxPrice != null) {
+      setDefaultFilterPrices();
     }
-  }, [priceFilterMinMax]);
+  }, [priceFilterMinMax, rangeInputChanged]);
 
   const handleMinPriceChange = (e) => {
     if (!rangeInputChanged) setRangeInputChanged(true);
