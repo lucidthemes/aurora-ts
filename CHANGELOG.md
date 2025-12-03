@@ -12,6 +12,25 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+#### Components
+
+##### Footer
+
+- copyright link eslint error message of not having noreferrer
+
+##### Form
+
+- checkbox eslint error message of assigned a value but never used
+
+##### Header
+
+- HeaderTop Nav eslint error message of type format
+- Search eslint error message of calling hooks conditionally
+
+##### Notifcation
+
+- useNotification eslint error message of calling setState synchronously within an effect
+
 #### Features
 
 ##### Account
@@ -34,18 +53,32 @@ All notable changes to this project will be documented in this file.
 
 - useTags eslint error message of calling setState synchronously within an effect
 
+##### Cart
+
+- CouponForm eslint error message of calling hooks conditionally
+
 ##### Checkout
 
-- useCheckout eslint error message of calling setState synchronously within an effect by replacing with useMemo
-- useOrderReceived eslint error message of calling setState synchronously within an effect
+- useCheckout eslint error message of calling setState synchronously within an effect by removing unnecessary useEffect
+- orderReceived useOrderReceived eslint error message of calling setState synchronously within an effect
+- orderReceived useItems hook eslint error message of calling hooks conditionally
+
+##### ProductList
+
+- useSort eslint error message of calling setState synchronously within an effect
+- useFilterPrice eslint error message of calling setState synchronously within an effect
 
 ##### ProductPost
 
-useSingleProduct eslint error message of calling setState synchronously within an effect
+- useSingleProduct eslint error message of calling setState synchronously within an effect
 
 ###### Breadcrumb
 
 - useBreadcrumb eslint error message of calling setState synchronously within an effect
+
+###### Gallery
+
+- useSlideshow eslint error message of missing dependencies in effects
 
 ###### Tabs
 
@@ -54,6 +87,11 @@ useSingleProduct eslint error message of calling setState synchronously within a
 ###### Related
 
 - useRelated eslint error message of calling setState synchronously within an effect
+
+###### Summary
+
+- useAddCartForm eslint error message of calling setState synchronously within an effect
+- useVariations eslint error message of calling setState synchronously within an effect
 
 ##### SearchForm
 
