@@ -7,9 +7,9 @@ interface SearchProps {
 }
 
 export default function Search({ headerSearchActive, handleHeaderSearchActive }: SearchProps) {
-  if (!headerSearchActive) return null;
-
   const overlayInputRef = useSearch(headerSearchActive);
+
+  if (!headerSearchActive) return null;
 
   return (
     <div className="fixed top-0 left-0 z-10 h-full w-full bg-black">
