@@ -7,29 +7,30 @@ export default function useAddCartForm(addCartItem, singleProduct, setSummaryDat
   });
 
   useEffect(() => {
-    if (!addCartFormData.variationId) {
-      setSummaryData((prevData) => ({
-        ...prevData,
-        price: singleProduct.price,
-        maxQuantity: singleProduct.stock,
-        SKU: singleProduct.SKU,
+    const updateVariationSummaryData = (variation) => {
+      setSummaryData((prevState) => ({
+        ...prevState,
+        price: variation?.price ?? singleProduct?.price,
+        maxQuantity: variation?.stock ?? singleProduct?.stock,
+        SKU: variation?.SKU ?? singleProduct?.SKU,
       }));
-      setAddCartFormData((prevData) => ({
-        ...prevData,
+    };
+
+    const resetAddCartVariation = () => {
+      setAddCartFormData((prevState) => ({
+        ...prevState,
         variationId: '',
       }));
+    };
+
+    if (!addCartFormData.variationId) {
+      updateVariationSummaryData();
+      resetAddCartVariation();
       return;
     }
 
     const variation = singleProduct.variations?.find((variation) => variation.id === addCartFormData.variationId);
-    if (variation) {
-      setSummaryData((prevData) => ({
-        ...prevData,
-        price: variation.price,
-        maxQuantity: variation.stock,
-        SKU: variation.SKU,
-      }));
-    }
+    if (variation) updateVariationSummaryData(variation);
   }, [addCartFormData.variationId]);
 
   const handleFormSubmit = (e) => {
