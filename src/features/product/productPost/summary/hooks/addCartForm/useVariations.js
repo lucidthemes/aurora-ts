@@ -80,63 +80,64 @@ export default function useVariations(singleProduct, addCartFormData, setAddCart
       };
     });
 
-    setProductVariations(filteredVariations);
+    const updateProductVariations = () => {
+      setProductVariations(filteredVariations);
+    };
+
+    updateProductVariations(filteredVariations);
   }, [attributeArray, selectedVariations]);
 
   const handleProductVariationChange = (e) => {
     const { name, value } = e.target;
 
+    const updatedSelectedVariations = { ...selectedVariations };
+
     if (value === '' || value === null) {
-      // remove the variation set to default from the selected variations object
-      const updatedSelectedVariations = { ...selectedVariations };
       delete updatedSelectedVariations[name];
-      setSelectedVariations(updatedSelectedVariations);
     } else {
-      setSelectedVariations({
-        ...selectedVariations,
-        [name]: Number(value),
-      });
+      updatedSelectedVariations[name] = Number(value);
     }
-  };
 
-  // check selected variations to get correct variation ID
-  useEffect(() => {
-    if (Object.keys(selectedVariations).length) {
-      const variationAttributes = singleProduct.variationAttributes;
+    setSelectedVariations(updatedSelectedVariations);
 
-      // check the number of variation attributes for the product matches the number of selected variations
-      if (variationAttributes?.length === Object.keys(selectedVariations).length) {
-        let filteredVariation = [];
+    const variationAttributes = singleProduct.variationAttributes;
 
-        variationAttributes.forEach((variation) => {
-          variation.options.forEach((option) => {
-            if (selectedVariations[variation.type] && selectedVariations[variation.type] === option) {
-              const variationField = `${variation.type}Id`;
-              if (filteredVariation.length === 0) {
-                const filterVariation = singleProduct.variations.filter((variation) => variation[variationField] === option);
-                if (filterVariation) filteredVariation = filterVariation;
-              } else {
-                const filterVariation = filteredVariation.filter((variation) => variation[variationField] === option);
-                if (filterVariation) filteredVariation = filterVariation;
-              }
-            }
-          });
-        });
+    if (variationAttributes?.length === Object.keys(updatedSelectedVariations).length) {
+      let filteredVariation = [];
 
-        if (filteredVariation.length === 1 && filteredVariation[0].id !== addCartFormData.variationId) {
-          setAddCartFormData((prevData) => ({
-            ...prevData,
-            variationId: filteredVariation[0].id,
-          }));
-        }
+      // product has colour and size variations
+      if (updatedSelectedVariations.colour && updatedSelectedVariations.size) {
+        const filteredColourSize = singleProduct.variations.filter(
+          (variation) => variation.colourId === updatedSelectedVariations.colour && variation.sizeId === updatedSelectedVariations.size
+        );
+        if (filteredColourSize) filteredVariation = filteredColourSize;
       } else {
-        setAddCartFormData((prevData) => ({
-          ...prevData,
-          variationId: '',
+        // product has only colour variations
+        if (updatedSelectedVariations.colour) {
+          const filteredColour = singleProduct.variations.filter((variation) => variation.colourId === updatedSelectedVariations.colour);
+          if (filteredColour) filteredVariation = filteredColour;
+        }
+
+        // product has only size variations
+        if (updatedSelectedVariations.size) {
+          const filteredSize = singleProduct.variations.filter((variation) => variation.sizeId === updatedSelectedVariations.size);
+          if (filteredSize) filteredVariation = filteredSize;
+        }
+      }
+
+      if (filteredVariation.length > 0) {
+        setAddCartFormData((prevState) => ({
+          ...prevState,
+          variationId: filteredVariation[0].id,
         }));
       }
+    } else {
+      setAddCartFormData((prevState) => ({
+        ...prevState,
+        variationId: '',
+      }));
     }
-  }, [selectedVariations]);
+  };
 
   return { productVariations, handleProductVariationChange };
 }
