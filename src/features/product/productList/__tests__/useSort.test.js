@@ -38,6 +38,10 @@ describe('useSort hook', () => {
     },
   ];
 
+  const mockShowSort = true;
+
+  const mockShowPagination = true;
+
   const resetPaginationMock = vi.fn();
 
   const mockProductsFilteredByDate = mockProducts.toSorted((a, b) => new Date(b.date) - new Date(a.date));
@@ -51,7 +55,7 @@ describe('useSort hook', () => {
   const mockProductsFilteredByPriceAsc = mockProducts.toSorted((a, b) => a.price - b.price);
 
   test('updates sort option on handleSortChange', () => {
-    const { result } = renderHook(() => useSort(mockProducts, true, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleSortChange({ target: { value: 'price-desc' } });
@@ -61,7 +65,7 @@ describe('useSort hook', () => {
   });
 
   test('sort products using date option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, true, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleSortChange({ target: { value: 'date' } });
@@ -72,7 +76,7 @@ describe('useSort hook', () => {
   });
 
   test('sort products using rating-desc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, true, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleSortChange({ target: { value: 'rating-desc' } });
@@ -83,7 +87,7 @@ describe('useSort hook', () => {
   });
 
   test('sort products using rating-asc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, true, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleSortChange({ target: { value: 'rating-asc' } });
@@ -94,7 +98,7 @@ describe('useSort hook', () => {
   });
 
   test('sort products using price-desc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, true, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleSortChange({ target: { value: 'price-desc' } });
@@ -105,7 +109,7 @@ describe('useSort hook', () => {
   });
 
   test('sort products using price-asc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, true, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleSortChange({ target: { value: 'price-asc' } });
@@ -116,7 +120,7 @@ describe('useSort hook', () => {
   });
 
   test('pagination reset to first page after sort option change', () => {
-    const { result } = renderHook(() => useSort(mockProducts, true, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleSortChange({ target: { value: 'date' } });
