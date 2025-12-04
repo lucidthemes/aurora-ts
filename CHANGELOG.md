@@ -65,7 +65,10 @@ All notable changes to this project will be documented in this file.
 
 ##### ProductList
 
+- ProductList reformat
 - useSort eslint error message of calling setState synchronously within an effect
+- usePagination reformat
+- useFilters eslint error message of calling setState synchronously within an effect
 - useFilterPrice eslint error message of calling setState synchronously within an effect
 
 ##### ProductPost

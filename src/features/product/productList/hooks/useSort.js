@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-function sortProducts(products, sortOption) {
+function sortProducts(products, showSort, sortOption) {
+  if (showSort === false) return products;
+
   let sorted = [...products];
 
   switch (sortOption) {
@@ -24,10 +26,10 @@ function sortProducts(products, sortOption) {
   return sorted;
 }
 
-export default function useSort(products, showPagination, resetPagination) {
+export default function useSort(products, showSort, showPagination, resetPagination) {
   const [sortOption, setSortOption] = useState('date');
 
-  const sortedProducts = sortProducts(products, sortOption);
+  const sortedProducts = sortProducts(products, showSort, sortOption);
 
   const handleSortChange = (e) => {
     const { value } = e.target;
