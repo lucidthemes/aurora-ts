@@ -1,38 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export default function useSort(products, showPagination, resetPagination) {
-  const [sortedProducts, setSortedProducts] = useState([]);
+function sortProducts(products, showSort, sortOption) {
+  if (showSort === false) return products;
+
+  let sorted = [...products];
+
+  switch (sortOption) {
+    case 'date':
+      sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+      break;
+    case 'rating-desc':
+      sorted.sort((a, b) => b.averageReview - a.averageReview);
+      break;
+    case 'rating-asc':
+      sorted.sort((a, b) => a.averageReview - b.averageReview);
+      break;
+    case 'price-desc':
+      sorted.sort((a, b) => b.price - a.price);
+      break;
+    case 'price-asc':
+      sorted.sort((a, b) => a.price - b.price);
+      break;
+  }
+
+  return sorted;
+}
+
+export default function useSort(products, showSort, showPagination, resetPagination) {
   const [sortOption, setSortOption] = useState('date');
 
-  useEffect(() => {
-    let sorted = [...products];
-
-    switch (sortOption) {
-      case 'date':
-        sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
-        break;
-      case 'rating-desc':
-        sorted.sort((a, b) => b.averageReview - a.averageReview);
-        break;
-      case 'rating-asc':
-        sorted.sort((a, b) => a.averageReview - b.averageReview);
-        break;
-      case 'price-desc':
-        sorted.sort((a, b) => b.price - a.price);
-        break;
-      case 'price-asc':
-        sorted.sort((a, b) => a.price - b.price);
-        break;
-    }
-
-    setSortedProducts(sorted);
-
-    if (showPagination) resetPagination();
-  }, [sortOption, products]);
+  const sortedProducts = sortProducts(products, showSort, sortOption);
 
   const handleSortChange = (e) => {
     const { value } = e.target;
-    if (value) setSortOption(value);
+    if (value) {
+      setSortOption(value);
+      if (showPagination) resetPagination();
+    }
   };
 
   return { sortedProducts, sortOption, handleSortChange };

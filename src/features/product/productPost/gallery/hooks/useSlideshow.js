@@ -22,7 +22,7 @@ export default function useSlideshow(selectedSlideIndex, setSelectedSlideIndex, 
       if (!emblaMainApi) return;
       setSelectedOverlayIndex(emblaMainApi.selectedScrollSnap());
     }
-  }, [emblaMainApi, emblaThumbsApi, setSelectedSlideIndex]);
+  }, [overlay, emblaMainApi, emblaThumbsApi, setSelectedSlideIndex, setSelectedOverlayIndex]);
 
   useEffect(() => {
     if (!emblaMainApi) return;
@@ -34,7 +34,7 @@ export default function useSlideshow(selectedSlideIndex, setSelectedSlideIndex, 
     }
 
     emblaMainApi.on('select', onSelect).on('reInit', onSelect);
-  }, [emblaMainApi, onSelect]);
+  }, [overlay, emblaMainApi, onSelect, selectedSlideIndex, setSelectedOverlayIndex]);
 
   const scrollPrev = useCallback(() => emblaMainApi && emblaMainApi.scrollPrev(), [emblaMainApi]);
   const scrollNext = useCallback(() => emblaMainApi && emblaMainApi.scrollNext(), [emblaMainApi]);
@@ -55,7 +55,7 @@ export default function useSlideshow(selectedSlideIndex, setSelectedSlideIndex, 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [scrollPrev, scrollNext]);
+  }, [overlay, scrollPrev, scrollNext]);
 
   return { emblaMainRef, emblaThumbsRef, onThumbClick, scrollPrev, scrollNext };
 }

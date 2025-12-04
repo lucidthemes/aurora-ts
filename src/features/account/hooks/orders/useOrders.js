@@ -5,15 +5,15 @@ export default function useOrders(customerId) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    if (!customerId) {
-      setOrders([]);
-      return;
-    }
-
     const fetchOrders = async () => {
+      if (!customerId) {
+        setOrders([]);
+        return;
+      }
+
       try {
         const ordersList = await getOrdersByCustomerId(customerId);
-        if (ordersList) setOrders(ordersList);
+        setOrders(ordersList);
       } catch (error) {
         console.error('Failed to fetch orders.', error);
       }

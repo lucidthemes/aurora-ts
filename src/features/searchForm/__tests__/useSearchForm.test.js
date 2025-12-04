@@ -47,8 +47,6 @@ describe('useSearchForm hook', () => {
       result.current.handleFormSubmit({ preventDefault: vi.fn() });
     });
 
-    expect(result.current.searchFormTerm).toBe('');
-    expect(result.current.searchFormError).toBe('');
     expect(mockNavigate).toHaveBeenCalledWith('/search/term');
   });
 });

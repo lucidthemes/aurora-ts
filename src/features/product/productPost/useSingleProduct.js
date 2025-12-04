@@ -5,19 +5,15 @@ export default function useSingleProduct(slug) {
   const [singleProduct, setSingleProduct] = useState(null);
 
   useEffect(() => {
-    if (!slug) {
-      setSingleProduct(null);
-      return;
-    }
-
     const fetchProduct = async () => {
+      if (!slug) {
+        setSingleProduct(null);
+        return;
+      }
+
       try {
         const product = await getProductBySlug(slug);
-        if (product) {
-          setSingleProduct(product);
-        } else {
-          setSingleProduct(false);
-        }
+        setSingleProduct(product || false);
       } catch (error) {
         console.error('Failed to fetch product.', error);
       }

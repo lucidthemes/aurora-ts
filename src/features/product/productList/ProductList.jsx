@@ -22,36 +22,31 @@ export default function ProductList({
   showPagination = true,
   productsPerPage = 9,
 }) {
-  // fetch default product list
-  const { products: defaultProducts, currentPage, productListRef, handlePageChange, resetPagination } = useProductList(limit, category, tag);
+  // fetch products
+  const { products, currentPage, productListRef, handlePageChange, resetPagination } = useProductList(limit, category, tag);
 
-  // apply filtering
-  const { filteredProducts, activeFilters, filterCounts, priceFilterMinMax, handleFilterListToggle, handleFilterListPrices } = useFilters(
-    defaultProducts,
+  // filter
+  const { filteredProducts, filterCounts, activeFilters, priceFilterMinMax, handleFilterListToggle, handleFilterListPrices } = useFilters(
+    products,
+    showFilter,
     showPagination,
     resetPagination
   );
 
-  // check filtered products returned (if showFilter enabled) or use default products
-  const productsToSort = filteredProducts ?? defaultProducts;
+  // sort
+  const { sortedProducts, sortOption, handleSortChange } = useSort(filteredProducts, showSort, showPagination, resetPagination);
 
-  // apply sorting
-  const { sortedProducts, sortOption, handleSortChange } = useSort(productsToSort, showPagination, resetPagination);
+  // paginate
+  const { paginatedProducts, totalPages } = usePagination(sortedProducts, currentPage, productsPerPage, showPagination);
 
-  // check sorted products returned (if showSort enabled) or use previous products
-  const productsToPaginate = sortedProducts ?? productsToSort;
+  // final products list after filtering, sorting, and pagination
+  const productsList = paginatedProducts;
 
-  // apply pagination
-  const { paginatedProducts, totalPages } = usePagination(productsToPaginate, currentPage, productsPerPage, showPagination);
-
-  // check paginated products returned (if showPagination enabled) or use previous products
-  const products = paginatedProducts ?? productsToPaginate;
-
-  // total number of products after fetching and filtering
-  const productsTotal = products.length;
+  // total number of products
+  const productsTotal = productsList.length;
 
   // total number of product results before pagination
-  const paginateProductsTotal = productsToPaginate.length;
+  const paginateProductsTotal = sortedProducts.length;
 
   // layout class based on filter shown/hidden
   const productListClasses = showFilter ? 'basis-3/4' : 'w-full';
@@ -86,7 +81,7 @@ export default function ProductList({
             {showSort && <Sort sortOption={sortOption} handleSortChange={handleSortChange} />}
           </div>
         )}
-        <Items products={products} />
+        <Items products={productsList} />
         {showPagination && totalPages > 1 && <Pagination totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}
       </section>
     </div>

@@ -6,13 +6,12 @@ export default function useNavigation(postId) {
   const [nextPost, setNextPost] = useState(null);
 
   useEffect(() => {
-    if (!postId) {
-      setPreviousPost(null);
-      setNextPost(null);
-      return;
-    }
-
     const fetchPreviousPost = async () => {
+      if (!postId) {
+        setPreviousPost(null);
+        return;
+      }
+
       try {
         const previous = await getPostById(postId + 1);
         setPreviousPost(previous || null);
@@ -24,6 +23,11 @@ export default function useNavigation(postId) {
     fetchPreviousPost();
 
     const fetchNextPost = async () => {
+      if (!postId) {
+        setNextPost(null);
+        return;
+      }
+
       try {
         const next = await getPostById(postId - 1);
         setNextPost(next || null);

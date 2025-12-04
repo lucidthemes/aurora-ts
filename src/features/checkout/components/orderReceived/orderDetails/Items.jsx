@@ -2,9 +2,9 @@ import useItems from '../../../hooks/orderReceived/useItems';
 import Item from './Item';
 
 export default function Items({ order }) {
-  if (!order.items) return null;
-
   const attributeMap = useItems(order.items);
+
+  if (!order.items) return null;
 
   return (
     <section className="flex flex-col gap-y-5">

@@ -4,7 +4,12 @@ export default function Copyright() {
   return (
     <p className="flex gap-x-1 self-center text-sm tracking-xwide text-shark uppercase lg:self-start">
       <span>© {currentYear}. Created By</span>
-      <a href="https://www.lucid-themes.com/" target="_blank" className="transition-colors duration-300 ease-in-out hover:text-boulder focus:text-boulder">
+      <a
+        href="https://www.lucid-themes.com/"
+        target="_blank"
+        rel="noreferrer"
+        className="transition-colors duration-300 ease-in-out hover:text-boulder focus:text-boulder"
+      >
         Lucid Themes
       </a>
     </p>

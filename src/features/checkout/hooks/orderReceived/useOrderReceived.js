@@ -5,36 +5,35 @@ export default function useOrderReceived(orderId) {
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    if (!orderId) {
-      setOrder(null);
-      return;
-    }
-
-    const storedOrder = localStorage.getItem('order');
-
-    if (storedOrder) {
-      const parsedOrder = JSON.parse(storedOrder);
-
-      if (Number(orderId) === parsedOrder.id) {
-        setOrder(parsedOrder);
-      } else {
-        setOrder(false);
+    const fetchOrder = async () => {
+      if (!orderId) {
+        setOrder(null);
+        return;
       }
-    } else {
-      const fetchOrder = async () => {
+
+      const storedOrder = localStorage.getItem('order');
+
+      if (storedOrder) {
         try {
-          const order = await getOrderById(Number(orderId));
-          if (order) {
-            setOrder(order);
-          } else {
-            setOrder(false);
+          const parsedOrder = JSON.parse(storedOrder);
+          if (Number(orderId) === parsedOrder.id) {
+            setOrder(parsedOrder);
+            return;
           }
-        } catch (error) {
-          console.error('Failed to fetch order.', error);
+        } catch {
+          console.error('Failed to fetch stored order.');
         }
-      };
-      fetchOrder();
-    }
+      }
+
+      try {
+        const order = await getOrderById(Number(orderId));
+        setOrder(order || false);
+      } catch (error) {
+        console.error('Failed to fetch order.', error);
+      }
+    };
+
+    fetchOrder();
   }, [orderId]);
 
   return order;

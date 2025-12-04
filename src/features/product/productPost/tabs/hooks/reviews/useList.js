@@ -5,15 +5,15 @@ export default function useList(singleProduct) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    if (!singleProduct || !singleProduct.reviewCount) {
-      setReviews([]);
-      return;
-    }
-
     const fetchReviews = async () => {
+      if (!singleProduct?.reviewCount) {
+        setReviews([]);
+        return;
+      }
+
       try {
         const productReviews = await getReviewsById(singleProduct.id);
-        if (productReviews) setReviews(productReviews);
+        setReviews(productReviews);
       } catch (error) {
         console.error('Failed to fetch reviews.', error);
       }

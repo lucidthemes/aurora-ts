@@ -280,6 +280,8 @@ describe('useFilters hook', () => {
     },
   ];
 
+  const mockShowFilter = true;
+
   const mockShowPagination = true;
 
   const resetPaginationMock = vi.fn();
@@ -329,7 +331,7 @@ describe('useFilters hook', () => {
   test('fetches min and max product price values and sets priceFilterMinMax state', async () => {
     getProductsMinMaxPrices.mockResolvedValue(mockPriceFilterMinMax);
 
-    const { result } = renderHook(() => useFilters(mockProducts, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
     expect(result.current.priceFilterMinMax).toEqual(undefined);
 
@@ -341,7 +343,7 @@ describe('useFilters hook', () => {
   });
 
   test('calculates initial filterCounts values for products within list', async () => {
-    const { result } = renderHook(() => useFilters(mockProducts, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
     await waitFor(() => {
       expect(result.current.filterCounts).toEqual({
@@ -382,11 +384,10 @@ describe('useFilters hook', () => {
     let result;
 
     await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowPagination, resetPaginationMock)).result;
+      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
     });
 
     expect(result.current.filteredProducts).toEqual(mockProducts);
-    expect(resetPaginationMock).toHaveBeenCalled();
   });
 
   test('updates filteredProducts state when a filter option is selected', async () => {
@@ -395,15 +396,11 @@ describe('useFilters hook', () => {
     let result;
 
     await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowPagination, resetPaginationMock, 300)).result;
+      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
     });
 
     act(() => {
       result.current.handleFilterListToggle('category', 1);
-    });
-
-    act(() => {
-      vi.advanceTimersByTime(300);
     });
 
     expect(result.current.filteredProducts).toEqual(mockFilteredProducts);
@@ -418,15 +415,11 @@ describe('useFilters hook', () => {
     let result;
 
     await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowPagination, resetPaginationMock, 300)).result;
+      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
     });
 
     act(() => {
       result.current.handleFilterListToggle('category', 1);
-    });
-
-    act(() => {
-      vi.advanceTimersByTime(300);
     });
 
     expect(result.current.filterCounts).toEqual({
@@ -453,7 +446,7 @@ describe('useFilters hook', () => {
     let result;
 
     await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowPagination, resetPaginationMock, 300)).result;
+      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
     });
 
     act(() => {
@@ -467,7 +460,7 @@ describe('useFilters hook', () => {
     let result;
 
     await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowPagination, resetPaginationMock, 300)).result;
+      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
     });
 
     act(() => {

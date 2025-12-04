@@ -6,7 +6,7 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-export default function Checkbox({ name, checked, onChange, required = false, className = '', label, labelSrOnly = false, error, ...props }: CheckboxProps) {
+export default function Checkbox({ name, checked, onChange, className = '', label, labelSrOnly = false, error, ...props }: CheckboxProps) {
   const labelSrOnlyClass = labelSrOnly ? 'sr-only' : '';
 
   return (
