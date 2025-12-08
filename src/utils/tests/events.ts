@@ -1,11 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react';
 
-export function createChangeEvent(name: string, value: string): ChangeEvent<HTMLInputElement | HTMLTextAreaElement> {
-  return {
-    target: { name, value },
-  } as unknown as ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-}
-
 export function createInputChangeEvent(name: string, value: string): ChangeEvent<HTMLInputElement> {
   return {
     target: { name, value },
