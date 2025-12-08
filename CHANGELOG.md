@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 #### Features
 
+##### ContactForm
+
+- useContactForm hook test to use separate functions for input and textarea change events
+
 ##### NewsletterForm
 
 - NewsletterForm to TypeScript
@@ -21,6 +25,12 @@ All notable changes to this project will be documented in this file.
 #### Utils
 
 - split tests utils create change event function into separate functions for input and textarea element types
+
+### Removed
+
+#### Utils
+
+- create change event for both input and textarea combined
 
 ## [0.5.2] - 2025-12-08
 

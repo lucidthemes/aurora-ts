@@ -1,25 +1,25 @@
 import { renderHook, act } from '@testing-library/react';
 import useContactForm from '../useContactForm';
-import { createChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+import { createInputChangeEvent, createTextAreaChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
 
 describe('useContactForm hook', () => {
   test('updates form data on handleFormChange', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('name', 'John Doe'));
+      result.current.handleFormChange(createInputChangeEvent('name', 'John Doe'));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('email', 'test@example.com'));
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('subject', 'Test subject'));
+      result.current.handleFormChange(createInputChangeEvent('subject', 'Test subject'));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('message', 'Test message'));
+      result.current.handleFormChange(createTextAreaChangeEvent('message', 'Test message'));
     });
 
     expect(result.current.contactFormData.name).toBe('John Doe');
@@ -32,19 +32,19 @@ describe('useContactForm hook', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('name', ''));
+      result.current.handleFormChange(createInputChangeEvent('name', ''));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('email', ''));
+      result.current.handleFormChange(createInputChangeEvent('email', ''));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('subject', ''));
+      result.current.handleFormChange(createInputChangeEvent('subject', ''));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('message', ''));
+      result.current.handleFormChange(createTextAreaChangeEvent('message', ''));
     });
 
     act(() => {
@@ -61,7 +61,7 @@ describe('useContactForm hook', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('email', 'invalid-email'));
+      result.current.handleFormChange(createInputChangeEvent('email', 'invalid-email'));
     });
 
     act(() => {
@@ -75,19 +75,19 @@ describe('useContactForm hook', () => {
     const { result } = renderHook(() => useContactForm());
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('name', 'John Doe'));
+      result.current.handleFormChange(createInputChangeEvent('name', 'John Doe'));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('email', 'test@example.com'));
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('subject', 'Test subject'));
+      result.current.handleFormChange(createInputChangeEvent('subject', 'Test subject'));
     });
 
     act(() => {
-      result.current.handleFormChange(createChangeEvent('message', 'Test message'));
+      result.current.handleFormChange(createTextAreaChangeEvent('message', 'Test message'));
     });
 
     act(() => {
