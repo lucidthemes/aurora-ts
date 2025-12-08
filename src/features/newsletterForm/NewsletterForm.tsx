@@ -3,7 +3,11 @@ import Notification from '@components/Notification';
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
 
-export default function NewsletterForm({ layout = 'page' }) {
+interface NewsletterFormProps {
+  layout?: string;
+}
+
+export default function NewsletterForm({ layout = 'page' }: NewsletterFormProps) {
   const { newsletterFormEmail, newsletterFormError, newsletterFormNotification, resetNewsletterFormNotification, handleFormChange, handleFormSubmit } =
     useNewsletterForm();
 

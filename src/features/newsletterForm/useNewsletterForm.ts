@@ -1,7 +1,16 @@
-import { useState } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { validateEmail } from '@utils/validators';
 
-export default function useNewsletterForm() {
+interface UseNewsletterFormReturn {
+  newsletterFormEmail: string;
+  newsletterFormError: string;
+  newsletterFormNotification: { type: string; message: string };
+  resetNewsletterFormNotification: () => void;
+  handleFormChange: ChangeEventHandler<HTMLInputElement>;
+  handleFormSubmit: FormEventHandler<HTMLFormElement>;
+}
+
+export default function useNewsletterForm(): UseNewsletterFormReturn {
   const [newsletterFormEmail, setNewsletterFormEmail] = useState('');
   const [newsletterFormError, setNewsletterFormError] = useState('');
 
@@ -17,7 +26,7 @@ export default function useNewsletterForm() {
     });
   };
 
-  const handleFormChange = (e) => {
+  const handleFormChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
     setNewsletterFormEmail(value);
   };
@@ -42,7 +51,7 @@ export default function useNewsletterForm() {
     return formIsValid;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     let isFormValid = validateFormData();
