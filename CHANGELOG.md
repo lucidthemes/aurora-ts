@@ -6,10 +6,16 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-#### NewsletterForm
+#### Features
+
+##### NewsletterForm
 
 - NewsletterForm to TypeScript
 - useNewsletterForm to TypeScript
+- tests to TypeScript
+
+##### SearchForm
+
 - tests to TypeScript
 
 #### Utils
