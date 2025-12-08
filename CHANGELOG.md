@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - [Unreleased]
+
+### Changed
+
+#### NewsletterForm
+
+- NewsletterForm to TypeScript
+- useNewsletterForm to TypeScript
+- tests to TypeScript
+
+#### Utils
+
+- split tests utils create change event function into separate functions for input and textarea element types
+
 ## [0.5.2] - 2025-12-08
 
 - updated dependencies
