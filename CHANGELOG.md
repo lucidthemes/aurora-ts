@@ -8,6 +8,10 @@ All notable changes to this project will be documented in this file.
 
 #### Features
 
+##### ContactForm
+
+- useContactForm hook test to use separate functions for input and textarea change events
+
 ##### NewsletterForm
 
 - NewsletterForm to TypeScript
