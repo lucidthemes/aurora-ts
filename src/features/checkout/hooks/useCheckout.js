@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 
 function calculateCheckoutTotal(cartTotal, shippingOption) {
   if (!shippingOption || shippingOption.amount == null) {
