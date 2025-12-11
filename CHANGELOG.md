@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0] - [Unreleased]
+
+### Changed
+
+#### BlogList
+
+- refactor blog list pagination to same structure as product list pagination
+
 ## [0.6.1] - 2025-12-10
 
 ### Fixed
@@ -82,17 +90,8 @@ All notable changes to this project will be documented in this file.
 ##### BlogPost
 
 - useSinglePost eslint error message of calling setState synchronously within an effect
-
-###### Navigation
-
 - useNavigation eslint error message of calling setState synchronously within an effect
-
-###### Related
-
 - useRelated eslint error message of calling setState synchronously within an effect
-
-###### Tags
-
 - useTags eslint error message of calling setState synchronously within an effect
 
 ##### Cart
@@ -116,25 +115,10 @@ All notable changes to this project will be documented in this file.
 ##### ProductPost
 
 - useSingleProduct eslint error message of calling setState synchronously within an effect
-
-###### Breadcrumb
-
 - useBreadcrumb eslint error message of calling setState synchronously within an effect
-
-###### Gallery
-
 - useSlideshow eslint error message of missing dependencies in effects
-
-###### Tabs
-
 - useList eslint error message of calling setState synchronously within an effect
-
-###### Related
-
 - useRelated eslint error message of calling setState synchronously within an effect
-
-###### Summary
-
 - useAddCartForm eslint error message of calling setState synchronously within an effect
 - useVariations eslint error message of calling setState synchronously within an effect
 

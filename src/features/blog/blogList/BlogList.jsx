@@ -6,11 +6,8 @@ import Pagination from './components/pagination/Pagination';
 
 export default function BlogList({ limit, category = null, tag = null, author = null, search = '', style = 'wide', showPagination = true, postsPerPage = 6 }) {
   const { posts, categoryMap, authorMap } = useBlogList(limit, category, tag, author, search);
-  const { totalPages, currentPage, currentPosts, postListRef, handlePageChange } = usePagination(posts, postsPerPage);
 
-  if (!Array.isArray(posts) || posts.length === 0) {
-    return <p className="rounded-sm bg-white p-5 text-center">No posts found</p>;
-  }
+  const { paginatedPosts, currentPage, totalPages, postListRef, handlePageChange } = usePagination(posts, showPagination, postsPerPage);
 
   const wide = style === 'wide';
   const wideSmall = style === 'wide-small-small' || style === 'wide-small-half' || style === 'wide-small-large';
@@ -55,41 +52,47 @@ export default function BlogList({ limit, category = null, tag = null, author = 
 
   return (
     <>
-      <ul className={listClasses} aria-label="Blog posts" ref={postListRef}>
-        {currentPosts.map((post, index) => {
-          const isFirstPost = index === 0 && currentPage === 1;
-          const itemWide = wide || grid || wideGrid || (wideSmall && isFirstPost);
-          const itemWideGridClasses = wideGrid && isFirstPost ? 'col-span-full' : '';
-          const itemWideExcerptLength =
-            wide || (wideSmall && isFirstPost) ? wideExcerpt : grid ? gridExcerpt : wideGrid && !isFirstPost ? gridExcerpt : wideExcerpt;
+      {Array.isArray(paginatedPosts) && paginatedPosts.length > 0 ? (
+        <>
+          <ul className={listClasses} aria-label="Blog posts" ref={postListRef}>
+            {paginatedPosts.map((post, index) => {
+              const isFirstPost = index === 0 && currentPage === 1;
+              const itemWide = wide || grid || wideGrid || (wideSmall && isFirstPost);
+              const itemWideGridClasses = wideGrid && isFirstPost ? 'col-span-full' : '';
+              const itemWideExcerptLength =
+                wide || (wideSmall && isFirstPost) ? wideExcerpt : grid ? gridExcerpt : wideGrid && !isFirstPost ? gridExcerpt : wideExcerpt;
 
-          return (
-            <li key={post.id} className={itemWideGridClasses}>
-              {itemWide ? (
-                <WideLayout
-                  post={post}
-                  categoryMap={categoryMap}
-                  authorMap={authorMap}
-                  excerptLength={itemWideExcerptLength}
-                  mediaClasses={mediaClasses}
-                  contentClasses={contentClasses}
-                />
-              ) : (
-                <SmallLayout
-                  post={post}
-                  categoryMap={categoryMap}
-                  authorMap={authorMap}
-                  excerptLength={smallExcerpt}
-                  mediaClasses={mediaClasses}
-                  contentClasses={contentClasses}
-                />
-              )}
-            </li>
-          );
-        })}
-      </ul>
+              return (
+                <li key={post.id} className={itemWideGridClasses}>
+                  {itemWide ? (
+                    <WideLayout
+                      post={post}
+                      categoryMap={categoryMap}
+                      authorMap={authorMap}
+                      excerptLength={itemWideExcerptLength}
+                      mediaClasses={mediaClasses}
+                      contentClasses={contentClasses}
+                    />
+                  ) : (
+                    <SmallLayout
+                      post={post}
+                      categoryMap={categoryMap}
+                      authorMap={authorMap}
+                      excerptLength={smallExcerpt}
+                      mediaClasses={mediaClasses}
+                      contentClasses={contentClasses}
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </ul>
 
-      {showPagination && totalPages > 1 && <Pagination totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}
+          {showPagination && totalPages > 1 && <Pagination totalPages={totalPages} currentPage={currentPage} handlePageChange={handlePageChange} />}
+        </>
+      ) : (
+        <p className="rounded-sm bg-white p-5 text-center">No posts found</p>
+      )}
     </>
   );
 }
