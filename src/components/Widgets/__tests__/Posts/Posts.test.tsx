@@ -40,7 +40,7 @@ describe('PostsWidget component', () => {
   });
 
   test('renders posts widget when posts data is fetched', async () => {
-    getPosts.mockResolvedValue(mockPosts);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
 
     render(
       <MemoryRouter>
@@ -56,7 +56,7 @@ describe('PostsWidget component', () => {
   });
 
   test('renders post information', async () => {
-    getPosts.mockResolvedValue(mockPosts);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
 
     render(
       <MemoryRouter>
@@ -67,7 +67,7 @@ describe('PostsWidget component', () => {
     const postsList = await screen.findByRole('list', { name: /widget posts/i });
     expect(postsList).toBeInTheDocument();
 
-    const firstListItem = postsList.querySelector(':scope > li:first-child');
+    const firstListItem = postsList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('img', { name: /dune walk/i })).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('PostsWidget component', () => {
   });
 
   test('renders error message if no posts found', async () => {
-    getPosts.mockResolvedValue([]);
+    vi.mocked(getPosts).mockResolvedValue([]);
 
     render(
       <MemoryRouter>

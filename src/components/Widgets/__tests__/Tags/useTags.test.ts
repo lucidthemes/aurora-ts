@@ -39,7 +39,7 @@ describe('usePosts hook', () => {
   });
 
   test('fetches posts data and sets posts state', async () => {
-    getTags.mockResolvedValue(mockTags);
+    vi.mocked(getTags).mockResolvedValue(mockTags);
 
     const { result } = renderHook(() => useTags(mockLimit));
 

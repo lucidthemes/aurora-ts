@@ -39,9 +39,9 @@ describe('usePosts hook', () => {
   });
 
   test('fetches posts data and sets posts state', async () => {
-    getPosts.mockResolvedValue(mockPosts);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
 
-    const { result } = renderHook(() => usePosts(mockLimit, null));
+    const { result } = renderHook(() => usePosts(mockLimit, undefined));
 
     expect(result.current).toEqual([]);
 
@@ -50,6 +50,6 @@ describe('usePosts hook', () => {
       expect(result.current).toHaveLength(3);
     });
 
-    expect(getPosts).toHaveBeenCalledWith(mockLimit, null);
+    expect(getPosts).toHaveBeenCalledWith(mockLimit, undefined);
   });
 });

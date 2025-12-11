@@ -45,7 +45,7 @@ describe('ProductsWidget component', () => {
   });
 
   test('renders products widget when products data is fetched', async () => {
-    getProducts.mockResolvedValue(mockProducts);
+    vi.mocked(getProducts).mockResolvedValue(mockProducts);
 
     render(
       <MemoryRouter>
@@ -61,7 +61,7 @@ describe('ProductsWidget component', () => {
   });
 
   test('renders product information', async () => {
-    getProducts.mockResolvedValue(mockProducts);
+    vi.mocked(getProducts).mockResolvedValue(mockProducts);
 
     render(
       <MemoryRouter>
@@ -72,7 +72,7 @@ describe('ProductsWidget component', () => {
     const productsList = await screen.findByRole('list', { name: /widget products/i });
     expect(productsList).toBeInTheDocument();
 
-    const firstListItem = productsList.querySelector(':scope > li:first-child');
+    const firstListItem = productsList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('img', { name: /cozy sweater/i })).toBeInTheDocument();
@@ -85,7 +85,7 @@ describe('ProductsWidget component', () => {
   });
 
   test('renders error message if no products found', async () => {
-    getProducts.mockResolvedValue([]);
+    vi.mocked(getProducts).mockResolvedValue([]);
 
     render(
       <MemoryRouter>
