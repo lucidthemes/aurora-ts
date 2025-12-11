@@ -40,7 +40,7 @@ describe('PostsWidget component', () => {
   });
 
   test('renders tags widget when tags data is fetched', async () => {
-    getTags.mockResolvedValue(mockTags);
+    vi.mocked(getTags).mockResolvedValue(mockTags);
 
     render(
       <MemoryRouter>
@@ -56,7 +56,7 @@ describe('PostsWidget component', () => {
   });
 
   test('renders tag information', async () => {
-    getTags.mockResolvedValue(mockTags);
+    vi.mocked(getTags).mockResolvedValue(mockTags);
 
     render(
       <MemoryRouter>
@@ -67,7 +67,7 @@ describe('PostsWidget component', () => {
     const tagsList = await screen.findByRole('list', { name: /widget tags/i });
     expect(tagsList).toBeInTheDocument();
 
-    const firstListItem = tagsList.querySelector(':scope > li:first-child');
+    const firstListItem = tagsList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('link', { name: /beach/i })).toBeInTheDocument();
@@ -75,7 +75,7 @@ describe('PostsWidget component', () => {
   });
 
   test('renders error message if no tags found', async () => {
-    getTags.mockResolvedValue([]);
+    vi.mocked(getTags).mockResolvedValue([]);
 
     render(
       <MemoryRouter>

@@ -6,7 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-#### BlogList
+#### Components
+
+##### Widgets
+
+- convert posts widget tests to TypeScript
+- convert products widget tests to TypeScript
+- convert tags widget tests to TypeScript
+
+#### Features
+
+##### BlogList
 
 - refactor blog list pagination to same structure as product list pagination
 

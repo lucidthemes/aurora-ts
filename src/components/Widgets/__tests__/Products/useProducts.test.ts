@@ -45,9 +45,9 @@ describe('useProducts hook', () => {
   });
 
   test('fetches products data and sets products state', async () => {
-    getProducts.mockResolvedValue(mockProducts);
+    vi.mocked(getProducts).mockResolvedValue(mockProducts);
 
-    const { result } = renderHook(() => useProducts(mockLimit, null));
+    const { result } = renderHook(() => useProducts(mockLimit, undefined));
 
     expect(result.current).toEqual([]);
 
@@ -56,6 +56,6 @@ describe('useProducts hook', () => {
       expect(result.current).toHaveLength(3);
     });
 
-    expect(getProducts).toHaveBeenCalledWith(mockLimit, null);
+    expect(getProducts).toHaveBeenCalledWith(mockLimit, undefined);
   });
 });
