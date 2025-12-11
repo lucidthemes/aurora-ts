@@ -20,6 +20,11 @@ All notable changes to this project will be documented in this file.
 
 - refactor blog list pagination to same structure as product list pagination
 
+#### Utils
+
+- convert formatters to TypeScript
+- convert validators to TypeScript
+
 ## [0.6.1] - 2025-12-10
 
 ### Fixed
