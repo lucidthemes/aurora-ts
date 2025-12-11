@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.7.1] - [Unreleased]
+## [0.7.1] - 2025-12-11
 
 - fix incorrect App import using jsx in main
 
