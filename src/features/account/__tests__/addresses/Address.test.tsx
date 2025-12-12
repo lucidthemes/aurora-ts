@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import Address from '../../components/addresses/Address';
+import { Customer } from '@typings/shop/customer';
 
 describe('Address component', () => {
-  const mockLoggedInUser = {
+  const mockLoggedInUser: Customer = {
     id: 1,
     email: 'test@example.com',
     shipping: {
@@ -29,7 +30,7 @@ describe('Address component', () => {
     },
   };
 
-  const mockLoggedInUserNoAddress = {
+  const mockLoggedInUserNoAddress: Customer = {
     id: 1,
     email: 'test@example.com',
   };

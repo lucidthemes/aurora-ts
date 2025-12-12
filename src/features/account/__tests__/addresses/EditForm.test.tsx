@@ -1,8 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import EditForm from '../../components/addresses/EditForm';
+import { Customer } from '@typings/shop/customer';
 
 describe('EditForm component', () => {
-  const mockLoggedInUser = {
+  const mockLoggedInUser: Customer = {
     id: 1,
     email: 'test@example.com',
     shipping: {
@@ -153,10 +154,10 @@ describe('EditForm component', () => {
     render(
       <EditForm
         loggedInUser={mockLoggedInUser}
+        section="shipping"
         handleUserUpdate={handleUserUpdateMock}
         handleShippingEditShow={handleShippingEditShowMock}
         handleBillingEditShow={handleBillingEditShowMock}
-        section="shipping"
       />
     );
 
@@ -178,10 +179,10 @@ describe('EditForm component', () => {
     render(
       <EditForm
         loggedInUser={mockLoggedInUser}
+        section="billing"
         handleUserUpdate={handleUserUpdateMock}
         handleShippingEditShow={handleShippingEditShowMock}
         handleBillingEditShow={handleBillingEditShowMock}
-        section="billing"
       />
     );
 

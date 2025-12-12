@@ -1,8 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import EmailForm from '../../components/details/EmailForm';
+import { Customer } from '@typings/shop/customer';
 
 describe('EmailForm component', () => {
-  const mockLoggedInUser = {
+  const mockLoggedInUser: Customer = {
     id: 1,
     email: 'test@example.com',
     shipping: {
