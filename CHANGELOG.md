@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.0] - [Unlreased]
+
+### Changed
+
+#### Account
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+
 ## [0.7.1] - 2025-12-11
 
 - fix incorrect App import using jsx in main

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Order } from '@typings/shop/order';
 import { getOrdersByCustomerId } from '@server/shop/getOrders';
 
-export default function useOrders(customerId) {
-  const [orders, setOrders] = useState([]);
+export default function useOrders(customerId: number | undefined) {
+  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     const fetchOrders = async () => {

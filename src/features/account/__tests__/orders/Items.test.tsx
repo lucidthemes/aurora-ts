@@ -1,5 +1,7 @@
 import { render, screen, fireEvent, within, act } from '@testing-library/react';
 import Items from '../../components/orders/Items';
+import { Order } from '@typings/shop/order';
+import { Attribute } from '@typings/products/attribute';
 
 vi.mock('@server/products/getAttribute', () => ({
   getAttributeMap: vi.fn(),
@@ -8,7 +10,7 @@ vi.mock('@server/products/getAttribute', () => ({
 import { getAttributeMap } from '@server/products/getAttribute';
 
 describe('Items component', () => {
-  const mockOrders = [
+  const mockOrders: Order[] = [
     {
       id: 1001,
       customerId: 1,
@@ -80,7 +82,6 @@ describe('Items component', () => {
           title: 'Handmade bonnet',
           slug: 'handmade-bonnet',
           image: '/images/products/product-10.jpg',
-          stock: 5,
           price: 20.0,
           quantity: 1,
         },
@@ -112,10 +113,79 @@ describe('Items component', () => {
       id: 1002,
       customerId: 1,
       date: '2025-10-22T15:30:51.372Z',
+      checkoutData: {
+        contact: {
+          email: 'test@example.com',
+        },
+        shipping: {
+          firstName: 'Matthew',
+          lastName: 'James',
+          country: 'GB',
+          addressLine1: '68 Rose Place',
+          addressLine2: '',
+          city: 'East Marybury',
+          county: 'Highland',
+          postcode: 'IV2 7EG',
+          phone: '01234567890',
+        },
+        billing: {
+          firstName: 'Matthew',
+          lastName: 'James',
+          country: 'GB',
+          addressLine1: '68 Rose Place',
+          addressLine2: '',
+          city: 'East Marybury',
+          county: 'Highland',
+          postcode: 'IV2 7EG',
+          phone: '01234567890',
+        },
+        note: {
+          text: '',
+        },
+      },
+      items: [
+        {
+          productId: 6,
+          title: 'Scarf knitwear',
+          slug: 'scarf-knitwear',
+          image: '/images/products/product-6.jpg',
+          price: 15.0,
+          quantity: 1,
+        },
+        {
+          productId: 7,
+          title: 'Sewn handbag',
+          slug: 'sewn-handbag',
+          image: '/images/products/product-12.jpg',
+          price: 10.0,
+          quantity: 1,
+        },
+      ],
+      subTotal: 25,
+      coupons: [
+        {
+          id: 1,
+          code: 'COUPON-5',
+          type: 'fixed',
+          amount: 5,
+          expires: '',
+        },
+      ],
+      shippingOption: {
+        id: 2,
+        name: 'Express',
+        amount: 1.99,
+      },
+      paymentOption: {
+        id: 2,
+        name: 'Cheque payment',
+        description: 'Please send a cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.',
+      },
+      total: 21.99,
     },
   ];
 
-  const mockAttributeMap = {
+  const mockAttributeMap: Record<number, Attribute> = {
     1: {
       id: 1,
       name: 'Black',
@@ -139,7 +209,7 @@ describe('Items component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
   });
 
   test('renders list of orders', () => {
@@ -158,7 +228,7 @@ describe('Items component', () => {
     const ordersList = screen.getByRole('list', { name: /orders/i });
     expect(ordersList).toBeInTheDocument();
 
-    const firstListItem = ordersList.querySelector(':scope > li:first-child');
+    const firstListItem = ordersList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('button', { name: /expand order/i })).toBeInTheDocument();
@@ -170,7 +240,7 @@ describe('Items component', () => {
     const ordersList = screen.getByRole('list', { name: /orders/i });
     expect(ordersList).toBeInTheDocument();
 
-    const firstListItem = ordersList.querySelector(':scope > li:first-child');
+    const firstListItem = ordersList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     const expandButton = within(firstListItem).getByRole('button', { name: /expand order/i });

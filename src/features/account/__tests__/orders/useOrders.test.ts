@@ -31,7 +31,7 @@ describe('useOrders hook', () => {
   });
 
   test('fetches orders data and sets orders state', async () => {
-    getOrdersByCustomerId.mockResolvedValue(mockOrders);
+    vi.mocked(getOrdersByCustomerId).mockResolvedValue(mockOrders);
 
     const { result } = renderHook(() => useOrders(mockCustomer.id));
 

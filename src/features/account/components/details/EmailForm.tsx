@@ -1,8 +1,15 @@
+import { Customer } from '@typings/shop/customer';
 import useEmailForm from '../../hooks/details/useEmailForm';
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
 
-export default function EmailForm({ loggedInUser, handleUserUpdate, handleEmailEditShow }) {
+interface EmailFormProps {
+  loggedInUser: Customer | null;
+  handleUserUpdate: <K extends 'email' | 'shipping' | 'billing'>(section: K, data: Customer[K]) => void;
+  handleEmailEditShow: () => void;
+}
+
+export default function EmailForm({ loggedInUser, handleUserUpdate, handleEmailEditShow }: EmailFormProps) {
   const { emailFormData, emailFormError, handleFormChange, handleFormSubmit } = useEmailForm(loggedInUser, handleUserUpdate, handleEmailEditShow);
 
   return (

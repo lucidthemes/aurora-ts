@@ -1,8 +1,10 @@
 import { renderHook, act } from '@testing-library/react';
 import useEmailForm from '../../hooks/details/useEmailForm';
+import { Customer } from '@typings/shop/customer';
+import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
 
 describe('useEmailForm hook', () => {
-  const mockLoggedInUser = {
+  const mockLoggedInUser: Customer = {
     id: 1,
     email: 'test@example.com',
     shipping: {
@@ -47,7 +49,7 @@ describe('useEmailForm hook', () => {
     const { result } = renderHook(() => useEmailForm(mockLoggedInUser, handleUserUpdateMock, handleEmailEditShowMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'test2@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test2@example.com'));
     });
 
     expect(result.current.emailFormData).toBe('test2@example.com');
@@ -57,11 +59,11 @@ describe('useEmailForm hook', () => {
     const { result } = renderHook(() => useEmailForm(mockLoggedInUser, handleUserUpdateMock, handleEmailEditShowMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('email', ''));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.emailFormError).toBe('Please enter an email address');
@@ -71,11 +73,11 @@ describe('useEmailForm hook', () => {
     const { result } = renderHook(() => useEmailForm(mockLoggedInUser, handleUserUpdateMock, handleEmailEditShowMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'invalid-email' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'invalid-email'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.emailFormError).toBe('Please enter a valid email address');
@@ -87,11 +89,11 @@ describe('useEmailForm hook', () => {
     expect(result.current.emailFormData).toBe('test@example.com');
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.emailFormData).toBe('test@example.com');
@@ -106,11 +108,11 @@ describe('useEmailForm hook', () => {
     expect(result.current.emailFormData).toBe('test@example.com');
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'test2@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test2@example.com'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.emailFormData).toBe('test2@example.com');

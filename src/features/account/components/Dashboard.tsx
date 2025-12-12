@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 export default function Dashboard() {
   const { loggedInUser, handleLogout } = useAuthContext();
 
-  const name = loggedInUser.shipping?.firstName || loggedInUser.email;
+  const name = loggedInUser?.shipping?.firstName || loggedInUser?.email;
 
   return (
     <>
       <p className="mb-5">
         Hello {name} (not {name}?{' '}
-        <Link onClick={handleLogout} className="underline">
+        <Link to="" onClick={handleLogout} className="underline">
           Log out
         </Link>
         )

@@ -1,6 +1,11 @@
+import { Order } from '@typings/shop/order';
 import Item from './Item';
 
-export default function Items({ orders }) {
+interface ItemsProps {
+  orders: Order[];
+}
+
+export default function Items({ orders }: ItemsProps) {
   return (
     <ul className="flex flex-col gap-y-10" aria-label="Orders">
       {orders.map((order) => (

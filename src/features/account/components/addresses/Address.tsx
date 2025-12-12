@@ -1,7 +1,14 @@
-export default function Address({ loggedInUser, section }) {
+import { Customer } from '@typings/shop/customer';
+
+interface AddressProps {
+  loggedInUser: Customer | null;
+  section: 'shipping' | 'billing';
+}
+
+export default function Address({ loggedInUser, section }: AddressProps) {
   let country = '';
 
-  if (loggedInUser[section]?.country) {
+  if (loggedInUser && loggedInUser[section]?.country) {
     switch (loggedInUser[section].country) {
       case 'GB':
         country = 'United Kingdom';
@@ -11,7 +18,7 @@ export default function Address({ loggedInUser, section }) {
 
   return (
     <>
-      {loggedInUser[section] ? (
+      {loggedInUser && loggedInUser[section] ? (
         <address className="not-italic">
           <p>{loggedInUser[section]?.firstName + ' ' + loggedInUser[section]?.lastName}</p>
           <p>{loggedInUser[section]?.addressLine1}</p>

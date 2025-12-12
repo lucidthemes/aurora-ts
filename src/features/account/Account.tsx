@@ -1,7 +1,12 @@
+import { ReactNode } from 'react';
 import { useAuthContext } from '@contexts/AuthContext';
 import Nav from './components/Nav';
 
-export default function Account({ children }) {
+interface AccountProps {
+  children: ReactNode;
+}
+
+export default function Account({ children }: AccountProps) {
   const { handleLogout } = useAuthContext();
 
   return (

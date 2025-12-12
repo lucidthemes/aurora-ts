@@ -1,8 +1,13 @@
+import { Order } from '@typings/shop/order';
 import useItem from '../../hooks/orders/useItem';
 import { dateFormat } from '@utils/formatters';
 import OrderReceived from '@features/checkout/components/orderReceived';
 
-export default function Item({ order }) {
+interface ItemProps {
+  order: Order;
+}
+
+export default function Item({ order }: ItemProps) {
   const { orderDetailShow, handleOrderDetailShow } = useItem();
 
   return (

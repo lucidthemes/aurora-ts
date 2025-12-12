@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
+import { Customer } from '@typings/shop/customer';
 import { validateEmail } from '@utils/validators';
 
-export default function useEmailForm(loggedInUser, handleUserUpdate, handleEmailEditShow) {
+export default function useEmailForm(
+  loggedInUser: Customer | null,
+  handleUserUpdate: <K extends 'email' | 'shipping' | 'billing'>(section: K, data: Customer[K]) => void,
+  handleEmailEditShow: () => void
+) {
   const [emailFormData, setEmailFormData] = useState(() => {
-    return loggedInUser.email ? loggedInUser.email : null;
+    return loggedInUser?.email ? loggedInUser.email : null;
   });
 
   const [emailFormError, setEmailFormError] = useState('');
 
   const [emailFormDataUpdated, setEmailFormDataUpdated] = useState(false);
 
-  const handleFormChange = (e) => {
+  const handleFormChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
+
     if (emailFormData !== value) {
       setEmailFormData(value);
 
@@ -23,7 +29,7 @@ export default function useEmailForm(loggedInUser, handleUserUpdate, handleEmail
     let formError = '';
     let formIsValid = true;
 
-    const trimmedEmail = emailFormData.trim();
+    const trimmedEmail = emailFormData?.trim();
 
     if (!trimmedEmail || !validateEmail(trimmedEmail)) {
       if (!trimmedEmail) {
@@ -39,13 +45,13 @@ export default function useEmailForm(loggedInUser, handleUserUpdate, handleEmail
     return formIsValid;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     const isFormValid = validateFormData();
 
     // check data has changed. only update user if it has
-    if (emailFormDataUpdated) {
+    if (emailFormData && emailFormDataUpdated) {
       if (isFormValid) {
         handleUserUpdate('email', emailFormData);
 
