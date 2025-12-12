@@ -1,15 +1,24 @@
+import { Customer } from '@typings/shop/customer';
 import useEditForm from '../../hooks/addresses/useEditForm';
 import Input from '@components/Form/Input';
 import Select from '@components/Form/Select';
 import Button from '@components/UI/Button';
 
-export default function EditForm({ loggedInUser, handleUserUpdate, handleShippingEditShow, handleBillingEditShow, section }) {
+interface EditFormProps {
+  loggedInUser: Customer | null;
+  section: 'shipping' | 'billing';
+  handleUserUpdate: <K extends 'email' | 'shipping' | 'billing'>(section: K, data: Customer[K]) => void;
+  handleShippingEditShow?: () => void;
+  handleBillingEditShow?: () => void;
+}
+
+export default function EditForm({ loggedInUser, section, handleUserUpdate, handleShippingEditShow, handleBillingEditShow }: EditFormProps) {
   const { editFormData, editFormErrors, handleFormChange, handleFormKeyDown, handleFormSubmit } = useEditForm(
     loggedInUser,
+    section,
     handleUserUpdate,
     handleShippingEditShow,
-    handleBillingEditShow,
-    section
+    handleBillingEditShow
   );
 
   const countryOptions = [{ value: 'GB', text: 'United Kingdom (UK)' }];

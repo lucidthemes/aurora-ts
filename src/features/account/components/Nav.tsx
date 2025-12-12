@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 
-export default function Nav({ handleLogout }) {
+interface NavProps {
+  handleLogout: () => void;
+}
+
+export default function Nav({ handleLogout }: NavProps) {
   return (
     <nav className="max-h-fit basis-1/4 rounded-md bg-white p-5 md:p-7.5 lg:p-10">
       <ul className="flex flex-col gap-y-7.5 text-sm tracking-xwide uppercase">
@@ -25,7 +29,7 @@ export default function Nav({ handleLogout }) {
           </Link>
         </li>
         <li>
-          <Link onClick={handleLogout} className="text-shark transition-colors duration-300 ease-in-out hover:text-boulder">
+          <Link to="" onClick={handleLogout} className="text-shark transition-colors duration-300 ease-in-out hover:text-boulder">
             Log out
           </Link>
         </li>

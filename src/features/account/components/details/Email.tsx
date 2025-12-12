@@ -1,7 +1,13 @@
+import { Customer } from '@typings/shop/customer';
 import useEmail from '../../hooks/details/useEmail';
 import EmailForm from './EmailForm';
 
-export default function Email({ loggedInUser, handleUserUpdate }) {
+interface EmailProps {
+  loggedInUser: Customer | null;
+  handleUserUpdate: <K extends 'email' | 'shipping' | 'billing'>(section: K, data: Customer[K]) => void;
+}
+
+export default function Email({ loggedInUser, handleUserUpdate }: EmailProps) {
   const { emailEditShow, handleEmailEditShow } = useEmail();
 
   return (
@@ -13,7 +19,7 @@ export default function Email({ loggedInUser, handleUserUpdate }) {
         </button>
       </div>
       {!emailEditShow ? (
-        <p>{loggedInUser.email}</p>
+        <p>{loggedInUser?.email}</p>
       ) : (
         <EmailForm loggedInUser={loggedInUser} handleUserUpdate={handleUserUpdate} handleEmailEditShow={handleEmailEditShow} />
       )}

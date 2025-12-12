@@ -21,7 +21,7 @@ export default function Addresses() {
           {!shippingEditShow ? (
             <Address loggedInUser={loggedInUser} section="shipping" />
           ) : (
-            <EditForm loggedInUser={loggedInUser} handleUserUpdate={handleUserUpdate} handleShippingEditShow={handleShippingEditShow} section="shipping" />
+            <EditForm loggedInUser={loggedInUser} section="shipping" handleUserUpdate={handleUserUpdate} handleShippingEditShow={handleShippingEditShow} />
           )}
         </div>
         <div className="flex basis-1/2 flex-col gap-y-5">
@@ -34,7 +34,7 @@ export default function Addresses() {
           {!billingEditShow ? (
             <Address loggedInUser={loggedInUser} section="billing" />
           ) : (
-            <EditForm loggedInUser={loggedInUser} handleUserUpdate={handleUserUpdate} handleBillingEditShow={handleBillingEditShow} section="billing" />
+            <EditForm loggedInUser={loggedInUser} section="billing" handleUserUpdate={handleUserUpdate} handleBillingEditShow={handleBillingEditShow} />
           )}
         </div>
       </div>

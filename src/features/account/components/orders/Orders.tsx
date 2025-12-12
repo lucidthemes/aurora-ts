@@ -6,7 +6,7 @@ import Button from '@components/UI/Button';
 export default function Orders() {
   const { loggedInUser } = useAuthContext();
 
-  const orders = useOrders(loggedInUser.id);
+  const orders = useOrders(loggedInUser?.id);
 
   return (
     <>
