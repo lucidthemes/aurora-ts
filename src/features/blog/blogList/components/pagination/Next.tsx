@@ -1,4 +1,9 @@
-export default function Next({ currentPage, handlePageChange }) {
+interface NextProps {
+  currentPage: number;
+  handlePageChange: (pageNumber: number) => void;
+}
+
+export default function Next({ currentPage, handlePageChange }: NextProps) {
   return (
     <li className="h-11 w-11">
       <button

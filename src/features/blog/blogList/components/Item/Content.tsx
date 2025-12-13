@@ -3,8 +3,19 @@ import CategoryList from '@features/blog/CategoryList';
 import MetaList from '@features/blog/MetaList';
 import Button from '@components/UI/Button';
 import { textTruncateByWords } from '@utils/formatters';
+import { Post } from '@typings/posts/post';
+import { Category } from '@typings/posts/category';
+import { Author } from '@typings/posts/author';
 
-export default function Content({ post, categoryMap, authorMap, excerptLength, contentClasses }) {
+interface ContentProps {
+  post: Post;
+  categoryMap: Record<number, Category>;
+  authorMap: Record<number, Author>;
+  excerptLength: number;
+  contentClasses: string;
+}
+
+export default function Content({ post, categoryMap, authorMap, excerptLength, contentClasses }: ContentProps) {
   const author = authorMap[post.authorId];
 
   return (
