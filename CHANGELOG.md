@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.0] - [Unreleased]
+
+### Changed
+
+#### Auth
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+
 ## [0.8.0] - 2025-12-12
 
 ### Changed

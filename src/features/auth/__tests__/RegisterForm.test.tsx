@@ -15,7 +15,7 @@ import { getCustomerByEmail } from '@server/shop/getCustomer';
 describe('RegisterForm component', () => {
   const handleRegisterMock = vi.fn();
 
-  useAuthContext.mockReturnValue({
+  vi.mocked(useAuthContext).mockReturnValue({
     handleRegister: handleRegisterMock,
   });
 
@@ -118,7 +118,7 @@ describe('RegisterForm component', () => {
   });
 
   test('shows error notification for user that already exists on form submission', async () => {
-    getCustomerByEmail.mockResolvedValue({ id: 1, email: 'test@example.com' });
+    vi.mocked(getCustomerByEmail).mockResolvedValue({ id: 1, email: 'test@example.com' });
 
     render(<RegisterForm />);
 
@@ -144,7 +144,7 @@ describe('RegisterForm component', () => {
   });
 
   test('register user on valid form submission', async () => {
-    getCustomerByEmail.mockResolvedValue(null);
+    vi.mocked(getCustomerByEmail).mockResolvedValue(null);
 
     render(<RegisterForm />);
 

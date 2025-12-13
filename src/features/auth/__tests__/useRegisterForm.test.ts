@@ -1,5 +1,6 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import useRegisterForm from '../hooks/useRegisterForm';
+import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
 
 vi.mock('@server/shop/getCustomer', () => ({
   getCustomerByEmail: vi.fn(),
@@ -18,15 +19,15 @@ describe('useRegisterForm hook', () => {
     const { result } = renderHook(() => useRegisterForm(handleRegisterMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'password'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'confirmPassword', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('confirmPassword', 'password'));
     });
 
     expect(result.current.registerFormData.email).toBe('test@example.com');
@@ -38,19 +39,19 @@ describe('useRegisterForm hook', () => {
     const { result } = renderHook(() => useRegisterForm(handleRegisterMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('email', ''));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('password', ''));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'confirmPassword', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('confirmPassword', ''));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.registerFormErrors.email).toBe('Please enter an email address');
@@ -62,11 +63,11 @@ describe('useRegisterForm hook', () => {
     const { result } = renderHook(() => useRegisterForm(handleRegisterMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'invalid-email' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'invalid-email'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.registerFormErrors.email).toBe('Please enter a valid email address');
@@ -76,11 +77,11 @@ describe('useRegisterForm hook', () => {
     const { result } = renderHook(() => useRegisterForm(handleRegisterMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'pass' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'pass'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.registerFormErrors.password).toBe('Password needs to be longer than 8 characters');
@@ -90,39 +91,39 @@ describe('useRegisterForm hook', () => {
     const { result } = renderHook(() => useRegisterForm(handleRegisterMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'password1' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'password1'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'confirmPassword', value: 'password2' } });
+      result.current.handleFormChange(createInputChangeEvent('confirmPassword', 'password2'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.registerFormErrors.confirmPassword).toBe('Passwords do no match');
   });
 
   test('updates form notification for user that already exists on form submission', async () => {
-    getCustomerByEmail.mockResolvedValue({ id: 1, email: 'test@example.com' });
+    vi.mocked(getCustomerByEmail).mockResolvedValue({ id: 1, email: 'test@example.com' });
 
     const { result } = renderHook(() => useRegisterForm(handleRegisterMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'password'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'confirmPassword', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('confirmPassword', 'password'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     await waitFor(() => {
@@ -134,24 +135,24 @@ describe('useRegisterForm hook', () => {
   });
 
   test('calls handleRegister and resets form data on valid form submission', async () => {
-    getCustomerByEmail.mockResolvedValue(null);
+    vi.mocked(getCustomerByEmail).mockResolvedValue(null);
 
     const { result } = renderHook(() => useRegisterForm(handleRegisterMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'password'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'confirmPassword', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('confirmPassword', 'password'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     await waitFor(() => {
