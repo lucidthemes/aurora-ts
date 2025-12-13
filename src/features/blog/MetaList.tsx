@@ -7,7 +7,11 @@ interface MetaListProps {
 }
 
 export default function MetaList({ author, date }: MetaListProps) {
-  const formattedDate = dateFormat(date);
+  let formattedDate;
+
+  if (date) {
+    formattedDate = dateFormat(date);
+  }
 
   return (
     <div className="flex flex-wrap gap-y-2.5 text-sm/5 tracking-xwide text-boulder uppercase">

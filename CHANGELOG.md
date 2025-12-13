@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.10.0] - [Unreleased]
+
+### Changed
+
+#### Blog
+
+- convert CategoryList to TypeScript
+
+##### BlogList
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+
+##### BlogPost
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+
 ## [0.9.0] - 2025-12-13
 
 ### Changed
@@ -308,7 +328,9 @@ All notable changes to this project will be documented in this file.
 
 #### Features
 
-- blog MetaList to TypeScript
+##### Blog
+
+- convert MetaList to TypeScript
 
 ### Removed
 

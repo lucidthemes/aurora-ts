@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Category } from '@typings/posts/category';
 
-export default function CategoryList({ categories, categoryMap }) {
+interface CategoryListProps {
+  categories: number[];
+  categoryMap: Record<number, Category>;
+}
+
+export default function CategoryList({ categories, categoryMap }: CategoryListProps) {
   if (!categories || !categoryMap) return null;
 
   return (
