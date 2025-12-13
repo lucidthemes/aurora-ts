@@ -21,7 +21,7 @@ describe('LoginForm component', () => {
 
   const handleLoginMock = vi.fn();
 
-  useAuthContext.mockReturnValue({
+  vi.mocked(useAuthContext).mockReturnValue({
     handleLogin: handleLoginMock,
   });
 
@@ -125,7 +125,7 @@ describe('LoginForm component', () => {
   });
 
   test('show error notification for user that does not exist on form submission', async () => {
-    getCustomerByEmail.mockResolvedValue(null);
+    vi.mocked(getCustomerByEmail).mockResolvedValue(null);
 
     render(
       <MemoryRouter>
@@ -151,7 +151,7 @@ describe('LoginForm component', () => {
   });
 
   test('log user in on valid form submission', async () => {
-    getCustomerByEmail.mockResolvedValue(mockCustomer);
+    vi.mocked(getCustomerByEmail).mockResolvedValue(mockCustomer);
 
     render(
       <MemoryRouter>

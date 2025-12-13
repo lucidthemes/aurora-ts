@@ -1,12 +1,13 @@
 import { renderHook, act } from '@testing-library/react';
 import useLostPasswordForm from '../hooks/useLostPasswordForm';
+import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
 
 describe('useLostPasswordForm hook', () => {
   test('updates form email on handleFormChange', () => {
     const { result } = renderHook(() => useLostPasswordForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     expect(result.current.lostPasswordFormEmail).toBe('test@example.com');
@@ -16,11 +17,11 @@ describe('useLostPasswordForm hook', () => {
     const { result } = renderHook(() => useLostPasswordForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('email', ''));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.lostPasswordFormError).toBe('Please enter an email address');
@@ -30,11 +31,11 @@ describe('useLostPasswordForm hook', () => {
     const { result } = renderHook(() => useLostPasswordForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'invalid-email' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'invalid-email'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.lostPasswordFormError).toBe('Please enter a valid email address');
@@ -44,11 +45,11 @@ describe('useLostPasswordForm hook', () => {
     const { result } = renderHook(() => useLostPasswordForm());
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.lostPasswordFormEmail).toBe('');

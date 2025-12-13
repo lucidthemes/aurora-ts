@@ -1,5 +1,6 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
 import useLoginForm from '../hooks/useLoginForm';
+import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
 
 vi.mock('@server/shop/getCustomer', () => ({
   getCustomerByEmail: vi.fn(),
@@ -23,11 +24,11 @@ describe('useLoginForm hook', () => {
     const { result } = renderHook(() => useLoginForm(handleLoginMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'password'));
     });
 
     expect(result.current.loginFormData.email).toBe('test@example.com');
@@ -38,15 +39,15 @@ describe('useLoginForm hook', () => {
     const { result } = renderHook(() => useLoginForm(handleLoginMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('email', ''));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('password', ''));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.loginFormErrors.email).toBe('Please enter an email address');
@@ -57,11 +58,11 @@ describe('useLoginForm hook', () => {
     const { result } = renderHook(() => useLoginForm(handleLoginMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'invalid-email' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'invalid-email'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.loginFormErrors.email).toBe('Please enter a valid email address');
@@ -71,31 +72,31 @@ describe('useLoginForm hook', () => {
     const { result } = renderHook(() => useLoginForm(handleLoginMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'pass' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'pass'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.loginFormErrors.password).toBe('Password needs to be longer than 8 characters');
   });
 
   test('updates form notification for user that does not exist on form submission', async () => {
-    getCustomerByEmail.mockResolvedValue(null);
+    vi.mocked(getCustomerByEmail).mockResolvedValue(null);
 
     const { result } = renderHook(() => useLoginForm(handleLoginMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'password'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     await waitFor(() => {
@@ -107,20 +108,20 @@ describe('useLoginForm hook', () => {
   });
 
   test('calls handleLogin and resets form data on valid form submission', async () => {
-    getCustomerByEmail.mockResolvedValue(mockCustomer);
+    vi.mocked(getCustomerByEmail).mockResolvedValue(mockCustomer);
 
     const { result } = renderHook(() => useLoginForm(handleLoginMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test@example.com' } });
+      result.current.handleFormChange(createInputChangeEvent('email', 'test@example.com'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'password', value: 'password' } });
+      result.current.handleFormChange(createInputChangeEvent('password', 'password'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     await waitFor(() => {
