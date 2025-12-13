@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [0.10.0] - [Unreleased]
 
+### Added
+
+#### Pages
+
+- status object to SinglePost for not found, loading, and loaded states
+
 ### Changed
 
 #### Blog
