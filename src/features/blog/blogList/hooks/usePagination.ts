@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
+import { Post } from '@typings/posts/post';
 
-function paginatePosts(posts, currentPage, postsPerPage, showPagination) {
+function paginatePosts(posts: Post[], currentPage: number, postsPerPage: number, showPagination: boolean) {
   if (!showPagination) return posts;
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -13,7 +14,7 @@ function paginatePosts(posts, currentPage, postsPerPage, showPagination) {
   return paginated;
 }
 
-function calculateTotalPages(posts, postsPerPage) {
+function calculateTotalPages(posts: Post[], postsPerPage: number) {
   const perPage = postsPerPage && postsPerPage >= 1 ? postsPerPage : 9;
   const totalPosts = posts.length || 0;
   const totalPages = Math.ceil(totalPosts / perPage);
@@ -21,16 +22,16 @@ function calculateTotalPages(posts, postsPerPage) {
   return totalPages;
 }
 
-export default function usePagination(posts, showPagination, postsPerPage) {
+export default function usePagination(posts: Post[], showPagination: boolean, postsPerPage: number) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const paginatedPosts = paginatePosts(posts, currentPage, postsPerPage, showPagination);
 
   const totalPages = calculateTotalPages(posts, postsPerPage);
 
-  const postListRef = useRef();
+  const postListRef = useRef<HTMLUListElement | null>(null);
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     postListRef.current?.scrollIntoView({ behavior: 'smooth' });
   };

@@ -4,7 +4,18 @@ import WideLayout from './components/Item/WideLayout';
 import SmallLayout from './components/Item/SmallLayout';
 import Pagination from './components/pagination/Pagination';
 
-export default function BlogList({ limit, category = null, tag = null, author = null, search = '', style = 'wide', showPagination = true, postsPerPage = 6 }) {
+interface BlogListProps {
+  limit?: number;
+  category?: number;
+  tag?: number;
+  author?: number;
+  search?: string;
+  style?: string;
+  showPagination?: boolean;
+  postsPerPage?: number;
+}
+
+export default function BlogList({ limit, category, tag, author, search = '', style = 'wide', showPagination = true, postsPerPage = 6 }: BlogListProps) {
   const { posts, categoryMap, authorMap } = useBlogList(limit, category, tag, author, search);
 
   const { paginatedPosts, currentPage, totalPages, postListRef, handlePageChange } = usePagination(posts, showPagination, postsPerPage);
@@ -13,7 +24,7 @@ export default function BlogList({ limit, category = null, tag = null, author = 
   const wideSmall = style === 'wide-small-small' || style === 'wide-small-half' || style === 'wide-small-large';
   const wideGrid = style === 'wide-grid-2' || style === 'wide-grid-3' || style === 'wide-grid-4';
   const grid = style === 'grid-2' || style === 'grid-3' || style === 'grid-4';
-  const small = style === 'small-small' || style === 'small-half' || style === 'small-large';
+  //const small = style === 'small-small' || style === 'small-half' || style === 'small-large';
 
   const wideExcerpt = 70;
   const smallExcerpt = 45;

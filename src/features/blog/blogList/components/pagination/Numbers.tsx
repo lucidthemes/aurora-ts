@@ -1,4 +1,10 @@
-export default function Numbers({ totalPages, currentPage, handlePageChange }) {
+interface NumbersProps {
+  totalPages: number;
+  currentPage: number;
+  handlePageChange: (pageNumber: number) => void;
+}
+
+export default function Numbers({ totalPages, currentPage, handlePageChange }: NumbersProps) {
   return (
     <>
       {[...Array(totalPages)].map((_, i) => {

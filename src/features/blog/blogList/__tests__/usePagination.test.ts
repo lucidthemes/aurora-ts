@@ -1,8 +1,9 @@
 import { renderHook, act } from '@testing-library/react';
 import usePagination from '../hooks/usePagination';
+import { Post } from '@typings/posts/post';
 
 describe('usePagination hook', () => {
-  const mockBlogPosts = [
+  const mockBlogPosts: Partial<Post>[] = [
     {
       id: 1,
       title: 'Dune walk',
@@ -58,19 +59,19 @@ describe('usePagination hook', () => {
   });
 
   test('slices posts down to posts per page amount', () => {
-    const { result } = renderHook(() => usePagination(mockBlogPosts, mockShowPagination, mockPostsPerPage));
+    const { result } = renderHook(() => usePagination(mockBlogPosts as Post[], mockShowPagination, mockPostsPerPage));
 
     expect(result.current.paginatedPosts).toHaveLength(mockPostsPerPage);
   });
 
   test('calculates the total number of pages based on posts count and posts per page', () => {
-    const { result } = renderHook(() => usePagination(mockBlogPosts, mockShowPagination, mockPostsPerPage));
+    const { result } = renderHook(() => usePagination(mockBlogPosts as Post[], mockShowPagination, mockPostsPerPage));
 
     expect(result.current.totalPages).toEqual(2);
   });
 
   test('updates page number on handlePageChange', () => {
-    const { result } = renderHook(() => usePagination(mockBlogPosts, mockShowPagination, mockPostsPerPage));
+    const { result } = renderHook(() => usePagination(mockBlogPosts as Post[], mockShowPagination, mockPostsPerPage));
 
     act(() => {
       result.current.handlePageChange(2);

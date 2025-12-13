@@ -1,5 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import useBlogList from '../hooks/useBlogList';
+import { Post } from '@typings/posts/post';
+import { Category } from '@typings/posts/category';
+import { Author } from '@typings/posts/author';
 
 vi.mock('@server/posts/getPosts', () => ({
   getPosts: vi.fn(),
@@ -18,7 +21,7 @@ import { getCategoryMap } from '@server/posts/getCategory';
 import { getAuthorMap } from '@server/posts/getAuthor';
 
 describe('useBlogList hook', () => {
-  const mockPosts = [
+  const mockPosts: Partial<Post>[] = [
     {
       id: 1,
       title: 'Dune walk',
@@ -54,7 +57,7 @@ describe('useBlogList hook', () => {
     },
   ];
 
-  const mockCategoryMap = {
+  const mockCategoryMap: Record<number, Category> = {
     1: {
       id: 1,
       name: 'Fashion',
@@ -85,7 +88,7 @@ describe('useBlogList hook', () => {
     },
   };
 
-  const mockAuthorMap = {
+  const mockAuthorMap: Record<number, Author> = {
     1: {
       id: 1,
       name: 'Lucid Themes',
@@ -96,16 +99,16 @@ describe('useBlogList hook', () => {
     },
   };
 
-  const mockCategoryIds = mockPosts.flatMap((post) => post.categories);
+  const mockCategoryIds = mockPosts.flatMap((post) => post.categories ?? []);
 
-  const mockAuthorIds = mockPosts.flatMap((post) => post.authorId);
+  const mockAuthorIds = mockPosts.flatMap((post) => post.authorId ?? []);
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   test('fetches posts data and sets posts state', async () => {
-    getPosts.mockResolvedValue(mockPosts);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
 
     const { result } = renderHook(() => useBlogList());
 
@@ -120,9 +123,9 @@ describe('useBlogList hook', () => {
   });
 
   test('fetches categoryMap and authorMap data after posts data has loaded', async () => {
-    getPosts.mockResolvedValue(mockPosts);
-    getCategoryMap.mockResolvedValue(mockCategoryMap);
-    getAuthorMap.mockResolvedValue(mockAuthorMap);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
+    vi.mocked(getCategoryMap).mockResolvedValue(mockCategoryMap);
+    vi.mocked(getAuthorMap).mockResolvedValue(mockAuthorMap);
 
     const { result } = renderHook(() => useBlogList());
 
