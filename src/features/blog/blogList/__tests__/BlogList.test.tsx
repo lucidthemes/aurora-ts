@@ -1,5 +1,8 @@
 import { render, screen, within, fireEvent } from '@testing-library/react';
 import BlogList from '../BlogList';
+import { Post } from '@typings/posts/post';
+import { Category } from '@typings/posts/category';
+import { Author } from '@typings/posts/author';
 
 vi.mock('@server/posts/getPosts', () => ({
   getPosts: vi.fn(),
@@ -21,7 +24,7 @@ import { MemoryRouter } from 'react-router-dom';
 Element.prototype.scrollIntoView = vi.fn();
 
 describe('BlogList component', () => {
-  const mockPosts = [
+  const mockPosts: Partial<Post>[] = [
     {
       id: 1,
       title: 'Dune walk',
@@ -101,7 +104,7 @@ describe('BlogList component', () => {
     },
   ];
 
-  const mockCategoryMap = {
+  const mockCategoryMap: Record<number, Category> = {
     1: {
       id: 1,
       name: 'Fashion',
@@ -132,7 +135,7 @@ describe('BlogList component', () => {
     },
   };
 
-  const mockAuthorMap = {
+  const mockAuthorMap: Record<number, Author> = {
     1: {
       id: 1,
       name: 'Lucid Themes',
@@ -148,9 +151,9 @@ describe('BlogList component', () => {
   });
 
   test('renders list when post data is fetched', async () => {
-    getPosts.mockResolvedValue(mockPosts);
-    getCategoryMap.mockResolvedValue(mockCategoryMap);
-    getAuthorMap.mockResolvedValue(mockAuthorMap);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
+    vi.mocked(getCategoryMap).mockResolvedValue(mockCategoryMap);
+    vi.mocked(getAuthorMap).mockResolvedValue(mockAuthorMap);
 
     render(
       <MemoryRouter>
@@ -166,9 +169,9 @@ describe('BlogList component', () => {
   });
 
   test('renders post information', async () => {
-    getPosts.mockResolvedValue(mockPosts);
-    getCategoryMap.mockResolvedValue(mockCategoryMap);
-    getAuthorMap.mockResolvedValue(mockAuthorMap);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
+    vi.mocked(getCategoryMap).mockResolvedValue(mockCategoryMap);
+    vi.mocked(getAuthorMap).mockResolvedValue(mockAuthorMap);
 
     render(
       <MemoryRouter>
@@ -179,7 +182,7 @@ describe('BlogList component', () => {
     const blogList = await screen.findByRole('list', { name: /blog posts/i });
     expect(blogList).toBeInTheDocument();
 
-    const firstListItem = blogList.querySelector(':scope > li:first-child');
+    const firstListItem = blogList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('img', { name: /dune walk/i })).toBeInTheDocument();
@@ -203,9 +206,9 @@ describe('BlogList component', () => {
   });
 
   test('renders pagination when post data is fetched', async () => {
-    getPosts.mockResolvedValue(mockPosts);
-    getCategoryMap.mockResolvedValue(mockCategoryMap);
-    getAuthorMap.mockResolvedValue(mockAuthorMap);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
+    vi.mocked(getCategoryMap).mockResolvedValue(mockCategoryMap);
+    vi.mocked(getAuthorMap).mockResolvedValue(mockAuthorMap);
 
     render(
       <MemoryRouter>
@@ -221,9 +224,9 @@ describe('BlogList component', () => {
   });
 
   test('updates list when pagination link is clicked', async () => {
-    getPosts.mockResolvedValue(mockPosts);
-    getCategoryMap.mockResolvedValue(mockCategoryMap);
-    getAuthorMap.mockResolvedValue(mockAuthorMap);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
+    vi.mocked(getCategoryMap).mockResolvedValue(mockCategoryMap);
+    vi.mocked(getAuthorMap).mockResolvedValue(mockAuthorMap);
 
     render(
       <MemoryRouter>
@@ -249,9 +252,9 @@ describe('BlogList component', () => {
   });
 
   test('hides pagination when showPagination is set to false', async () => {
-    getPosts.mockResolvedValue(mockPosts);
-    getCategoryMap.mockResolvedValue(mockCategoryMap);
-    getAuthorMap.mockResolvedValue(mockAuthorMap);
+    vi.mocked(getPosts).mockResolvedValue(mockPosts);
+    vi.mocked(getCategoryMap).mockResolvedValue(mockCategoryMap);
+    vi.mocked(getAuthorMap).mockResolvedValue(mockAuthorMap);
 
     render(
       <MemoryRouter>
