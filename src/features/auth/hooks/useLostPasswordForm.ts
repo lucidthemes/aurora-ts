@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { validateEmail } from '@utils/validators';
+
+interface LostPasswordFormNotification {
+  type: string;
+  message: string;
+}
 
 export default function useLostPasswordForm() {
   const [lostPasswordFormEmail, setLostPasswordFormEmail] = useState('');
   const [lostPasswordFormError, setLostPasswordFormError] = useState('');
 
-  const [lostPasswordFormNotification, setLostPasswordFormNotification] = useState({
+  const [lostPasswordFormNotification, setLostPasswordFormNotification] = useState<LostPasswordFormNotification>({
     type: '',
     message: '',
   });
@@ -17,7 +22,7 @@ export default function useLostPasswordForm() {
     });
   };
 
-  const handleFormChange = (e) => {
+  const handleFormChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
     setLostPasswordFormEmail(value);
   };
@@ -26,7 +31,7 @@ export default function useLostPasswordForm() {
     let formError = '';
     let formIsValid = true;
 
-    const trimmedEmail = lostPasswordFormEmail.trim();
+    const trimmedEmail = lostPasswordFormEmail?.trim();
 
     if (!trimmedEmail || !validateEmail(trimmedEmail)) {
       if (!trimmedEmail) {
@@ -42,7 +47,7 @@ export default function useLostPasswordForm() {
     return formIsValid;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     let isFormValid = validateFormData();

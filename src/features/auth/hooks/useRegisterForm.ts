@@ -1,27 +1,47 @@
-import { useState } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { validateEmail } from '@utils/validators';
 import { getCustomerByEmail } from '@server/shop/getCustomer';
+import { Customer } from '@typings/shop/customer';
 
-export default function useRegisterForm(handleRegister) {
-  const [registerFormData, setRegisterFormData] = useState({
+interface RegisterFormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+type RegisterFormValidation = {
+  [k in keyof RegisterFormData]: boolean;
+};
+
+type RegisterFormErrors = {
+  [k in keyof RegisterFormData]: string;
+};
+
+interface RegisterFormNotification {
+  type: string;
+  message: string;
+}
+
+export default function useRegisterForm(handleRegister: (userData: Customer) => void) {
+  const [registerFormData, setRegisterFormData] = useState<RegisterFormData>({
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  const registerFormValidation = {
+  const registerFormValidation: RegisterFormValidation = {
     email: true,
     password: true,
     confirmPassword: true,
   };
 
-  const [registerFormErrors, setRegisterFormErrors] = useState({
+  const [registerFormErrors, setRegisterFormErrors] = useState<RegisterFormErrors>({
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  const [registerFormNotification, setRegisterFormNotification] = useState({
+  const [registerFormNotification, setRegisterFormNotification] = useState<RegisterFormNotification>({
     type: '',
     message: '',
   });
@@ -33,7 +53,7 @@ export default function useRegisterForm(handleRegister) {
     });
   };
 
-  const handleFormChange = (e) => {
+  const handleFormChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
     setRegisterFormData({
       ...registerFormData,
@@ -45,46 +65,48 @@ export default function useRegisterForm(handleRegister) {
     let formErrors = { ...registerFormErrors };
     let formIsValid = true;
 
-    for (let field in registerFormData) {
-      const value = registerFormData[field];
-      const required = registerFormValidation[field];
+    for (const field in registerFormData) {
+      const key = field as keyof RegisterFormData;
 
-      if (field === 'email') {
+      const value = registerFormData[key];
+      const required = registerFormValidation[key];
+
+      if (key === 'email') {
         if ((!value && required) || !validateEmail(registerFormData.email)) {
           if (!value && required) {
-            formErrors[field] = 'Please enter an email address';
+            formErrors[key] = 'Please enter an email address';
           } else {
-            formErrors[field] = 'Please enter a valid email address';
+            formErrors[key] = 'Please enter a valid email address';
           }
           formIsValid = false;
         } else {
-          formErrors[field] = '';
+          formErrors[key] = '';
         }
       }
 
-      if (field === 'password') {
+      if (key === 'password') {
         if ((!value && required) || value.length < 8) {
           if (!value && required) {
-            formErrors[field] = `Please enter a password`;
+            formErrors[key] = `Please enter a password`;
           } else {
-            formErrors[field] = `Password needs to be longer than 8 characters`;
+            formErrors[key] = `Password needs to be longer than 8 characters`;
           }
           formIsValid = false;
         } else {
-          formErrors[field] = '';
+          formErrors[key] = '';
         }
       }
 
-      if (field === 'confirmPassword') {
+      if (key === 'confirmPassword') {
         if ((!value && required) || registerFormData.password !== registerFormData.confirmPassword) {
           if (!value && required) {
-            formErrors[field] = `Please confirm the password`;
+            formErrors[key] = `Please confirm the password`;
           } else {
-            formErrors[field] = `Passwords do no match`;
+            formErrors[key] = `Passwords do no match`;
           }
           formIsValid = false;
         } else {
-          formErrors[field] = '';
+          formErrors[key] = '';
         }
       }
     }
@@ -94,7 +116,7 @@ export default function useRegisterForm(handleRegister) {
     return formIsValid;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     const isFormValid = validateFormData();

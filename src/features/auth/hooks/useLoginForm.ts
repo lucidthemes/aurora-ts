@@ -1,24 +1,43 @@
-import { useState } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { validateEmail } from '@utils/validators';
 import { getCustomerByEmail } from '@server/shop/getCustomer';
+import { Customer } from '@typings/shop/customer';
 
-export default function useLoginForm(handleLogin) {
-  const [loginFormData, setLoginFormData] = useState({
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+type LoginFormValidation = {
+  [K in keyof LoginFormData]: boolean;
+};
+
+type LoginFormErrors = {
+  [K in keyof LoginFormData]: string;
+};
+
+interface LoginFormNotification {
+  type: string;
+  message: string;
+}
+
+export default function useLoginForm(handleLogin: (userData: Customer) => void) {
+  const [loginFormData, setLoginFormData] = useState<LoginFormData>({
     email: '',
     password: '',
   });
 
-  const loginFormValidation = {
+  const loginFormValidation: LoginFormValidation = {
     email: true,
     password: true,
   };
 
-  const [loginFormErrors, setLoginFormErrors] = useState({
+  const [loginFormErrors, setLoginFormErrors] = useState<LoginFormErrors>({
     email: '',
     password: '',
   });
 
-  const [loginFormNotification, setLoginFormNotification] = useState({
+  const [loginFormNotification, setLoginFormNotification] = useState<LoginFormNotification>({
     type: '',
     message: '',
   });
@@ -30,8 +49,9 @@ export default function useLoginForm(handleLogin) {
     });
   };
 
-  const handleFormChange = (e) => {
+  const handleFormChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { name, value } = e.target;
+
     setLoginFormData({
       ...loginFormData,
       [name]: value,
@@ -42,33 +62,35 @@ export default function useLoginForm(handleLogin) {
     let formErrors = { ...loginFormErrors };
     let formIsValid = true;
 
-    for (let field in loginFormData) {
-      const value = loginFormData[field];
-      const required = loginFormValidation[field];
+    for (const field in loginFormData) {
+      const key = field as keyof LoginFormData;
 
-      if (field === 'email') {
+      const value = loginFormData[key];
+      const required = loginFormValidation[key];
+
+      if (key === 'email') {
         if ((!value && required) || !validateEmail(loginFormData.email)) {
           if (!value && required) {
-            formErrors[field] = 'Please enter an email address';
+            formErrors[key] = 'Please enter an email address';
           } else {
-            formErrors[field] = 'Please enter a valid email address';
+            formErrors[key] = 'Please enter a valid email address';
           }
           formIsValid = false;
         } else {
-          formErrors[field] = '';
+          formErrors[key] = '';
         }
       }
 
-      if (field === 'password') {
+      if (key === 'password') {
         if ((!value && required) || value.length < 8) {
           if (!value && required) {
-            formErrors[field] = `Please enter a password`;
+            formErrors[key] = `Please enter a password`;
           } else {
-            formErrors[field] = `Password needs to be longer than 8 characters`;
+            formErrors[key] = `Password needs to be longer than 8 characters`;
           }
           formIsValid = false;
         } else {
-          formErrors[field] = '';
+          formErrors[key] = '';
         }
       }
     }
@@ -78,7 +100,7 @@ export default function useLoginForm(handleLogin) {
     return formIsValid;
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     const isFormValid = validateFormData();
