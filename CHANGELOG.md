@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 
 - status object to SinglePost for not found, loading, and loaded states
 
+#### Types
+
+- replies field to posts comment type
+
 ### Changed
 
 #### Blog
