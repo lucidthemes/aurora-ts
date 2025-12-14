@@ -1,7 +1,21 @@
+import type { Dispatch, SetStateAction } from 'react';
+
+import type { Comment as CommentType } from '@typings/posts/comment';
+
 import Comment from './Comment';
 import Form from '../Form';
 
-export default function Item({ postId, commentsCount, comment, replies = [], commentReplyId, setCommentReplyId, handleNewComment }) {
+interface ItemProps {
+  postId: number;
+  commentsCount: number;
+  comment: CommentType;
+  replies?: CommentType[];
+  commentReplyId: number | null;
+  setCommentReplyId: Dispatch<SetStateAction<number | null>>;
+  handleNewComment: (newComment: CommentType) => void;
+}
+
+export default function Item({ postId, commentsCount, comment, replies = [], commentReplyId, setCommentReplyId, handleNewComment }: ItemProps) {
   return (
     <li className="flex flex-col gap-y-10">
       <Comment comment={comment} setCommentReplyId={setCommentReplyId} />

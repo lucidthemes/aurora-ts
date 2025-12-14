@@ -1,9 +1,21 @@
-import useForm from '../hooks/useForm';
+import type { Dispatch, SetStateAction } from 'react';
+
 import Textarea from '@components/Form/Textarea';
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
+import type { Comment as CommentType } from '@typings/posts/comment';
 
-export default function Form({ postId, commentsCount, replyTo = null, setCommentReplyId, handleNewComment }) {
+import useForm from '../hooks/useForm';
+
+interface FormProps {
+  postId: number;
+  commentsCount: number;
+  replyTo?: number | null;
+  setCommentReplyId: Dispatch<SetStateAction<number | null>>;
+  handleNewComment: (newComment: CommentType) => void;
+}
+
+export default function Form({ postId, commentsCount, replyTo = null, setCommentReplyId, handleNewComment }: FormProps) {
   const { commentFormData, commentFormErrors, handleFormChange, handleFormSubmit } = useForm(
     postId,
     commentsCount,

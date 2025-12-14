@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react';
-import { getCommentsById } from '@server/posts/getComments';
 
-export default function useComments(postId) {
-  const [comments, setComments] = useState({
+import { getCommentsById } from '@server/posts/getComments';
+import type { Comment as CommentType } from '@typings/posts/comment';
+
+interface CommentsState {
+  list: CommentType[];
+  count: number;
+}
+
+export default function useComments(postId: number) {
+  const [comments, setComments] = useState<CommentsState>({
     list: [],
     count: 0,
   });
 
-  const [commentReplyId, setCommentReplyId] = useState(null);
+  const [commentReplyId, setCommentReplyId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!postId) return;
@@ -19,7 +26,7 @@ export default function useComments(postId) {
 
         const commentsCount = postComments.length;
 
-        const commentReplies = (parentId) => {
+        const commentReplies = (parentId: number): CommentType[] => {
           return postComments
             .filter((comment) => comment.replyTo === parentId)
             .map((comment) => ({
@@ -51,31 +58,25 @@ export default function useComments(postId) {
     fetchComments();
   }, [postId]);
 
-  const handleNewComment = (newComment) => {
-    let updatedComments;
+  const handleNewComment = (newComment: CommentType) => {
+    const insertReply = (comments: CommentType[]): CommentType[] => {
+      return comments.map((comment): CommentType => {
+        if (comment.id === newComment.replyTo) {
+          return {
+            ...comment,
+            replies: [...(comment.replies ?? []), newComment],
+          };
+        } else if (comment.replies && comment.replies.length > 0) {
+          return {
+            ...comment,
+            replies: insertReply(comment.replies),
+          };
+        }
+        return comment;
+      });
+    };
 
-    if (!newComment.replyTo) {
-      updatedComments = [...comments.list, newComment];
-    } else {
-      const insertReply = (comments) => {
-        return comments.map((comment) => {
-          if (comment.id === newComment.replyTo) {
-            return {
-              ...comment,
-              replies: [...(comment.replies || []), newComment],
-            };
-          } else if (comment.replies && comment.replies.length > 0) {
-            return {
-              ...comment,
-              replies: insertReply(comment.replies),
-            };
-          }
-          return comment;
-        });
-      };
-
-      updatedComments = insertReply(comments.list);
-    }
+    const updatedComments = newComment.replyTo === null ? [...comments.list, newComment] : insertReply(comments.list);
 
     setComments({
       list: updatedComments,

@@ -1,15 +1,21 @@
-import useComments from './hooks/useComments';
 import SectionHeading from '@components/UI/SectionHeading';
+import type { Post } from '@typings/posts/post';
+
+import useComments from './hooks/useComments';
 import Items from './components/items';
 import Form from './components/Form';
 
-export default function Comments({ singlePost }) {
-  const postId = singlePost.id;
+interface CommentsProps {
+  post: Post;
+}
+
+export default function Comments({ post }: CommentsProps) {
+  const postId = post.id;
   const { comments, commentReplyId, setCommentReplyId, handleNewComment } = useComments(postId);
 
   return (
     <section className="rounded-md bg-white p-5 md:p-7.5 lg:p-10">
-      <SectionHeading heading={`Comments (${comments.count})`} headingLevel={3} />
+      <SectionHeading heading={`Comments (${comments.count})`} headingLevel="3" />
       <div className="flex flex-col gap-y-10">
         {comments.count > 0 ? (
           <Items

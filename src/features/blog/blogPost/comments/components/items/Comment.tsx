@@ -1,6 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
+
+import type { Comment as CommentType } from '@typings/posts/comment';
 import { dateTimeFormat } from '@utils/formatters';
 
-export default function Comment({ comment, setCommentReplyId }) {
+interface CommentProps {
+  comment: CommentType;
+  setCommentReplyId: Dispatch<SetStateAction<number | null>>;
+}
+
+export default function Comment({ comment, setCommentReplyId }: CommentProps) {
   const formattedDateTime = dateTimeFormat(comment.datetime);
 
   return (
