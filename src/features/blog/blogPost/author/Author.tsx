@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
+import { Author as AuthorType } from '@typings/posts/author';
 
-export default function Author({ author }) {
+interface AuthorProps {
+  author: AuthorType | null;
+}
+
+export default function Author({ author }: AuthorProps) {
   if (!author) return null;
 
   return (
