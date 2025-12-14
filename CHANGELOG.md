@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 #### Blog
 
 - convert CategoryList to TypeScript
+- MetaList props interface author to Author typing
 
 ##### BlogList
 

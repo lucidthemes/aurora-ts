@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+
+import type { Author } from '@typings/posts/author';
 import { dateFormat } from '@utils/formatters';
 
 interface MetaListProps {
-  author?: { slug: string; name: string };
+  author?: Author | null;
   date?: string;
 }
 
