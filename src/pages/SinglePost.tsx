@@ -4,37 +4,48 @@ import Header from '@features/blog/blogPost/header';
 import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
 import BlogPost from '@features/blog/blogPost';
 import { Sidebar } from '@components/Layout/Sidebar';
+import Container from '@components/Layout/Container';
 
 export default function SinglePost() {
   const { slug } = useParams();
   const { singlePost, categoryMap, author } = useSinglePost(slug);
 
-  if (singlePost === null) return null;
-  if (singlePost === false) return <Navigate to="/404" replace />;
+  if (singlePost.status === 'not-found') return <Navigate to="/404" replace />;
 
-  const postSidebar = singlePost.postSidebar || 'right';
-  const postHeaderBesideSidebar = singlePost.postHeader?.besideSidebar || false;
+  if (singlePost.status === 'loading')
+    return (
+      <Container>
+        <p className="rounded-sm bg-white p-5 text-center">Post loading</p>
+      </Container>
+    );
+
+  if (singlePost.status !== 'loaded') return null;
+
+  const { post } = singlePost;
+
+  const postSidebar = post.postSidebar || 'right';
+  const postHeaderBesideSidebar = post.postHeader?.besideSidebar || false;
 
   return (
-    <article id={`post-${singlePost.id}`} className="flex flex-col gap-y-10">
+    <article id={`post-${post.id}`} className="flex flex-col gap-y-10">
       {postSidebar === 'hidden' && (
         <>
-          <Header singlePost={singlePost} categoryMap={categoryMap} author={author} />
+          <Header post={post} categoryMap={categoryMap} author={author} />
           <PageLayout>
             <div className="flex flex-col gap-y-10">
-              <BlogPost singlePost={singlePost} author={author} />
+              <BlogPost post={post} author={author} />
             </div>
           </PageLayout>
         </>
       )}
       {(postSidebar === 'right' || postSidebar === 'left') && (
         <>
-          {!postHeaderBesideSidebar && <Header singlePost={singlePost} categoryMap={categoryMap} author={author} />}
+          {!postHeaderBesideSidebar && <Header post={post} categoryMap={categoryMap} author={author} />}
           <PageSidebarLayout
             content={
               <div className="flex flex-col gap-y-10">
-                {postHeaderBesideSidebar && <Header singlePost={singlePost} categoryMap={categoryMap} author={author} />}
-                <BlogPost singlePost={singlePost} author={author} />
+                {postHeaderBesideSidebar && <Header post={post} categoryMap={categoryMap} author={author} />}
+                <BlogPost post={post} author={author} />
               </div>
             }
             sidebar={<Sidebar />}

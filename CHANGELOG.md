@@ -4,11 +4,22 @@ All notable changes to this project will be documented in this file.
 
 ## [0.10.0] - [Unreleased]
 
+### Added
+
+#### Pages
+
+- status object to SinglePost for not found, loading, and loaded states
+
+#### Types
+
+- replies field to posts comment type
+
 ### Changed
 
 #### Blog
 
 - convert CategoryList to TypeScript
+- MetaList props interface author to Author typing
 
 ##### BlogList
 
@@ -21,6 +32,10 @@ All notable changes to this project will be documented in this file.
 - convert components to TypeScript
 - convert hooks to TypeScript
 - convert tests to TypeScript
+
+#### Server
+
+- posts getComments amend each returned comment to include replies field added to comment type
 
 ## [0.9.0] - 2025-12-13
 

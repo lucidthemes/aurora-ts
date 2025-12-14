@@ -7,4 +7,5 @@ export interface Comment {
   datetime: string;
   comment: string;
   status: string;
+  replies: Comment[];
 }

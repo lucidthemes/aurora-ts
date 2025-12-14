@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Category } from '@typings/posts/category';
+
+import type { Category } from '@typings/posts/category';
 
 interface CategoryListProps {
   categories: number[];
