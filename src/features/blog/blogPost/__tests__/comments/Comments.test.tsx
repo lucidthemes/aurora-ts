@@ -1,19 +1,22 @@
 import { render, screen, fireEvent, within, waitFor } from '@testing-library/react';
-import Comments from '../../comments';
 
 vi.mock('@server/posts/getComments', () => ({
   getCommentsById: vi.fn(),
 }));
 
 import { getCommentsById } from '@server/posts/getComments';
+import type { Post } from '@typings/posts/post';
+import type { Comment } from '@typings/posts/comment';
+
+import Comments from '../../comments';
 
 describe('Author component', () => {
-  const mockPost = {
+  const mockPost: Partial<Post> = {
     id: 1,
     title: 'Dune walk',
   };
 
-  const mockComments = [
+  const mockComments: Comment[] = [
     {
       id: 1,
       postId: 1,
@@ -24,6 +27,7 @@ describe('Author component', () => {
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
       status: 'approved',
+      replies: [],
     },
     {
       id: 2,
@@ -35,6 +39,7 @@ describe('Author component', () => {
       comment:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempus tortor et facilisis lobortis. Donec auctor aliquam libero nec ullamcorper. In hac habitasse platea dictumst. Nullam nec eros scelerisque, auctor mauris at, vehicula mauris. Sed ac mollis magna, in tempus eros. Duis et nibh in sapien finibus posuere at ut libero.',
       status: 'approved',
+      replies: [],
     },
   ];
 
@@ -43,9 +48,9 @@ describe('Author component', () => {
   });
 
   test('renders comments list when data is fetched', async () => {
-    getCommentsById.mockResolvedValue(mockComments);
+    vi.mocked(getCommentsById).mockResolvedValue(mockComments);
 
-    render(<Comments singlePost={mockPost} />);
+    render(<Comments post={mockPost as Post} />);
 
     const commentsList = await screen.findByRole('list', { name: /comments/i });
     expect(commentsList).toBeInTheDocument();
@@ -55,7 +60,7 @@ describe('Author component', () => {
   });
 
   test('renders form input fields and submit button', async () => {
-    render(<Comments singlePost={mockPost} />);
+    render(<Comments post={mockPost as Post} />);
 
     await waitFor(() => {
       expect(screen.getByRole('form', { name: /add comment/i })).toBeInTheDocument();
@@ -66,9 +71,9 @@ describe('Author component', () => {
   });
 
   test('adds new comment when form successfully submitted', async () => {
-    getCommentsById.mockResolvedValue(mockComments);
+    vi.mocked(getCommentsById).mockResolvedValue(mockComments);
 
-    render(<Comments singlePost={mockPost} />);
+    render(<Comments post={mockPost as Post} />);
 
     const commentsList = await screen.findByRole('list', { name: /comments/i });
     expect(commentsList).toBeInTheDocument();
@@ -93,7 +98,7 @@ describe('Author component', () => {
   });
 
   test('shows form error messages for missing fields', async () => {
-    render(<Comments singlePost={mockPost} />);
+    render(<Comments post={mockPost as Post} />);
 
     await waitFor(() => {
       expect(screen.getByRole('form', { name: /add comment/i })).toBeInTheDocument();

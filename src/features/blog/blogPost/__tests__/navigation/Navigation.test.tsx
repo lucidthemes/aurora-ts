@@ -1,16 +1,19 @@
 import { render, screen } from '@testing-library/react';
-import Previous from '../../navigation/components/Previous';
-import Next from '../../navigation/components/Next';
 import { MemoryRouter } from 'react-router-dom';
 
+import type { Post } from '@typings/posts/post';
+
+import Previous from '../../navigation/components/Previous';
+import Next from '../../navigation/components/Next';
+
 describe('Navigation component', () => {
-  const mockPrevious = {
+  const mockPrevious: Partial<Post> = {
     id: 2,
     title: 'Old Town Centre',
     slug: 'old-town-centre',
   };
 
-  const mockNext = {
+  const mockNext: Partial<Post> = {
     id: 1,
     title: 'Dune walk',
     slug: 'dune-walk',
@@ -19,7 +22,7 @@ describe('Navigation component', () => {
   test('renders Previous post component', () => {
     render(
       <MemoryRouter>
-        <Previous previousPost={mockPrevious} />
+        <Previous previousPost={mockPrevious as Post} />
       </MemoryRouter>
     );
 
@@ -31,7 +34,7 @@ describe('Navigation component', () => {
   test('renders Next post component', () => {
     render(
       <MemoryRouter>
-        <Next nextPost={mockNext} />
+        <Next nextPost={mockNext as Post} />
       </MemoryRouter>
     );
 

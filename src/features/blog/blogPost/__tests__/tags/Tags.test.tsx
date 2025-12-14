@@ -1,20 +1,23 @@
 import { render, screen } from '@testing-library/react';
-import Tags from '../../tags';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/posts/getTags', () => ({
   getTagsArray: vi.fn(),
 }));
 
 import { getTagsArray } from '@server/posts/getTags';
-import { MemoryRouter } from 'react-router-dom';
+import type { Post } from '@typings/posts/post';
+import type { Tag } from '@typings/posts/tag';
+
+import Tags from '../../tags';
 
 describe('Tags component', () => {
-  const mockPost = {
+  const mockPost: Partial<Post> = {
     id: 1,
     tags: [1, 2, 3, 4],
   };
 
-  const mockTags = [
+  const mockTags: Tag[] = [
     {
       id: 1,
       name: 'Beach',
@@ -50,11 +53,11 @@ describe('Tags component', () => {
   });
 
   test('renders tags when tag data is fetched', async () => {
-    getTagsArray.mockResolvedValue(mockTags);
+    vi.mocked(getTagsArray).mockResolvedValue(mockTags);
 
     render(
       <MemoryRouter>
-        <Tags singlePost={mockPost} />
+        <Tags post={mockPost as Post} />
       </MemoryRouter>
     );
 
@@ -72,7 +75,7 @@ describe('Tags component', () => {
 
     const { container } = render(
       <MemoryRouter>
-        <Tags singlePost={postWithoutTags} />
+        <Tags post={postWithoutTags as Post} />
       </MemoryRouter>
     );
 

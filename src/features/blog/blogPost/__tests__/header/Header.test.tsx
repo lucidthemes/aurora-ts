@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import Header from '../../header/Header';
 import { MemoryRouter } from 'react-router-dom';
 
+import type { Post } from '@typings/posts/post';
+import type { Category } from '@typings/posts/category';
+import type { Author } from '@typings/posts/author';
+
+import Header from '../../header/Header';
+
 describe('Header component', () => {
-  const mockPost = {
+  const mockPost: Partial<Post> = {
     id: 1,
     title: 'Dune walk',
     date: '2025-09-11',
@@ -12,16 +17,7 @@ describe('Header component', () => {
     image: '/images/posts/post-1.jpg',
   };
 
-  const mockAuthor = {
-    id: 1,
-    name: 'Lucid Themes',
-    slug: 'lucid-themes',
-    avatar: '/images/author.jpg',
-    description:
-      'Sed rhoncus, velit sit amet mollis cursus, velit urna congue orci, in dignissim elit magna eget ante. Mauris sem justo, volutpat in quam quis, vulputate luctus neque. Sed ultricies eget augue quis hendrerit. Nullam quis nisi sit amet velit pharetra lobortis ac eget magna. Proin luctus sit amet odio sit amet imperdiet. Integer sodales arcu congue nisl rhoncus feugiat eget vel ex.',
-  };
-
-  const mockCategoryMap = {
+  const mockCategoryMap: Record<number, Category> = {
     1: {
       id: 1,
       name: 'Fashion',
@@ -38,10 +34,19 @@ describe('Header component', () => {
     },
   };
 
+  const mockAuthor: Author = {
+    id: 1,
+    name: 'Lucid Themes',
+    slug: 'lucid-themes',
+    avatar: '/images/author.jpg',
+    description:
+      'Sed rhoncus, velit sit amet mollis cursus, velit urna congue orci, in dignissim elit magna eget ante. Mauris sem justo, volutpat in quam quis, vulputate luctus neque. Sed ultricies eget augue quis hendrerit. Nullam quis nisi sit amet velit pharetra lobortis ac eget magna. Proin luctus sit amet odio sit amet imperdiet. Integer sodales arcu congue nisl rhoncus feugiat eget vel ex.',
+  };
+
   test('renders title', () => {
     render(
       <MemoryRouter>
-        <Header singlePost={mockPost} author={mockAuthor} categoryMap={mockCategoryMap} />
+        <Header post={mockPost as Post} categoryMap={mockCategoryMap} author={mockAuthor} />
       </MemoryRouter>
     );
 
@@ -51,7 +56,7 @@ describe('Header component', () => {
   test('renders categories', () => {
     render(
       <MemoryRouter>
-        <Header singlePost={mockPost} author={mockAuthor} categoryMap={mockCategoryMap} />
+        <Header post={mockPost as Post} categoryMap={mockCategoryMap} author={mockAuthor} />
       </MemoryRouter>
     );
 
@@ -68,7 +73,7 @@ describe('Header component', () => {
   test('renders author', () => {
     render(
       <MemoryRouter>
-        <Header singlePost={mockPost} author={mockAuthor} categoryMap={mockCategoryMap} />
+        <Header post={mockPost as Post} categoryMap={mockCategoryMap} author={mockAuthor} />
       </MemoryRouter>
     );
 
@@ -79,7 +84,7 @@ describe('Header component', () => {
   test('renders date', () => {
     render(
       <MemoryRouter>
-        <Header singlePost={mockPost} author={mockAuthor} categoryMap={mockCategoryMap} />
+        <Header post={mockPost as Post} categoryMap={mockCategoryMap} author={mockAuthor} />
       </MemoryRouter>
     );
 
@@ -89,7 +94,7 @@ describe('Header component', () => {
   test('renders image', () => {
     render(
       <MemoryRouter>
-        <Header singlePost={mockPost} author={mockAuthor} categoryMap={mockCategoryMap} />
+        <Header post={mockPost as Post} categoryMap={mockCategoryMap} author={mockAuthor} />
       </MemoryRouter>
     );
 

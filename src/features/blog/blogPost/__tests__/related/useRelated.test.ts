@@ -1,19 +1,21 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useRelated from '../../related/useRelated';
 
 vi.mock('@server/posts/getPost', () => ({
   getPostArray: vi.fn(),
 }));
 
 import { getPostArray } from '@server/posts/getPost';
+import type { Post } from '@typings/posts/post';
+
+import useRelated from '../../related/useRelated';
 
 describe('useRelated hook', () => {
-  const mockPost = {
+  const mockPost: Partial<Post> = {
     id: 1,
     relatedPosts: [2, 4, 6],
   };
 
-  const mockRelated = [
+  const mockRelated: Partial<Post>[] = [
     { id: 2, title: 'Old Town Centre' },
     { id: 4, title: 'Sweet Coffee' },
     { id: 6, title: 'Beautiful Bouquet' },
@@ -24,9 +26,9 @@ describe('useRelated hook', () => {
   });
 
   test('fetches related posts data and sets relatedPosts state', async () => {
-    getPostArray.mockResolvedValue(mockRelated);
+    vi.mocked(getPostArray).mockResolvedValue(mockRelated);
 
-    const { result } = renderHook(() => useRelated(mockPost));
+    const { result } = renderHook(() => useRelated(mockPost as Post));
 
     expect(result.current).toEqual([]);
 
@@ -38,18 +40,10 @@ describe('useRelated hook', () => {
     expect(getPostArray).toHaveBeenCalledWith(mockPost.relatedPosts);
   });
 
-  test('sets relatedPosts state to null if singlePost is missing', () => {
-    const { result } = renderHook(() => useRelated());
-
-    expect(result.current).toEqual([]);
-
-    expect(getPostArray).not.toHaveBeenCalled();
-  });
-
   test('sets relatedPosts state to null if post has no related posts', () => {
     const postWithoutRelated = { id: 1 };
 
-    const { result } = renderHook(() => useRelated(postWithoutRelated));
+    const { result } = renderHook(() => useRelated(postWithoutRelated as Post));
 
     expect(result.current).toEqual([]);
 

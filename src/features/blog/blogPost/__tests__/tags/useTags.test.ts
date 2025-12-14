@@ -1,19 +1,22 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useTags from '../../tags/useTags';
 
 vi.mock('@server/posts/getTags', () => ({
   getTagsArray: vi.fn(),
 }));
 
 import { getTagsArray } from '@server/posts/getTags';
+import type { Post } from '@typings/posts/post';
+import type { Tag } from '@typings/posts/tag';
+
+import useTags from '../../tags/useTags';
 
 describe('useTags hook', () => {
-  const mockPost = {
+  const mockPost: Partial<Post> = {
     id: 1,
     tags: [1, 2, 3, 4],
   };
 
-  const mockTags = [
+  const mockTags: Tag[] = [
     {
       id: 1,
       name: 'Beach',
@@ -49,9 +52,9 @@ describe('useTags hook', () => {
   });
 
   test('fetches tags data and sets tags state', async () => {
-    getTagsArray.mockResolvedValue(mockTags);
+    vi.mocked(getTagsArray).mockResolvedValue(mockTags);
 
-    const { result } = renderHook(() => useTags(mockPost));
+    const { result } = renderHook(() => useTags(mockPost as Post));
 
     expect(result.current).toEqual([]);
 
@@ -62,18 +65,10 @@ describe('useTags hook', () => {
     expect(getTagsArray).toHaveBeenCalledWith(mockPost.tags);
   });
 
-  test('sets tags state to null if singlePost is missing', () => {
-    const { result } = renderHook(() => useTags());
-
-    expect(result.current).toEqual([]);
-
-    expect(getTagsArray).not.toHaveBeenCalled();
-  });
-
   test('sets tags state to null if post has no tags', () => {
     const postWithoutTags = { id: 1 };
 
-    const { result } = renderHook(() => useTags(postWithoutTags));
+    const { result } = renderHook(() => useTags(postWithoutTags as Post));
 
     expect(result.current).toEqual([]);
 

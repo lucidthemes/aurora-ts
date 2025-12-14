@@ -1,25 +1,28 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useComments from '../../comments/hooks/useComments';
 
 vi.mock('@server/posts/getComments', () => ({
   getCommentsById: vi.fn(),
 }));
 
 import { getCommentsById } from '@server/posts/getComments';
+import type { Post } from '@typings/posts/post';
+import type { Comment as CommentType } from '@typings/posts/comment';
+
+import useComments from '../../comments/hooks/useComments';
 
 describe('useComments hook', () => {
-  const mockPost = {
+  const mockPost: Partial<Post> = {
     id: 1,
     title: 'Dune walk',
     slug: 'dune-walk',
   };
 
-  const mockCommentsInitialState = {
+  const mockCommentsInitialState: { list: CommentType[]; count: number } = {
     list: [],
     count: 0,
   };
 
-  const mockComments = [
+  const mockComments: CommentType[] = [
     {
       id: 1,
       postId: 1,
@@ -46,7 +49,7 @@ describe('useComments hook', () => {
     },
   ];
 
-  const newComment = {
+  const newComment: CommentType = {
     id: 3,
     postId: 1,
     replyTo: null,
@@ -55,9 +58,10 @@ describe('useComments hook', () => {
     datetime: '2025-10-09T10:37:54.987Z',
     comment: 'New comment!',
     status: 'approved',
+    replies: [],
   };
 
-  const newReply = {
+  const newReply: CommentType = {
     id: 4,
     postId: 1,
     replyTo: 1,
@@ -66,6 +70,7 @@ describe('useComments hook', () => {
     datetime: '2025-10-09T10:39:42.508Z',
     comment: 'New reply!',
     status: 'approved',
+    replies: [],
   };
 
   beforeEach(() => {
@@ -73,9 +78,9 @@ describe('useComments hook', () => {
   });
 
   test('fetches comments data and sets comments state', async () => {
-    getCommentsById.mockResolvedValue(mockComments);
+    vi.mocked(getCommentsById).mockResolvedValue(mockComments);
 
-    const { result } = renderHook(() => useComments(mockPost.id));
+    const { result } = renderHook(() => useComments(mockPost.id as number));
 
     expect(result.current.comments).toEqual(mockCommentsInitialState);
 
@@ -88,9 +93,9 @@ describe('useComments hook', () => {
   });
 
   test('adds new comment to list on handleNewComment', async () => {
-    getCommentsById.mockResolvedValue(mockComments);
+    vi.mocked(getCommentsById).mockResolvedValue(mockComments);
 
-    const { result } = renderHook(() => useComments(mockPost.id));
+    const { result } = renderHook(() => useComments(mockPost.id as number));
 
     await waitFor(() => {
       expect(result.current.comments.list).toEqual(mockComments);
@@ -109,9 +114,9 @@ describe('useComments hook', () => {
   });
 
   test('adds new reply comment to list on handleNewComment', async () => {
-    getCommentsById.mockResolvedValue(mockComments);
+    vi.mocked(getCommentsById).mockResolvedValue(mockComments);
 
-    const { result } = renderHook(() => useComments(mockPost.id));
+    const { result } = renderHook(() => useComments(mockPost.id as number));
 
     await waitFor(() => {
       expect(result.current.comments.list).toEqual(mockComments);

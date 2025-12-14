@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import Share from '../../share/Share';
 
 describe('Share component', () => {

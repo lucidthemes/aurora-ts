@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import Newsletter from '../../newsletter';
 
 describe('Newsletter component', () => {

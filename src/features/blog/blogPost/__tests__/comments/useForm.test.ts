@@ -1,4 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
+
+import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
 import useForm from '../../comments/hooks/useForm';
 
 describe('useForm hook', () => {
@@ -12,11 +15,11 @@ describe('useForm hook', () => {
     const { result } = renderHook(() => useForm(mockPostId, mockCommentsCount, mockReplyTo, setCommentReplyIdMock, handleNewCommentMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'comment', value: 'New comment!' } });
+      result.current.handleFormChange(createInputChangeEvent('comment', 'New comment!'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'name', value: 'Lucid Themes' } });
+      result.current.handleFormChange(createInputChangeEvent('name', 'Lucid Themes'));
     });
 
     expect(result.current.commentFormData.comment).toBe('New comment!');
@@ -27,14 +30,14 @@ describe('useForm hook', () => {
     const { result } = renderHook(() => useForm(mockPostId, mockCommentsCount, mockReplyTo, setCommentReplyIdMock, handleNewCommentMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'comment', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('comment', ''));
     });
     act(() => {
-      result.current.handleFormChange({ target: { name: 'name', value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('name', ''));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.commentFormErrors.comment).toBe('Please enter a comment');
@@ -45,15 +48,15 @@ describe('useForm hook', () => {
     const { result } = renderHook(() => useForm(mockPostId, mockCommentsCount, mockReplyTo, setCommentReplyIdMock, handleNewCommentMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'comment', value: 'New comment!' } });
+      result.current.handleFormChange(createInputChangeEvent('comment', 'New comment!'));
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'name', value: 'Lucid Themes' } });
+      result.current.handleFormChange(createInputChangeEvent('name', 'Lucid Themes'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(handleNewCommentMock).toHaveBeenCalled();

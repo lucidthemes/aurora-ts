@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import Author from '../../author';
 import { MemoryRouter } from 'react-router-dom';
+
+import Author from '../../author';
 
 describe('Author component', () => {
   const mockAuthor = {

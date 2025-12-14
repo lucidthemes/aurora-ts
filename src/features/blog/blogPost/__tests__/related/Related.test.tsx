@@ -1,20 +1,22 @@
 import { render, screen } from '@testing-library/react';
-import Related from '../../related/Related';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/posts/getPost', () => ({
   getPostArray: vi.fn(),
 }));
 
 import { getPostArray } from '@server/posts/getPost';
-import { MemoryRouter } from 'react-router-dom';
+import type { Post } from '@typings/posts/post';
+
+import Related from '../../related/Related';
 
 describe('Related component', () => {
-  const mockPost = {
+  const mockPost: Partial<Post> = {
     id: 1,
     relatedPosts: [2, 4, 6],
   };
 
-  const mockRelated = [
+  const mockRelated: Partial<Post>[] = [
     { id: 2, title: 'Old Town Centre' },
     { id: 4, title: 'Sweet Coffee' },
     { id: 6, title: 'Beautiful Bouquet' },
@@ -25,11 +27,11 @@ describe('Related component', () => {
   });
 
   test('renders related posts when post data is fetched', async () => {
-    getPostArray.mockResolvedValue(mockRelated);
+    vi.mocked(getPostArray).mockResolvedValue(mockRelated);
 
     render(
       <MemoryRouter>
-        <Related singlePost={mockPost} />
+        <Related post={mockPost as Post} />
       </MemoryRouter>
     );
 
@@ -45,7 +47,7 @@ describe('Related component', () => {
 
     const { container } = render(
       <MemoryRouter>
-        <Related singlePost={postWithoutRelated} />
+        <Related post={postWithoutRelated as Post} />
       </MemoryRouter>
     );
 
