@@ -1,4 +1,10 @@
-export default function Icon({ site, shareUrl, currentPostUrl }) {
+interface IconProps {
+  site: string;
+  shareUrl: string;
+  currentPostUrl: string;
+}
+
+export default function Icon({ site, shareUrl, currentPostUrl }: IconProps) {
   return (
     <li>
       <a
