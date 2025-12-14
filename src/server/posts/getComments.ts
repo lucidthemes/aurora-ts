@@ -1,8 +1,9 @@
 import { z } from 'zod';
-import { Comment } from '@typings/posts/comment';
-import { CommentSchema } from '@schemas/posts/comment.schema';
 
-export async function getComments<K extends 'postId'>(field: K, value: Comment[K]): Promise<Comment[]> {
+import { CommentSchema } from '@schemas/posts/comment.schema';
+import type { Comment as CommentType } from '@typings/posts/comment';
+
+export async function getComments<K extends 'postId'>(field: K, value: CommentType[K]): Promise<CommentType[]> {
   try {
     const res = await fetch('/data/post-comments.json');
 
@@ -19,9 +20,16 @@ export async function getComments<K extends 'postId'>(field: K, value: Comment[K
     }
 
     const allComments = parsed.data;
-    const comments = allComments.filter((comment) => comment[field] === value);
 
-    return comments;
+    return allComments
+      .filter((comment) => comment[field] === value)
+      .map(
+        (comment): CommentType => ({
+          ...comment,
+          replyTo: comment.replyTo ?? null,
+          replies: [],
+        })
+      );
   } catch (error) {
     console.error('getComments', error);
     throw error;

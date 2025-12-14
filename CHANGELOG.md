@@ -33,6 +33,10 @@ All notable changes to this project will be documented in this file.
 - convert hooks to TypeScript
 - convert tests to TypeScript
 
+#### Server
+
+- posts getComments amend each returned comment to include replies field added to comment type
+
 ## [0.9.0] - 2025-12-13
 
 ### Changed
