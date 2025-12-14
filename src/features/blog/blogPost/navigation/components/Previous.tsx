@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
 
-export default function Previous({ previousPost }) {
+import type { Post } from '@typings/posts/post';
+
+interface PreviousProps {
+  previousPost: Post;
+}
+
+export default function Previous({ previousPost }: PreviousProps) {
   return (
     <div className="flex basis-full flex-col items-start gap-y-1 text-left">
       <Link

@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
 
-export default function Next({ nextPost }) {
+import type { Post } from '@typings/posts/post';
+
+interface NextProps {
+  nextPost: Post;
+}
+
+export default function Next({ nextPost }: NextProps) {
   return (
     <div className="flex basis-full flex-col items-end gap-y-1 text-right">
       <Link

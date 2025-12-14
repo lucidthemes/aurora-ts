@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getPostById } from '@server/posts/getPost';
 
-export default function useNavigation(postId) {
-  const [previousPost, setPreviousPost] = useState(null);
-  const [nextPost, setNextPost] = useState(null);
+import { getPostById } from '@server/posts/getPost';
+import type { Post } from '@typings/posts/post';
+
+export default function useNavigation(postId: number) {
+  const [previousPost, setPreviousPost] = useState<Post | null>(null);
+  const [nextPost, setNextPost] = useState<Post | null>(null);
 
   useEffect(() => {
     const fetchPreviousPost = async () => {
