@@ -1,8 +1,15 @@
-import useTags from './useTags';
 import { Link } from 'react-router-dom';
 
-export default function Tags({ singlePost }) {
-  const tags = useTags(singlePost);
+import type { Post } from '@typings/posts/post';
+
+import useTags from './useTags';
+
+interface TagsProps {
+  post: Post;
+}
+
+export default function Tags({ post }: TagsProps) {
+  const tags = useTags(post);
   if (!Array.isArray(tags) || tags.length === 0) return null;
 
   return (
