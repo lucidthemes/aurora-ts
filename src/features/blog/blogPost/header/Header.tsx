@@ -1,12 +1,22 @@
+import Container from '@components/Layout/Container';
+import type { Post } from '@typings/posts/post';
+import type { Category } from '@typings/posts/category';
+import type { Author } from '@typings/posts/author';
+
 import Content from './components/Content';
 import OutsideLayout from './components/OutsideLayout';
 import OverlayLayout from './components/OverlayLayout';
 import SplitLayout from './components/SplitLayout';
-import Container from '@components/Layout/Container';
 
-export default function Header({ singlePost, author, categoryMap }) {
-  const layout = singlePost.postHeader?.layout || 'outside-above';
-  const besideSidebar = singlePost.postHeader?.besideSidebar || false;
+interface HeaderProps {
+  post: Post;
+  categoryMap: Record<number, Category>;
+  author: Author | null;
+}
+
+export default function Header({ post, categoryMap, author }: HeaderProps) {
+  const layout = post.postHeader?.layout || 'outside-above';
+  const besideSidebar = post.postHeader?.besideSidebar || false;
 
   let headerLayout = '';
   let headerLayoutWidth = '';
@@ -31,7 +41,7 @@ export default function Header({ singlePost, author, categoryMap }) {
     headerCustomPadding = 'p-0';
   }
 
-  const headerContent = <Content singlePost={singlePost} author={author} categoryMap={categoryMap} align={headerLayoutAlign} />;
+  const headerContent = <Content post={post} categoryMap={categoryMap} author={author} align={headerLayoutAlign} />;
 
   const LayoutComponent = {
     outside: OutsideLayout,
@@ -43,7 +53,7 @@ export default function Header({ singlePost, author, categoryMap }) {
     return null;
   }
 
-  const headerInner = <LayoutComponent singlePost={singlePost} content={headerContent} layout={layout} />;
+  const headerInner = <LayoutComponent post={post} content={headerContent} layout={layout} />;
 
   return (
     <header className={`post-header-${headerLayout}`}>
