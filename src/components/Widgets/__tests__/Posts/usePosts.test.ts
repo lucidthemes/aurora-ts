@@ -1,16 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import usePosts from '../../Posts/usePosts';
 
 vi.mock('@server/posts/getPosts', () => ({
   getPosts: vi.fn(),
 }));
 
 import { getPosts } from '@server/posts/getPosts';
+import type { Post } from '@typings/posts/post';
+
+import usePosts from '../../Posts/usePosts';
 
 describe('usePosts hook', () => {
   const mockLimit = 3;
 
-  const mockPosts = [
+  const mockPosts: Partial<Post>[] = [
     {
       id: 1,
       title: 'Dune walk',

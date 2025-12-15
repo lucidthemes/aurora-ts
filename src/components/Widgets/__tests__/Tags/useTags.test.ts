@@ -1,16 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useTags from '../../Tags/useTags';
 
 vi.mock('@server/posts/getTags', () => ({
   getTags: vi.fn(),
 }));
 
 import { getTags } from '@server/posts/getTags';
+import type { Tag } from '@typings/posts/tag';
+
+import useTags from '../../Tags/useTags';
 
 describe('usePosts hook', () => {
   const mockLimit = 3;
 
-  const mockTags = [
+  const mockTags: Tag[] = [
     {
       id: 1,
       name: 'Beach',

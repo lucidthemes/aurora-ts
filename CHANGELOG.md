@@ -38,6 +38,10 @@ All notable changes to this project will be documented in this file.
 
 - add import type to components which import types
 
+##### Widgets
+
+- add import type to components, hooks, and tests which import types
+
 #### Contexts
 
 - add import type to contexts which import types

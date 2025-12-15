@@ -1,17 +1,19 @@
 import { render, screen, within } from '@testing-library/react';
-import ProductsWidget from '../../Products/Products';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/products/getProducts', () => ({
   getProducts: vi.fn(),
 }));
 
 import { getProducts } from '@server/products/getProducts';
-import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@typings/products/product';
+
+import ProductsWidget from '../../Products/Products';
 
 describe('ProductsWidget component', () => {
   const mockLimit = 3;
 
-  const mockProducts = [
+  const mockProducts: Partial<Product>[] = [
     {
       id: 1,
       title: 'Cozy sweater',

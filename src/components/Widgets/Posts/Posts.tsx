@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import usePosts from './usePosts';
+
 import WidgetTitle from '@components/Widgets/Title';
 import MetaList from '@features/blog/MetaList';
+
+import usePosts from './usePosts';
 
 interface PostsWidgetProps {
   title?: string;

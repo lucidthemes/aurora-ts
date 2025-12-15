@@ -1,17 +1,19 @@
 import { render, screen, within } from '@testing-library/react';
-import TagsWidget from '../../Tags/Tags';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/posts/getTags', () => ({
   getTags: vi.fn(),
 }));
 
 import { getTags } from '@server/posts/getTags';
-import { MemoryRouter } from 'react-router-dom';
+import type { Tag } from '@typings/posts/tag';
+
+import TagsWidget from '../../Tags/Tags';
 
 describe('PostsWidget component', () => {
   const mockLimit = 3;
 
-  const mockTags = [
+  const mockTags: Tag[] = [
     {
       id: 1,
       name: 'Beach',

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Product } from '@typings/products/product';
+
 import { getProducts } from '@server/products/getProducts';
+import type { Product } from '@typings/products/product';
 
 export default function useProducts(limit: number, category?: number) {
   const [products, setProducts] = useState<Product[]>([]);

@@ -1,17 +1,19 @@
 import { render, screen, within } from '@testing-library/react';
-import PostsWidget from '../../Posts/Posts';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/posts/getPosts', () => ({
   getPosts: vi.fn(),
 }));
 
 import { getPosts } from '@server/posts/getPosts';
-import { MemoryRouter } from 'react-router-dom';
+import type { Post } from '@typings/posts/post';
+
+import PostsWidget from '../../Posts/Posts';
 
 describe('PostsWidget component', () => {
   const mockLimit = 3;
 
-  const mockPosts = [
+  const mockPosts: Partial<Post>[] = [
     {
       id: 1,
       title: 'Dune walk',

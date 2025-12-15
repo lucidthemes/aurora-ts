@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
-import useTags from './useTags';
+
 import WidgetTitle from '@components/Widgets/Title';
+
+import useTags from './useTags';
 
 interface TagsWidgetProps {
   title?: string;
