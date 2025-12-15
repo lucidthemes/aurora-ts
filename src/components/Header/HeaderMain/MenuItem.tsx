@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import type { ReactNode, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 
 interface MenuItemProps {
   url: string;
   text: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   level?: number;
 }
 
@@ -17,7 +18,7 @@ export default function MenuItem({ url = '', text = '', children, level = 1 }: M
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child as React.ReactElement<any>, {
+      return React.cloneElement(child as ReactElement<any>, {
         mobileSubMenuActive,
         level,
       });

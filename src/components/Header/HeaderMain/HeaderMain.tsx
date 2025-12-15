@@ -1,4 +1,5 @@
 import { useHeaderLayoutContext } from '@contexts/HeaderLayoutContext';
+
 import HeaderMainBlog from './Blog';
 import HeaderMainMinimal from './Minimal';
 

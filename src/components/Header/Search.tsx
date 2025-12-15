@@ -1,5 +1,6 @@
-import useSearch from './useSearch';
 import SearchForm from '@features/searchForm';
+
+import useSearch from './useSearch';
 
 interface SearchProps {
   headerSearchActive: boolean;
