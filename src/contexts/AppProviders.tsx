@@ -1,8 +1,10 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+
+import { CartProvider } from '@features/cart/CartContext';
+
 import { HeaderLayoutProvider } from './HeaderLayoutContext';
 import { MobileMenuProvider } from './MobileMenuContext';
 import { AuthProvider } from './AuthContext';
-import { CartProvider } from '@features/cart/CartContext';
 
 interface AppProvidersProps {
   children: ReactNode;

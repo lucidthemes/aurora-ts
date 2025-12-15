@@ -16,27 +16,33 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-#### Account
+#### Contexts
 
 - add import type to components, hooks, and tests which import types
 
-#### Auth
+#### Features
+
+##### Account
 
 - add import type to components, hooks, and tests which import types
 
-#### Blog
+##### Auth
+
+- add import type to components, hooks, and tests which import types
+
+##### Blog
 
 - convert CategoryList to TypeScript
 - MetaList props interface author to Author typing
 
-##### BlogList
+###### BlogList
 
 - convert components to TypeScript
 - convert hooks to TypeScript
 - convert tests to TypeScript
 - add import type to components, hooks, and tests which import types
 
-##### BlogPost
+###### BlogPost
 
 - convert components to TypeScript
 - convert hooks to TypeScript
