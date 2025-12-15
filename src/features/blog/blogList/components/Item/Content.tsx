@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+
+import Button from '@components/UI/Button';
 import CategoryList from '@features/blog/CategoryList';
 import MetaList from '@features/blog/MetaList';
-import Button from '@components/UI/Button';
+import type { Post } from '@typings/posts/post';
+import type { Category } from '@typings/posts/category';
+import type { Author } from '@typings/posts/author';
 import { textTruncateByWords } from '@utils/formatters';
-import { Post } from '@typings/posts/post';
-import { Category } from '@typings/posts/category';
-import { Author } from '@typings/posts/author';
 
 interface ContentProps {
   post: Post;

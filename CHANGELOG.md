@@ -26,12 +26,14 @@ All notable changes to this project will be documented in this file.
 - convert components to TypeScript
 - convert hooks to TypeScript
 - convert tests to TypeScript
+- add import type to components, hooks, and tests which import types
 
 ##### BlogPost
 
 - convert components to TypeScript
 - convert hooks to TypeScript
 - convert tests to TypeScript
+- add import type to components, hooks, and tests which import types
 
 #### Server
 

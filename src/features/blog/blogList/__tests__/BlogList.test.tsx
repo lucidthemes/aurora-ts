@@ -1,8 +1,5 @@
 import { render, screen, within, fireEvent } from '@testing-library/react';
-import BlogList from '../BlogList';
-import { Post } from '@typings/posts/post';
-import { Category } from '@typings/posts/category';
-import { Author } from '@typings/posts/author';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/posts/getPosts', () => ({
   getPosts: vi.fn(),
@@ -19,7 +16,11 @@ vi.mock('@server/posts/getAuthor', () => ({
 import { getPosts } from '@server/posts/getPosts';
 import { getCategoryMap } from '@server/posts/getCategory';
 import { getAuthorMap } from '@server/posts/getAuthor';
-import { MemoryRouter } from 'react-router-dom';
+import type { Post } from '@typings/posts/post';
+import type { Category } from '@typings/posts/category';
+import type { Author } from '@typings/posts/author';
+
+import BlogList from '../BlogList';
 
 Element.prototype.scrollIntoView = vi.fn();
 

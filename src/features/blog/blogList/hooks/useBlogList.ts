@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+
 import { getPosts } from '@server/posts/getPosts';
 import { getCategoryMap } from '@server/posts/getCategory';
 import { getAuthorMap } from '@server/posts/getAuthor';
-import { Post } from '@typings/posts/post';
-import { Category } from '@typings/posts/category';
-import { Author } from '@typings/posts/author';
+import type { Post } from '@typings/posts/post';
+import type { Category } from '@typings/posts/category';
+import type { Author } from '@typings/posts/author';
 
 export default function useBlogList(limit?: number, category?: number, tag?: number, author?: number, search?: string) {
   const [posts, setPosts] = useState<Post[]>([]);
