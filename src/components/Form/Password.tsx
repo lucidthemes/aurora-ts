@@ -1,4 +1,5 @@
-import { useState, InputHTMLAttributes, MouseEventHandler } from 'react';
+import { useState } from 'react';
+import type { InputHTMLAttributes, MouseEventHandler } from 'react';
 
 interface PasswordProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;

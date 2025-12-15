@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import type { InputHTMLAttributes } from 'react';
 
 interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
   options: { value: string; text: string }[];
