@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
+
+import type { Customer } from '@typings/shop/customer';
+
 import Address from '../../components/addresses/Address';
-import { Customer } from '@typings/shop/customer';
 
 describe('Address component', () => {
   const mockLoggedInUser: Customer = {

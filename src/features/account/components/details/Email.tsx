@@ -1,4 +1,5 @@
-import { Customer } from '@typings/shop/customer';
+import type { Customer } from '@typings/shop/customer';
+
 import useEmail from '../../hooks/details/useEmail';
 import EmailForm from './EmailForm';
 

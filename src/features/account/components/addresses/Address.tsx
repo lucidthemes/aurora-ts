@@ -1,4 +1,4 @@
-import { Customer } from '@typings/shop/customer';
+import type { Customer } from '@typings/shop/customer';
 
 interface AddressProps {
   loggedInUser: Customer | null;

@@ -1,7 +1,8 @@
-import { Order } from '@typings/shop/order';
-import useItem from '../../hooks/orders/useItem';
-import { dateFormat } from '@utils/formatters';
 import OrderReceived from '@features/checkout/components/orderReceived';
+import type { Order } from '@typings/shop/order';
+import { dateFormat } from '@utils/formatters';
+
+import useItem from '../../hooks/orders/useItem';
 
 interface ItemProps {
   order: Order;

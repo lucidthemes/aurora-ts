@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Nav from '../components/Nav';
 import { MemoryRouter } from 'react-router-dom';
+
+import Nav from '../components/Nav';
 
 describe('Nav component', () => {
   const handleLogoutMock = vi.fn();

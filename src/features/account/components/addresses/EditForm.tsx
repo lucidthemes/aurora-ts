@@ -1,8 +1,9 @@
-import { Customer } from '@typings/shop/customer';
-import useEditForm from '../../hooks/addresses/useEditForm';
 import Input from '@components/Form/Input';
 import Select from '@components/Form/Select';
 import Button from '@components/UI/Button';
+import type { Customer } from '@typings/shop/customer';
+
+import useEditForm from '../../hooks/addresses/useEditForm';
 
 interface EditFormProps {
   loggedInUser: Customer | null;

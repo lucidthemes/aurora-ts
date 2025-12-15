@@ -1,4 +1,5 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
+
 import useEmail from '../../hooks/details/useEmail';
 
 describe('useEmail hook', () => {
