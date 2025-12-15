@@ -1,6 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
+
+import type { Post } from '@typings/posts/post';
+
 import usePagination from '../hooks/usePagination';
-import { Post } from '@typings/posts/post';
 
 describe('usePagination hook', () => {
   const mockBlogPosts: Partial<Post>[] = [

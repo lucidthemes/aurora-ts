@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { Post } from '@typings/posts/post';
+
+import type { Post } from '@typings/posts/post';
 
 function paginatePosts(posts: Post[], currentPage: number, postsPerPage: number, showPagination: boolean) {
   if (!showPagination) return posts;

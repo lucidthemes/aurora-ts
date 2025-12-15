@@ -1,8 +1,4 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useBlogList from '../hooks/useBlogList';
-import { Post } from '@typings/posts/post';
-import { Category } from '@typings/posts/category';
-import { Author } from '@typings/posts/author';
 
 vi.mock('@server/posts/getPosts', () => ({
   getPosts: vi.fn(),
@@ -19,6 +15,11 @@ vi.mock('@server/posts/getAuthor', () => ({
 import { getPosts } from '@server/posts/getPosts';
 import { getCategoryMap } from '@server/posts/getCategory';
 import { getAuthorMap } from '@server/posts/getAuthor';
+import type { Post } from '@typings/posts/post';
+import type { Category } from '@typings/posts/category';
+import type { Author } from '@typings/posts/author';
+
+import useBlogList from '../hooks/useBlogList';
 
 describe('useBlogList hook', () => {
   const mockPosts: Partial<Post>[] = [

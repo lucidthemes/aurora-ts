@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+
+import type { Post } from '@typings/posts/post';
+import type { Category } from '@typings/posts/category';
+import type { Author } from '@typings/posts/author';
+
 import Content from './Content';
-import { Post } from '@typings/posts/post';
-import { Category } from '@typings/posts/category';
-import { Author } from '@typings/posts/author';
 
 interface WideLayoutProps {
   post: Post;
