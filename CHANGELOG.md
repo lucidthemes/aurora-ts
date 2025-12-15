@@ -18,6 +18,10 @@ All notable changes to this project will be documented in this file.
 
 #### Components
 
+##### Footer
+
+- add import type to components which import types
+
 ##### Header
 
 - add import type to components which import types
