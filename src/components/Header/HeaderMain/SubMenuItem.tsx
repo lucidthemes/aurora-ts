@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import type { ReactNode, ReactElement, MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 
 interface SubMenuItemProps {
   url: string;
   text: string;
   level?: number;
-  children?: React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  children?: ReactNode;
+  onClick?: MouseEventHandler<HTMLElement>;
 }
 
 export default function SubMenuItem({ url = '', text = '', level = 1, children, onClick }: SubMenuItemProps) {
@@ -18,7 +19,7 @@ export default function SubMenuItem({ url = '', text = '', level = 1, children, 
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
-      return React.cloneElement(child as React.ReactElement<any>, {
+      return React.cloneElement(child as ReactElement<any>, {
         mobileSubMenuActive,
         level: level + 1,
       });

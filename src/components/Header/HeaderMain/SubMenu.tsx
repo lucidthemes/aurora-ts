@@ -1,8 +1,8 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 
 interface SubMenuProps {
   level?: number;
-  children?: React.ReactNode;
+  children?: ReactNode;
   mobileSubMenuActive?: boolean;
 }
 

@@ -1,6 +1,7 @@
-import { useCartContext } from '@features/cart/CartContext';
 import { Link } from 'react-router-dom';
+
 import SocialIcons from '@components/UI/SocialIcons';
+import { useCartContext } from '@features/cart/CartContext';
 
 interface IconsProps {
   location?: string;

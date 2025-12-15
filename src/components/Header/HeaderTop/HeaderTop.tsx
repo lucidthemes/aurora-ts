@@ -1,5 +1,6 @@
-import { useHeaderLayoutContext } from '@contexts/HeaderLayoutContext';
 import Container from '@components/Layout/Container';
+import { useHeaderLayoutContext } from '@contexts/HeaderLayoutContext';
+
 import Nav from './Nav';
 import Icons from '../Icons';
 

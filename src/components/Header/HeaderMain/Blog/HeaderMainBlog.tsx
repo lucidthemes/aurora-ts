@@ -1,5 +1,6 @@
-import { useMobileMenuContext } from '@contexts/MobileMenuContext';
 import Container from '@components/Layout/Container';
+import { useMobileMenuContext } from '@contexts/MobileMenuContext';
+
 import NavLeft from './NavLeft';
 import NavRight from './NavRight';
 import DesktopLogo from '../DesktopLogo';

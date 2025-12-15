@@ -16,9 +16,15 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+#### Components
+
+##### Header
+
+- add import type to components which import types
+
 #### Contexts
 
-- add import type to components, hooks, and tests which import types
+- add import type to contexts which import types
 
 #### Features
 
