@@ -1,4 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+
+import type { Customer } from '@typings/shop/customer';
+
 import LoginForm from '../LoginForm';
 
 vi.mock('@contexts/AuthContext', () => ({
@@ -11,10 +15,9 @@ vi.mock('@server/shop/getCustomer', () => ({
 
 import { useAuthContext } from '@contexts/AuthContext';
 import { getCustomerByEmail } from '@server/shop/getCustomer';
-import { MemoryRouter } from 'react-router-dom';
 
 describe('LoginForm component', () => {
-  const mockCustomer = {
+  const mockCustomer: Customer = {
     id: 1,
     email: 'test@example.com',
   };

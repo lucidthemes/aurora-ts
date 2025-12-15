@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+
 import RegisterForm from '../RegisterForm';
 
 vi.mock('@contexts/AuthContext', () => ({

@@ -1,4 +1,6 @@
-import { useState, ChangeEventHandler, FormEventHandler } from 'react';
+import { useState } from 'react';
+import type { ChangeEventHandler, FormEventHandler } from 'react';
+
 import { validateEmail } from '@utils/validators';
 
 interface LostPasswordFormNotification {

@@ -1,7 +1,9 @@
-import { useState, ChangeEventHandler, FormEventHandler } from 'react';
-import { validateEmail } from '@utils/validators';
+import { useState } from 'react';
+import type { ChangeEventHandler, FormEventHandler } from 'react';
+
 import { getCustomerByEmail } from '@server/shop/getCustomer';
-import { Customer } from '@typings/shop/customer';
+import type { Customer } from '@typings/shop/customer';
+import { validateEmail } from '@utils/validators';
 
 interface RegisterFormData {
   email: string;

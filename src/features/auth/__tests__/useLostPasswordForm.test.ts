@@ -1,6 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
-import useLostPasswordForm from '../hooks/useLostPasswordForm';
+
 import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useLostPasswordForm from '../hooks/useLostPasswordForm';
 
 describe('useLostPasswordForm hook', () => {
   test('updates form email on handleFormChange', () => {
