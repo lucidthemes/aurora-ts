@@ -1,6 +1,9 @@
-import { ReactNode, useEffect } from 'react';
-import { useMobileMenuContext } from '@contexts/MobileMenuContext';
+import { useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
+
+import { useMobileMenuContext } from '@contexts/MobileMenuContext';
+
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 
