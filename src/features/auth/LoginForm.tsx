@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '@contexts/AuthContext';
-import useLoginForm from './hooks/useLoginForm';
+
 import Notification from '@components/Notification';
 import Input from '@components/Form/Input';
 import Password from '@components/Form/Password';
 import Button from '@components/UI/Button';
+import { useAuthContext } from '@contexts/AuthContext';
+
+import useLoginForm from './hooks/useLoginForm';
 
 export default function LoginForm() {
   const { handleLogin } = useAuthContext();

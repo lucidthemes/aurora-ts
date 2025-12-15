@@ -1,6 +1,9 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useLoginForm from '../hooks/useLoginForm';
+
+import type { Customer } from '@typings/shop/customer';
 import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useLoginForm from '../hooks/useLoginForm';
 
 vi.mock('@server/shop/getCustomer', () => ({
   getCustomerByEmail: vi.fn(),
@@ -11,7 +14,7 @@ import { getCustomerByEmail } from '@server/shop/getCustomer';
 describe('useLoginForm hook', () => {
   const handleLoginMock = vi.fn();
 
-  const mockCustomer = {
+  const mockCustomer: Customer = {
     id: 1,
     email: 'test@example.com',
   };

@@ -20,6 +20,10 @@ All notable changes to this project will be documented in this file.
 
 - add import type to components, hooks, and tests which import types
 
+#### Auth
+
+- add import type to components, hooks, and tests which import types
+
 #### Blog
 
 - convert CategoryList to TypeScript

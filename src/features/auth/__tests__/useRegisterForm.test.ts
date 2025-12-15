@@ -1,6 +1,8 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useRegisterForm from '../hooks/useRegisterForm';
+
 import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useRegisterForm from '../hooks/useRegisterForm';
 
 vi.mock('@server/shop/getCustomer', () => ({
   getCustomerByEmail: vi.fn(),
