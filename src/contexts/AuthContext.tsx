@@ -1,5 +1,7 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
-import { Customer } from '@typings/shop/customer';
+import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
+
+import type { Customer } from '@typings/shop/customer';
 
 interface AuthContextType {
   loggedInUser: Customer | null;
