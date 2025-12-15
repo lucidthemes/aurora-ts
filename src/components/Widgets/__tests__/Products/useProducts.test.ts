@@ -1,16 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useProducts from '../../Products/useProducts';
 
 vi.mock('@server/products/getProducts', () => ({
   getProducts: vi.fn(),
 }));
 
 import { getProducts } from '@server/products/getProducts';
+import type { Product } from '@typings/products/product';
+
+import useProducts from '../../Products/useProducts';
 
 describe('useProducts hook', () => {
   const mockLimit = 3;
 
-  const mockProducts = [
+  const mockProducts: Partial<Product>[] = [
     {
       id: 1,
       title: 'Cozy sweater',

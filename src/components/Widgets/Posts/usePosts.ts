@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Post } from '@typings/posts/post';
+
 import { getPosts } from '@server/posts/getPosts';
+import type { Post } from '@typings/posts/post';
 
 export default function usePosts(limit: number, category?: number) {
   const [posts, setPosts] = useState<Post[]>([]);

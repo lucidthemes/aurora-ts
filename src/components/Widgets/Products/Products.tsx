@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import useProducts from './useProducts';
+
 import WidgetTitle from '@components/Widgets/Title';
 import StarRating from '@features/product/starRating';
+
+import useProducts from './useProducts';
 
 interface ProductsWidgetProps {
   title?: string;
