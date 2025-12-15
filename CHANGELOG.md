@@ -30,6 +30,10 @@ All notable changes to this project will be documented in this file.
 
 - add import type to components which import types
 
+##### Layout
+
+- add import type to components which import types
+
 #### Contexts
 
 - add import type to contexts which import types
