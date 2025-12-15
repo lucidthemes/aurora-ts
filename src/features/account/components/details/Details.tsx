@@ -1,4 +1,5 @@
 import { useAuthContext } from '@contexts/AuthContext';
+
 import Email from './Email';
 
 export default function Details() {

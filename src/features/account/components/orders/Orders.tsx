@@ -1,7 +1,8 @@
+import Button from '@components/UI/Button';
 import { useAuthContext } from '@contexts/AuthContext';
+
 import useOrders from '../../hooks/orders/useOrders';
 import Items from './Items';
-import Button from '@components/UI/Button';
 
 export default function Orders() {
   const { loggedInUser } = useAuthContext();

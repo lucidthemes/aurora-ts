@@ -1,7 +1,9 @@
 import { renderHook, act } from '@testing-library/react';
-import useEmailForm from '../../hooks/details/useEmailForm';
-import { Customer } from '@typings/shop/customer';
+
+import type { Customer } from '@typings/shop/customer';
 import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useEmailForm from '../../hooks/details/useEmailForm';
 
 describe('useEmailForm hook', () => {
   const mockLoggedInUser: Customer = {

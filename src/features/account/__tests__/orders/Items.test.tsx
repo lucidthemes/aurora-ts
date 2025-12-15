@@ -1,7 +1,9 @@
 import { render, screen, fireEvent, within, act } from '@testing-library/react';
+
+import type { Order } from '@typings/shop/order';
+import type { Attribute } from '@typings/products/attribute';
+
 import Items from '../../components/orders/Items';
-import { Order } from '@typings/shop/order';
-import { Attribute } from '@typings/products/attribute';
 
 vi.mock('@server/products/getAttribute', () => ({
   getAttributeMap: vi.fn(),

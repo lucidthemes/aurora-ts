@@ -1,5 +1,7 @@
-import { useState, ChangeEventHandler, KeyboardEventHandler, FormEventHandler } from 'react';
-import { Customer } from '@typings/shop/customer';
+import { useState } from 'react';
+import type { ChangeEventHandler, KeyboardEventHandler, FormEventHandler } from 'react';
+
+import type { Customer } from '@typings/shop/customer';
 
 interface EditFormData {
   firstName: string;

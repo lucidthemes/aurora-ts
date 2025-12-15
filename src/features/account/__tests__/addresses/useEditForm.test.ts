@@ -1,7 +1,9 @@
 import { renderHook, act } from '@testing-library/react';
-import useEditForm from '../../hooks/addresses/useEditForm';
-import { Customer } from '@typings/shop/customer';
+
+import type { Customer } from '@typings/shop/customer';
 import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useEditForm from '../../hooks/addresses/useEditForm';
 
 describe('useEditForm hook', () => {
   const mockLoggedInUser: Customer = {

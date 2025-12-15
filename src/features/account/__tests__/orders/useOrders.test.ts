@@ -1,4 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react';
+
+import type { Customer } from '@typings/shop/customer';
+import type { Order } from '@typings/shop/order';
+
 import useOrders from '../../hooks/orders/useOrders';
 
 vi.mock('@server/shop/getOrders', () => ({
@@ -8,12 +12,12 @@ vi.mock('@server/shop/getOrders', () => ({
 import { getOrdersByCustomerId } from '@server/shop/getOrders';
 
 describe('useOrders hook', () => {
-  const mockCustomer = {
+  const mockCustomer: Customer = {
     id: 1,
     email: 'test@example.com',
   };
 
-  const mockOrders = [
+  const mockOrders: Partial<Order>[] = [
     {
       id: 1001,
       customerId: 1,

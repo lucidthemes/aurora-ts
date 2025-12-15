@@ -1,5 +1,7 @@
-import { useState, ChangeEventHandler, FormEventHandler } from 'react';
-import { Customer } from '@typings/shop/customer';
+import { useState } from 'react';
+import type { ChangeEventHandler, FormEventHandler } from 'react';
+
+import type { Customer } from '@typings/shop/customer';
 import { validateEmail } from '@utils/validators';
 
 export default function useEmailForm(

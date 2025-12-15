@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Order } from '@typings/shop/order';
+
 import { getOrdersByCustomerId } from '@server/shop/getOrders';
+import type { Order } from '@typings/shop/order';
 
 export default function useOrders(customerId: number | undefined) {
   const [orders, setOrders] = useState<Order[]>([]);

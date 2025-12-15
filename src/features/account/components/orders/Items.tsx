@@ -1,4 +1,5 @@
-import { Order } from '@typings/shop/order';
+import type { Order } from '@typings/shop/order';
+
 import Item from './Item';
 
 interface ItemsProps {

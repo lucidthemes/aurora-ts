@@ -1,5 +1,7 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+
 import { useAuthContext } from '@contexts/AuthContext';
+
 import Nav from './components/Nav';
 
 interface AccountProps {

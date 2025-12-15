@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+
+import type { Customer } from '@typings/shop/customer';
+
 import EditForm from '../../components/addresses/EditForm';
-import { Customer } from '@typings/shop/customer';
 
 describe('EditForm component', () => {
   const mockLoggedInUser: Customer = {
@@ -30,7 +32,10 @@ describe('EditForm component', () => {
     },
   };
 
-  const mockLoggedInUserUpdated = {
+  type AddressSection = 'shipping' | 'billing';
+  type Address = Customer[AddressSection];
+
+  const mockLoggedInUserUpdated: Address = {
     firstName: 'James',
     lastName: 'Matthew',
     country: 'GB',
