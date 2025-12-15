@@ -1,5 +1,6 @@
-import { ElementType } from 'react';
-import { ContentBlock } from '@typings/contentBlock';
+import type { ElementType } from 'react';
+
+import type { ContentBlock } from '@typings/contentBlock';
 
 interface PageContentProps {
   content: ContentBlock[];
