@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { getCouponByCode } from '@server/shop/getCoupon';
+import type { ChangeEventHandler, FormEventHandler } from 'react';
 
-export default function useCouponForm(cartCoupons, addCartCoupon) {
+import { getCouponByCode } from '@server/shop/getCoupon';
+import type { Coupon as CouponType } from '@typings/shop/coupon';
+
+export default function useCouponForm(cartCoupons: CouponType[], addCartCoupon: (coupon: CouponType) => void) {
   const [couponFormCoupon, setCouponFormCoupon] = useState('');
   const [couponFormError, setCouponFormError] = useState('');
 
-  const handleFormChange = (e) => {
+  const handleFormChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
     setCouponFormCoupon(value);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
     if (couponFormCoupon) {
