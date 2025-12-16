@@ -1,9 +1,16 @@
+import type { Item } from '@typings/cart/item';
+
 import useQuantity from '../../hooks/items/useQuantity';
 
-export default function Quantity({ productId, productStock, variation, quantity, updateCartItem }) {
-  const { handleQuantityDecrease, handleQuantityChange, handleQuantityIncrease } = useQuantity(productId, productStock, variation, quantity, updateCartItem);
+interface QuantityProps {
+  item: Item;
+  updateCartItem: (productId: number, quantity: number, variationId?: number) => void;
+}
 
-  const maxQuantity = variation?.id !== null ? variation?.stock : productStock !== null ? productStock : '';
+export default function Quantity({ item, updateCartItem }: QuantityProps) {
+  const { handleQuantityDecrease, handleQuantityChange, handleQuantityIncrease } = useQuantity(item, updateCartItem);
+
+  const maxQuantity = item.variation?.id !== null ? item.variation?.stock : item.stock !== null ? item.stock : '';
 
   return (
     <div className="flex size-max rounded-sm border-1 border-pearl-bush">
@@ -15,7 +22,7 @@ export default function Quantity({ productId, productStock, variation, quantity,
       <input
         name="quantity"
         type="number"
-        value={quantity}
+        value={item.quantity}
         max={maxQuantity}
         onChange={(e) => {
           handleQuantityChange(e);

@@ -1,7 +1,14 @@
+import type { Item } from '@typings/cart/item';
+
 import useRemove from '../../hooks/items/useRemove';
 
-export default function Remove({ productId, variation, removeCartItem }) {
-  const handleRemoveCartItem = useRemove(productId, variation, removeCartItem);
+interface RemoveProps {
+  item: Item;
+  removeCartItem: (productId: number, variationId?: number) => void;
+}
+
+export default function Remove({ item, removeCartItem }: RemoveProps) {
+  const handleRemoveCartItem = useRemove(item, removeCartItem);
 
   return (
     <button

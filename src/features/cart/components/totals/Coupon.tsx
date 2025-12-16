@@ -1,7 +1,14 @@
+import type { Coupon as CouponType } from '@typings/shop/coupon';
+
 import useCoupon from '../../hooks/totals/useCoupon';
 import CouponForm from './CouponForm';
 
-export default function Coupon({ cartCoupons, addCartCoupon }) {
+interface CouponProps {
+  cartCoupons: CouponType[];
+  addCartCoupon: (coupon: CouponType) => void;
+}
+
+export default function Coupon({ cartCoupons, addCartCoupon }: CouponProps) {
   const { couponFormShow, handleCouponFormShow } = useCoupon();
   const couponFormShowIconClass = couponFormShow === true ? 'rotate-180' : '';
 

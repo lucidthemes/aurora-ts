@@ -1,4 +1,13 @@
-export default function CouponDiscount({ cartSubTotal, cartCoupons, cartTotal, removeCartCoupon }) {
+import type { Coupon } from '@typings/shop/coupon';
+
+interface CouponDiscountProps {
+  cartSubTotal: number;
+  cartCoupons: Coupon[];
+  cartTotal: number;
+  removeCartCoupon: (couponId: number) => void;
+}
+
+export default function CouponDiscount({ cartSubTotal, cartCoupons, cartTotal, removeCartCoupon }: CouponDiscountProps) {
   if (!Array.isArray(cartCoupons) || cartCoupons.length === 0) return null;
 
   return (

@@ -1,9 +1,20 @@
 import { Link } from 'react-router-dom';
+
+import type { Item as ItemType } from '@typings/cart/item';
+import type { Attribute } from '@typings/products/attribute';
+
 import Variation from './Variation';
 import Quantity from './Quantity';
 import Remove from './Remove';
 
-export default function Item({ item, attributeMap, updateCartItem, removeCartItem }) {
+interface ItemProps {
+  item: ItemType;
+  updateCartItem: (productId: number, quantity: number, variationId?: number) => void;
+  removeCartItem: (productId: number, variationId?: number) => void;
+  attributeMap?: Record<number, Attribute>;
+}
+
+export default function Item({ item, updateCartItem, removeCartItem, attributeMap }: ItemProps) {
   if (!item) return null;
 
   return (
@@ -25,11 +36,9 @@ export default function Item({ item, attributeMap, updateCartItem, removeCartIte
           {item.price && <p className="text-xl text-shark">£{(item.quantity * item.price).toFixed(2)}</p>}
         </div>
         {item.price && item.quantity > 1 && <p>£{item.price.toFixed(2)}</p>}
-        <Variation item={item} variation={item.variation} attributeMap={attributeMap} />
-        {updateCartItem && (
-          <Quantity productId={item.productId} productStock={item.stock} variation={item.variation} quantity={item.quantity} updateCartItem={updateCartItem} />
-        )}
-        {removeCartItem && <Remove productId={item.productId} variation={item.variation} removeCartItem={removeCartItem} />}
+        <Variation item={item} attributeMap={attributeMap} />
+        {updateCartItem && <Quantity item={item} updateCartItem={updateCartItem} />}
+        {removeCartItem && <Remove item={item} removeCartItem={removeCartItem} />}
       </div>
     </li>
   );
