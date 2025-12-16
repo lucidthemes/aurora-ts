@@ -13,6 +13,7 @@ export interface Product {
   description?: ContentBlock[];
   price: number;
   inStock: boolean;
+  stock?: number;
   SKU: string;
   variationAttributes?: { type: string; options: number[] }[];
   variations?: { id: number; colourId?: number; sizeId?: number; price: number; stock: number; SKU: string }[];
