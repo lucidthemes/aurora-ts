@@ -1,11 +1,29 @@
-import { CartObject, CartItemObject } from './CartObjects';
+import type { Cart, CartAction } from '@typings/cart/cart';
+import type { Item } from '@typings/cart/item';
+import type { Variation as VariationType } from '@typings/cart/variation';
+import type { Coupon as CouponType } from '@typings/shop/coupon';
+import type { Product } from '@typings/products/product';
 
-function addCartItem(state, cartItemProduct, productId, variationId, quantity, existingCartItem) {
-  let cartItemProductVariation = '';
+import { createEmptyCartObject, createCartItemObject } from './CartObjects';
 
-  if (variationId) {
-    cartItemProductVariation = cartItemProduct.variations.find((variation) => variation.id === variationId);
+function findExistingCartItem(state: Cart, productId: number, variationId?: number): Item | undefined {
+  if (productId == null) return undefined;
+
+  if (!variationId) {
+    return state.items.find((item) => item.productId === productId);
+  } else {
+    return state.items.find((item) => item.productId === productId && item.variation?.id === variationId);
   }
+}
+
+function findCartItemProductVariation(cartItemProduct: Product, variationId?: number): VariationType | undefined {
+  if (!cartItemProduct.variations || !variationId) return undefined;
+
+  return cartItemProduct.variations.find((variation) => variation.id === variationId);
+}
+
+function addCartItem(state: Cart, cartItemProduct: Product, productId: number, quantity: number, existingCartItem?: Item, variationId?: number) {
+  const cartItemProductVariation = findCartItemProductVariation(cartItemProduct, variationId);
 
   if (!existingCartItem) {
     let newCartItemPrice = cartItemProduct.price;
@@ -18,7 +36,7 @@ function addCartItem(state, cartItemProduct, productId, variationId, quantity, e
       }
     }
 
-    const newCartItem = new CartItemObject(cartItemProduct, cartItemProductVariation, newCartItemPrice, newCartItemQuantity);
+    const newCartItem = createCartItemObject(cartItemProduct, newCartItemPrice, newCartItemQuantity, cartItemProductVariation);
 
     return {
       ...state,
@@ -29,7 +47,7 @@ function addCartItem(state, cartItemProduct, productId, variationId, quantity, e
       if (item.productId === productId) {
         let newQuantity = Number(item.quantity) + Number(quantity || 1);
 
-        if (item.variation) {
+        if (cartItemProductVariation && item.variation) {
           if (item.variation?.id === variationId) {
             if (newQuantity > cartItemProductVariation.stock) {
               newQuantity = cartItemProductVariation.stock;
@@ -45,7 +63,7 @@ function addCartItem(state, cartItemProduct, productId, variationId, quantity, e
             };
           }
         } else {
-          if (newQuantity > cartItemProduct.stock) {
+          if (cartItemProduct.stock && newQuantity > cartItemProduct.stock) {
             newQuantity = cartItemProduct.stock;
           }
 
@@ -68,7 +86,7 @@ function addCartItem(state, cartItemProduct, productId, variationId, quantity, e
   }
 }
 
-function updateCartItem(state, productId, variationId, quantity, existingCartItem) {
+function updateCartItem(state: Cart, productId: number, quantity: number, existingCartItem?: Item, variationId?: number) {
   if (existingCartItem) {
     const updatedCartItems = state.items
       .map((item) => {
@@ -108,7 +126,7 @@ function updateCartItem(state, productId, variationId, quantity, existingCartIte
   }
 }
 
-function removeCartItem(state, productId, variationId, existingCartItem) {
+function removeCartItem(state: Cart, productId: number, existingCartItem?: Item, variationId?: number) {
   if (existingCartItem) {
     const updatedCartItems = state.items.filter((item) => {
       if (item.variation) {
@@ -127,7 +145,7 @@ function removeCartItem(state, productId, variationId, existingCartItem) {
   }
 }
 
-function addCartCoupon(state, coupon) {
+function addCartCoupon(state: Cart, coupon: CouponType) {
   if (coupon) {
     if (state.coupons && state.coupons.length > 0) {
       return {
@@ -145,7 +163,7 @@ function addCartCoupon(state, coupon) {
   }
 }
 
-function removeCartCoupon(state, couponId) {
+function removeCartCoupon(state: Cart, couponId: number) {
   if (couponId) {
     if (state.coupons && state.coupons.length > 0) {
       const updatedCoupons = state.coupons.filter((coupon) => coupon.id !== couponId);
@@ -161,7 +179,7 @@ function removeCartCoupon(state, couponId) {
   }
 }
 
-function updateCartTotal(state) {
+function updateCartTotal(state: Cart) {
   let cartSubTotal = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   let cartTotal = cartSubTotal;
 
@@ -185,44 +203,49 @@ function updateCartTotal(state) {
   };
 }
 
-export default function CartReducer(state, action) {
-  if (action.type === 'empty_cart') {
-    return new CartObject();
-  }
-
-  const cartItemProduct = action.cartItemProduct != null ? action.cartItemProduct : null;
-  const productId = action.productId != null ? Number(action.productId) : null;
-  const variationId = action.variationId != null ? Number(action.variationId) : null;
-  const quantity = action.quantity != null ? Number(action.quantity) : null;
-
-  const existingCartItem =
-    productId != null && variationId === null
-      ? state.items.find((item) => item.productId === productId)
-      : productId != null && variationId != null
-        ? state.items.find((item) => item.productId === productId && item.variation?.id === variationId)
-        : null;
-
-  const coupon = action.coupon != null ? action.coupon : null;
-  const couponId = action.couponId != null ? Number(action.couponId) : null;
-
+export default function CartReducer(state: Cart, action: CartAction) {
   switch (action.type) {
-    case 'add_cart_item':
-      return addCartItem(state, cartItemProduct, productId, variationId, quantity, existingCartItem);
+    case 'add_cart_item': {
+      const { cartItemProduct, productId, quantity, variationId } = action.payload;
 
-    case 'update_cart_item':
-      return updateCartItem(state, productId, variationId, quantity, existingCartItem);
+      const existingCartItem = findExistingCartItem(state, productId, variationId);
 
-    case 'remove_cart_item':
-      return removeCartItem(state, productId, variationId, existingCartItem);
+      return addCartItem(state, cartItemProduct, productId, quantity, existingCartItem, variationId);
+    }
 
-    case 'add_cart_coupon':
+    case 'update_cart_item': {
+      const { productId, quantity, variationId } = action.payload;
+
+      const existingCartItem = findExistingCartItem(state, productId, variationId);
+
+      return updateCartItem(state, productId, quantity, existingCartItem, variationId);
+    }
+
+    case 'remove_cart_item': {
+      const { productId, variationId } = action.payload;
+
+      const existingCartItem = findExistingCartItem(state, productId, variationId);
+
+      return removeCartItem(state, productId, existingCartItem, variationId);
+    }
+
+    case 'add_cart_coupon': {
+      const coupon = action.payload.coupon;
+
       return addCartCoupon(state, coupon);
+    }
 
-    case 'remove_cart_coupon':
+    case 'remove_cart_coupon': {
+      const couponId = Number(action.payload.couponId);
+
       return removeCartCoupon(state, couponId);
+    }
 
     case 'update_cart_total':
       return updateCartTotal(state);
+
+    case 'empty_cart':
+      return createEmptyCartObject();
 
     default:
       return state;
