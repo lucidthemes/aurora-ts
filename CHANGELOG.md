@@ -17,6 +17,9 @@ All notable changes to this project will be documented in this file.
 - add stock field to product type
 - convert components to TypeScript
 - convert hooks to TypeScript
+- convert CartContext to TypeScript
+- convert CartObjects to TypeScript
+- convert CartReducer to TypeScript
 - convert tests to TypeScript
 
 ##### ProductPost
