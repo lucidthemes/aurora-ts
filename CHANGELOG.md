@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+#### Components
+
+##### UI
+
+- add extends ButtonHTMLAttributes type to button component
+
 #### Features
 
 ##### Cart
