@@ -1,4 +1,4 @@
-import type { ChangeEvent, FormEvent } from 'react';
+import type { ChangeEvent, FormEvent, MouseEvent } from 'react';
 
 export function createInputChangeEvent(name: string, value: string): ChangeEvent<HTMLInputElement> {
   return {
@@ -20,4 +20,8 @@ export function createTextAreaChangeEvent(name: string, value: string): ChangeEv
 
 export function createFormSubmitEvent(): FormEvent<HTMLFormElement> {
   return { preventDefault: () => {} } as unknown as FormEvent<HTMLFormElement>;
+}
+
+export function createMouseClickEvent(): MouseEvent<HTMLButtonElement> {
+  return {} as unknown as MouseEvent<HTMLButtonElement>;
 }
