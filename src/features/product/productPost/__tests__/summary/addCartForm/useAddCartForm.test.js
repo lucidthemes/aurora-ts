@@ -114,8 +114,8 @@ describe('useAddCartForm hook', () => {
       result.current.handleFormSubmit({ preventDefault: () => {} });
     });
 
-    // singleProduct.id, addCartFormData.variationId, addCartFormData.quantity
-    expect(addCartItemMock).toHaveBeenCalledWith(1, 1001, 1);
+    // singleProduct.id, addCartFormData.quantity, addCartFormData.variationId
+    expect(addCartItemMock).toHaveBeenCalledWith(1, 1, 1001);
 
     expect(setAddCartNotificationMock).toHaveBeenCalledWith('Cozy sweater has been added to the cart');
   });
@@ -127,8 +127,8 @@ describe('useAddCartForm hook', () => {
       result.current.handleFormSubmit({ preventDefault: () => {} });
     });
 
-    // singleProduct.id, null (no variation), addCartFormData.quantity
-    expect(addCartItemMock).toHaveBeenCalledWith(4, null, 1);
+    // singleProduct.id, addCartFormData.quantity
+    expect(addCartItemMock).toHaveBeenCalledWith(4, 1);
 
     expect(setAddCartNotificationMock).toHaveBeenCalledWith('Handmade bonnet has been added to the cart');
   });
