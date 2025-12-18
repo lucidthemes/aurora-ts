@@ -1,8 +1,14 @@
-import { ChangeEvent, FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 export function createInputChangeEvent(name: string, value: string): ChangeEvent<HTMLInputElement> {
   return {
     target: { name, value },
+  } as unknown as ChangeEvent<HTMLInputElement>;
+}
+
+export function createInputNumberChangeEvent(name: string, valueAsNumber: number): ChangeEvent<HTMLInputElement> {
+  return {
+    target: { name, valueAsNumber },
   } as unknown as ChangeEvent<HTMLInputElement>;
 }
 
