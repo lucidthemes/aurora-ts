@@ -1,14 +1,23 @@
 import { renderHook, act } from '@testing-library/react';
-import { CartProvider, useCartContext } from '../CartContext';
+import type { ReactNode, FC } from 'react';
 
 vi.mock('@server/products/getProduct', () => ({
   getProductById: vi.fn(),
 }));
 
 import { getProductById } from '@server/products/getProduct';
+import type { Product } from '@typings/products/product';
+import type { Coupon } from '@typings/shop/coupon';
+import type { Variation as VariationType } from '@typings/cart/variation';
+
+import { CartProvider, useCartContext } from '../CartContext';
 
 describe('CartContext', () => {
-  const mockProductWithVariation = {
+  type ProductWithVariations = Product & {
+    variations: [VariationType, ...VariationType[]];
+  };
+
+  const mockProductWithVariation: ProductWithVariations = {
     id: 1,
     title: 'Cozy sweater',
     slug: 'cozy-sweater',
@@ -79,7 +88,7 @@ describe('CartContext', () => {
     ],
   };
 
-  const mockProductWithOutVariation = {
+  const mockProductWithOutVariation: Product = {
     id: 4,
     title: 'Handmade bonnet',
     slug: 'handmade-bonnet',
@@ -91,7 +100,7 @@ describe('CartContext', () => {
     SKU: 'HB',
   };
 
-  const mockCoupon = {
+  const mockCoupon: Coupon = {
     id: 1,
     code: 'COUPON-5',
     type: 'fixed',
@@ -99,14 +108,14 @@ describe('CartContext', () => {
     expires: '',
   };
 
-  let wrapper;
+  let wrapper: FC<{ children: ReactNode }>;
 
   beforeEach(() => {
     vi.clearAllMocks();
     vi.spyOn(Storage.prototype, 'setItem');
     vi.spyOn(Storage.prototype, 'getItem').mockReturnValue(null);
 
-    wrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
+    wrapper = ({ children }: { children: ReactNode }) => <CartProvider>{children}</CartProvider>;
   });
 
   afterEach(() => {
@@ -123,12 +132,12 @@ describe('CartContext', () => {
   });
 
   test('adds new item with variation and updates cart items via context', async () => {
-    getProductById.mockResolvedValue(mockProductWithVariation);
+    vi.mocked(getProductById).mockResolvedValue(mockProductWithVariation);
 
     const { result } = renderHook(() => useCartContext(), { wrapper });
 
     await act(async () => {
-      await result.current.addCartItem(1, 1001, 1);
+      result.current.addCartItem(1, 1, 1001);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
@@ -142,12 +151,12 @@ describe('CartContext', () => {
   });
 
   test('adds new item without variation and updates cart items via context', async () => {
-    getProductById.mockResolvedValue(mockProductWithOutVariation);
+    vi.mocked(getProductById).mockResolvedValue(mockProductWithOutVariation);
 
     const { result } = renderHook(() => useCartContext(), { wrapper });
 
     await act(async () => {
-      await result.current.addCartItem(4, null, 1);
+      result.current.addCartItem(4, 1);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
@@ -161,12 +170,12 @@ describe('CartContext', () => {
   });
 
   test('updates a cart item with varition via context', async () => {
-    getProductById.mockResolvedValue(mockProductWithVariation);
+    vi.mocked(getProductById).mockResolvedValue(mockProductWithVariation);
 
     const { result } = renderHook(() => useCartContext(), { wrapper });
 
     await act(async () => {
-      await result.current.addCartItem(1, 1001, 1);
+      result.current.addCartItem(1, 1, 1001);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
@@ -175,7 +184,7 @@ describe('CartContext', () => {
     });
 
     act(() => {
-      result.current.updateCartItem(1, 1001, 2);
+      result.current.updateCartItem(1, 2, 1001);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
@@ -186,12 +195,12 @@ describe('CartContext', () => {
   });
 
   test('updates a cart item without varition via context', async () => {
-    getProductById.mockResolvedValue(mockProductWithOutVariation);
+    vi.mocked(getProductById).mockResolvedValue(mockProductWithOutVariation);
 
     const { result } = renderHook(() => useCartContext(), { wrapper });
 
     await act(async () => {
-      await result.current.addCartItem(4, null, 1);
+      result.current.addCartItem(4, 1);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
@@ -200,7 +209,7 @@ describe('CartContext', () => {
     });
 
     act(() => {
-      result.current.updateCartItem(4, null, 2);
+      result.current.updateCartItem(4, 2);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
@@ -211,12 +220,12 @@ describe('CartContext', () => {
   });
 
   test('removes a cart item with varition via context', async () => {
-    getProductById.mockResolvedValue(mockProductWithVariation);
+    vi.mocked(getProductById).mockResolvedValue(mockProductWithVariation);
 
     const { result } = renderHook(() => useCartContext(), { wrapper });
 
     await act(async () => {
-      await result.current.addCartItem(1, 1001, 1);
+      result.current.addCartItem(1, 1, 1001);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
@@ -229,18 +238,18 @@ describe('CartContext', () => {
   });
 
   test('removes a cart item without varition via context', async () => {
-    getProductById.mockResolvedValue(mockProductWithOutVariation);
+    vi.mocked(getProductById).mockResolvedValue(mockProductWithOutVariation);
 
     const { result } = renderHook(() => useCartContext(), { wrapper });
 
     await act(async () => {
-      await result.current.addCartItem(4, null, 1);
+      result.current.addCartItem(4, 1);
     });
 
     expect(result.current.cartItems).toHaveLength(1);
 
     act(() => {
-      result.current.removeCartItem(4, null);
+      result.current.removeCartItem(4);
     });
 
     expect(result.current.cartItems).toHaveLength(0);
@@ -273,12 +282,12 @@ describe('CartContext', () => {
   });
 
   test('empties the cart via context', async () => {
-    getProductById.mockResolvedValue(mockProductWithVariation);
+    vi.mocked(getProductById).mockResolvedValue(mockProductWithVariation);
 
     const { result } = renderHook(() => useCartContext(), { wrapper });
 
     await act(async () => {
-      await result.current.addCartItem(1, 1001, 1);
+      result.current.addCartItem(1, 1, 1001);
     });
 
     expect(result.current.cartItems).toHaveLength(1);

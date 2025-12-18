@@ -1,8 +1,13 @@
+import type { Product } from '@typings/products/product';
+import type { Item } from '@typings/cart/item';
+import type { Coupon } from '@typings/shop/coupon';
+import type { Cart, CartAction } from '@typings/cart/cart';
+
 import CartReducer from '../CartReducer';
-import { CartObject } from '../CartObjects';
+import { createEmptyCartObject } from '../CartObjects';
 
 describe('CartReducer', () => {
-  const mockProductWithVariation = {
+  const mockProductWithVariation: Product = {
     id: 1,
     title: 'Cozy sweater',
     slug: 'cozy-sweater',
@@ -82,7 +87,7 @@ describe('CartReducer', () => {
     SKU: 'CS-BLACK-S',
   };
 
-  const mockProductWithOutVariation = {
+  const mockProductWithOutVariation: Product = {
     id: 4,
     title: 'Handmade bonnet',
     slug: 'handmade-bonnet',
@@ -94,7 +99,7 @@ describe('CartReducer', () => {
     SKU: 'HB',
   };
 
-  const mockExistingCartItems = [
+  const mockExistingCartItems: Item[] = [
     {
       productId: 1,
       title: 'Cozy sweater',
@@ -122,7 +127,7 @@ describe('CartReducer', () => {
     },
   ];
 
-  const mockCouponFixed = {
+  const mockCouponFixed: Coupon = {
     id: 1,
     code: 'COUPON-5',
     type: 'fixed',
@@ -130,7 +135,7 @@ describe('CartReducer', () => {
     expires: '',
   };
 
-  const mockCouponPercentage = {
+  const mockCouponPercentage: Coupon = {
     id: 2,
     code: 'COUPON-10',
     type: 'percentage',
@@ -143,15 +148,14 @@ describe('CartReducer', () => {
   });
 
   test('adds a new cart item with variation', () => {
-    const state = new CartObject();
+    const mockCartState = createEmptyCartObject();
 
-    const result = CartReducer(state, {
+    const mockCartAction: CartAction = {
       type: 'add_cart_item',
-      cartItemProduct: mockProductWithVariation,
-      productId: 1,
-      variationId: 1001,
-      quantity: 1,
-    });
+      payload: { cartItemProduct: mockProductWithVariation, productId: 1, quantity: 1, variationId: 1001 },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.items).toHaveLength(1);
     expect(result.items[0].productId).toBe(1);
@@ -165,14 +169,14 @@ describe('CartReducer', () => {
   });
 
   test('adds a new cart item without variation', () => {
-    const state = new CartObject();
+    const mockCartState = createEmptyCartObject();
 
-    const result = CartReducer(state, {
+    const mockCartAction: CartAction = {
       type: 'add_cart_item',
-      cartItemProduct: mockProductWithOutVariation,
-      productId: 4,
-      quantity: 1,
-    });
+      payload: { cartItemProduct: mockProductWithOutVariation, productId: 4, quantity: 1 },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.items).toHaveLength(1);
     expect(result.items[0].productId).toBe(4);
@@ -185,141 +189,162 @@ describe('CartReducer', () => {
   });
 
   test('updates quantity if item with variation already within cart', () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [],
       total: 40,
     };
 
-    const result = CartReducer(existingState, {
+    const mockCartAction: CartAction = {
       type: 'add_cart_item',
-      cartItemProduct: mockProductWithVariation,
-      productId: 1,
-      variationId: 1001,
-      quantity: 1,
-    });
+      payload: { cartItemProduct: mockProductWithVariation, productId: 1, quantity: 1, variationId: 1001 },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.items[0].quantity).toBe(2);
   });
 
   test('updates quantity if item without variation already within cart', () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [],
       total: 40,
     };
 
-    const result = CartReducer(existingState, {
+    const mockCartAction: CartAction = {
       type: 'add_cart_item',
-      cartItemProduct: mockProductWithOutVariation,
-      productId: 4,
-      quantity: 1,
-    });
+      payload: { cartItemProduct: mockProductWithOutVariation, productId: 4, quantity: 1 },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.items[1].quantity).toBe(2);
   });
 
   test('removes a cart item with variation', () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [],
       total: 40,
     };
 
-    const result = CartReducer(existingState, {
+    const mockCartAction: CartAction = {
       type: 'remove_cart_item',
-      productId: 1,
-      variationId: 1001,
-    });
+      payload: { productId: 1, variationId: 1001 },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.items).toHaveLength(1);
   });
 
   test('removes a cart item without variation', () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [],
       total: 40,
     };
 
-    const result = CartReducer(existingState, {
+    const mockCartAction: CartAction = {
       type: 'remove_cart_item',
-      productId: 4,
-    });
+      payload: { productId: 4 },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.items).toHaveLength(1);
   });
 
   test('adds a coupon', () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [],
       total: 40,
     };
 
-    const result = CartReducer(existingState, { type: 'add_cart_coupon', coupon: mockCouponFixed });
+    const mockCartAction: CartAction = {
+      type: 'add_cart_coupon',
+      payload: { coupon: mockCouponFixed },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.coupons).toContainEqual(mockCouponFixed);
   });
 
   test('removes a coupon', () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [mockCouponFixed],
       total: 40,
     };
 
-    const result = CartReducer(existingState, {
+    const mockCartAction: CartAction = {
       type: 'remove_cart_coupon',
-      couponId: 1,
-    });
+      payload: { couponId: 1 },
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.coupons).toHaveLength(0);
   });
 
   test('applies fixed amount coupon discount', async () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [mockCouponFixed],
       total: 40,
     };
 
-    const result = CartReducer(existingState, { type: 'update_cart_total' });
+    const mockCartAction: CartAction = {
+      type: 'update_cart_total',
+    };
 
-    expect(result.subTotal).toBe(existingState.subTotal);
-    expect(result.total).toBe(existingState.subTotal - mockCouponFixed.amount);
+    const result = CartReducer(mockCartState, mockCartAction);
+
+    expect(result.subTotal).toBe(mockCartState.subTotal);
+    expect(result.total).toBe(mockCartState.subTotal - mockCouponFixed.amount);
   });
 
   test('applies percentage amount coupon discount', async () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [mockCouponPercentage],
       total: 40,
     };
 
-    const result = CartReducer(existingState, { type: 'update_cart_total' });
+    const mockCartAction: CartAction = {
+      type: 'update_cart_total',
+    };
 
-    expect(result.subTotal).toBe(existingState.subTotal);
-    expect(result.total).toBe(((100 - mockCouponPercentage.amount) / 100) * existingState.subTotal);
+    const result = CartReducer(mockCartState, mockCartAction);
+
+    expect(result.subTotal).toBe(mockCartState.subTotal);
+    expect(result.total).toBe(((100 - mockCouponPercentage.amount) / 100) * mockCartState.subTotal);
   });
 
   test('empties the cart', () => {
-    const existingState = {
+    const mockCartState: Cart = {
       items: mockExistingCartItems,
       subTotal: 40,
       coupons: [],
       total: 40,
     };
 
-    const result = CartReducer(existingState, { type: 'empty_cart' });
+    const mockCartAction: CartAction = {
+      type: 'empty_cart',
+    };
+
+    const result = CartReducer(mockCartState, mockCartAction);
 
     expect(result.items).toHaveLength(0);
     expect(result.total).toBe(0);

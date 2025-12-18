@@ -1,14 +1,17 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useCouponForm from '../../hooks/totals/useCouponForm';
 
 vi.mock('@server/shop/getCoupon', () => ({
   getCouponByCode: vi.fn(),
 }));
 
 import { getCouponByCode } from '@server/shop/getCoupon';
+import type { Coupon } from '@typings/shop/coupon';
+import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useCouponForm from '../../hooks/totals/useCouponForm';
 
 describe('useCouponForm hook', () => {
-  const mockCartCoupons = [
+  const mockCartCoupons: Coupon[] = [
     {
       id: 2,
       code: 'COUPON-10',
@@ -20,7 +23,7 @@ describe('useCouponForm hook', () => {
 
   const addCartCouponMock = vi.fn();
 
-  const mockValidCoupon = {
+  const mockValidCoupon: Coupon = {
     id: 1,
     code: 'COUPON-5',
     type: 'fixed',
@@ -38,7 +41,7 @@ describe('useCouponForm hook', () => {
     const { result } = renderHook(() => useCouponForm(mockCartCoupons, addCartCouponMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'COUPON-5' } });
+      result.current.handleFormChange(createInputChangeEvent('coupon', 'COUPON-5'));
     });
 
     expect(result.current.couponFormCoupon).toBe('COUPON-5');
@@ -48,11 +51,11 @@ describe('useCouponForm hook', () => {
     const { result } = renderHook(() => useCouponForm(mockCartCoupons, addCartCouponMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: '' } });
+      result.current.handleFormChange(createInputChangeEvent('coupon', ''));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(addCartCouponMock).not.toHaveBeenCalled();
@@ -64,11 +67,11 @@ describe('useCouponForm hook', () => {
     const { result } = renderHook(() => useCouponForm(mockCartCoupons, addCartCouponMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'COUPON-10' } });
+      result.current.handleFormChange(createInputChangeEvent('coupon', 'COUPON-10'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(addCartCouponMock).not.toHaveBeenCalled();
@@ -77,16 +80,16 @@ describe('useCouponForm hook', () => {
   });
 
   test('updates error for invalid coupon', async () => {
-    getCouponByCode.mockResolvedValue(mockInvalidCoupon);
+    vi.mocked(getCouponByCode).mockResolvedValue(mockInvalidCoupon);
 
     const { result } = renderHook(() => useCouponForm(mockCartCoupons, addCartCouponMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'COUPON-2' } });
+      result.current.handleFormChange(createInputChangeEvent('coupon', 'COUPON-2'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     await waitFor(() => {
@@ -96,16 +99,16 @@ describe('useCouponForm hook', () => {
   });
 
   test('applies coupon for valid form submission', async () => {
-    getCouponByCode.mockResolvedValue(mockValidCoupon);
+    vi.mocked(getCouponByCode).mockResolvedValue(mockValidCoupon);
 
     const { result } = renderHook(() => useCouponForm(mockCartCoupons, addCartCouponMock));
 
     act(() => {
-      result.current.handleFormChange({ target: { value: 'COUPON-5' } });
+      result.current.handleFormChange(createInputChangeEvent('coupon', 'COUPON-5'));
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     await waitFor(() => {

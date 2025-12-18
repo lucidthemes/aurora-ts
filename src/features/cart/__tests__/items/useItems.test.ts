@@ -1,14 +1,17 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useItems from '../../hooks/items/useItems';
 
 vi.mock('@server/products/getAttribute', () => ({
   getAttributeMap: vi.fn(),
 }));
 
 import { getAttributeMap } from '@server/products/getAttribute';
+import type { Item } from '@typings/cart/item';
+import type { Attribute } from '@typings/products/attribute';
+
+import useItems from '../../hooks/items/useItems';
 
 describe('useItems hook', () => {
-  const mockItems = [
+  const mockItems: Item[] = [
     {
       productId: 1,
       title: 'Cozy sweater',
@@ -51,7 +54,7 @@ describe('useItems hook', () => {
     },
   ];
 
-  const mockAttributeMap = {
+  const mockAttributeMap: Record<number, Attribute> = {
     1: {
       id: 1,
       name: 'Black',
@@ -72,14 +75,14 @@ describe('useItems hook', () => {
     },
   };
 
-  const mockAttributeIds = mockItems.flatMap((item) => [item.variation?.colourId, item.variation?.sizeId]);
+  const mockAttributeIds = mockItems.flatMap((item) => [item.variation?.colourId, item.variation?.sizeId]).filter(Boolean) as number[];
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   test('fetches attributes data and sets attributeMap state', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     const { result } = renderHook(() => useItems(mockItems));
 

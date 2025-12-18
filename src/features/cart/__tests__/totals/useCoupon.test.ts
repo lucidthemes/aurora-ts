@@ -1,4 +1,5 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
+
 import useCoupon from '../../hooks/totals/useCoupon';
 
 describe('useCoupon hook', () => {

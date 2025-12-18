@@ -1,5 +1,5 @@
 import { render, screen, within, fireEvent, waitFor } from '@testing-library/react';
-import Totals from '../../components/totals';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@features/cart/CartContext', () => ({
   useCartContext: vi.fn(),
@@ -11,20 +11,22 @@ vi.mock('@server/shop/getCoupon', () => ({
 
 import { useCartContext } from '@features/cart/CartContext';
 import { getCouponByCode } from '@server/shop/getCoupon';
-import { MemoryRouter } from 'react-router-dom';
+import type { Coupon } from '@typings/shop/coupon';
+
+import Totals from '../../components/totals';
 
 describe('Totals component', () => {
   const addCartCouponMock = vi.fn();
   const removeCartCouponMock = vi.fn();
 
-  useCartContext.mockReturnValue({
+  vi.mocked(useCartContext).mockReturnValue({
     addCartCoupon: addCartCouponMock,
     removeCartCoupon: removeCartCouponMock,
   });
 
   const mockCartSubTotal = 60;
 
-  const mockCartCoupons = [
+  const mockCartCoupons: Coupon[] = [
     {
       id: 2,
       code: 'COUPON-10',
@@ -36,7 +38,7 @@ describe('Totals component', () => {
 
   const mockCartTotal = 54;
 
-  const mockNewValidCoupon = {
+  const mockNewValidCoupon: Coupon = {
     id: 1,
     code: 'COUPON-5',
     type: 'fixed',
@@ -51,7 +53,13 @@ describe('Totals component', () => {
   test('renders totals', () => {
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartCoupons={mockCartCoupons} cartTotal={mockCartTotal} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={mockCartCoupons}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 
@@ -67,7 +75,13 @@ describe('Totals component', () => {
   test('renders add coupon button', () => {
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartCoupons={mockCartCoupons} cartTotal={mockCartTotal} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={mockCartCoupons}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 
@@ -77,7 +91,13 @@ describe('Totals component', () => {
   test('renders add coupon form when button clicked', () => {
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartCoupons={mockCartCoupons} cartTotal={mockCartTotal} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={mockCartCoupons}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 
@@ -87,11 +107,17 @@ describe('Totals component', () => {
   });
 
   test('adds new coupon when form successfully submitted', async () => {
-    getCouponByCode.mockResolvedValue(mockNewValidCoupon);
+    vi.mocked(getCouponByCode).mockResolvedValue(mockNewValidCoupon);
 
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartCoupons={mockCartCoupons} cartTotal={mockCartTotal} addCartCoupon={addCartCouponMock} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={mockCartCoupons}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 
@@ -114,7 +140,13 @@ describe('Totals component', () => {
   test('removes coupon when remove button clicked', () => {
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartCoupons={mockCartCoupons} cartTotal={mockCartTotal} removeCartCoupon={removeCartCouponMock} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={mockCartCoupons}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 
@@ -129,7 +161,13 @@ describe('Totals component', () => {
   test('renders discount if coupon active', () => {
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartCoupons={mockCartCoupons} cartTotal={mockCartTotal} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={mockCartCoupons}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 
@@ -146,7 +184,13 @@ describe('Totals component', () => {
   test('hides discount if no coupon active', () => {
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartTotal={mockCartTotal} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={[]}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 
@@ -156,7 +200,13 @@ describe('Totals component', () => {
   test('renders checkout button', () => {
     render(
       <MemoryRouter>
-        <Totals cartSubTotal={mockCartSubTotal} cartCoupons={mockCartCoupons} cartTotal={mockCartTotal} />
+        <Totals
+          cartSubTotal={mockCartSubTotal}
+          cartCoupons={mockCartCoupons}
+          cartTotal={mockCartTotal}
+          addCartCoupon={addCartCouponMock}
+          removeCartCoupon={removeCartCouponMock}
+        />
       </MemoryRouter>
     );
 

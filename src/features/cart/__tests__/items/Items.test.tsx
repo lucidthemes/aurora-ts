@@ -1,5 +1,5 @@
 import { render, screen, within, fireEvent } from '@testing-library/react';
-import Items from '../../components/items';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@features/cart/CartContext', () => ({
   useCartContext: vi.fn(),
@@ -11,18 +11,21 @@ vi.mock('@server/products/getAttribute', () => ({
 
 import { useCartContext } from '@features/cart/CartContext';
 import { getAttributeMap } from '@server/products/getAttribute';
-import { MemoryRouter } from 'react-router-dom';
+import type { Item } from '@typings/cart/item';
+import type { Attribute } from '@typings/products/attribute';
+
+import Items from '../../components/items';
 
 describe('Items component', () => {
   const updateCartItemMock = vi.fn();
   const removeCartItemMock = vi.fn();
 
-  useCartContext.mockReturnValue({
+  vi.mocked(useCartContext).mockReturnValue({
     updateCartItem: updateCartItemMock,
     removeCartItem: removeCartItemMock,
   });
 
-  const mockItems = [
+  const mockItems: Item[] = [
     {
       productId: 1,
       title: 'Cozy sweater',
@@ -65,7 +68,7 @@ describe('Items component', () => {
     },
   ];
 
-  const mockAttributeMap = {
+  const mockAttributeMap: Record<number, Attribute> = {
     1: {
       id: 1,
       name: 'Black',
@@ -91,7 +94,7 @@ describe('Items component', () => {
   });
 
   test('renders items', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     render(
       <MemoryRouter>
@@ -107,7 +110,7 @@ describe('Items component', () => {
   });
 
   test('renders item information', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     render(
       <MemoryRouter>
@@ -118,7 +121,7 @@ describe('Items component', () => {
     const itemList = await screen.findByRole('list', { name: /cart items/i });
     expect(itemList).toBeInTheDocument();
 
-    const firstListItem = itemList.querySelector(':scope > li:first-child');
+    const firstListItem = itemList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('img', { name: /cozy sweater/i })).toBeInTheDocument();
@@ -142,7 +145,7 @@ describe('Items component', () => {
   });
 
   test('updates item quantity when quantity button clicked', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     render(
       <MemoryRouter>
@@ -153,17 +156,17 @@ describe('Items component', () => {
     const itemList = await screen.findByRole('list', { name: /cart items/i });
     expect(itemList).toBeInTheDocument();
 
-    const firstListItem = itemList.querySelector(':scope > li:first-child');
+    const firstListItem = itemList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     fireEvent.click(within(firstListItem).getByRole('button', { name: /increase quantity/i }));
 
-    // productId, variationId, quantity
-    expect(updateCartItemMock).toHaveBeenCalledWith(1, 1001, 2);
+    // productId, quantity, variationId
+    expect(updateCartItemMock).toHaveBeenCalledWith(1, 2, 1001);
   });
 
   test('removes item when remove button clicked', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     render(
       <MemoryRouter>
@@ -174,7 +177,7 @@ describe('Items component', () => {
     const itemList = await screen.findByRole('list', { name: /cart items/i });
     expect(itemList).toBeInTheDocument();
 
-    const firstListItem = itemList.querySelector(':scope > li:first-child');
+    const firstListItem = itemList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     fireEvent.click(within(firstListItem).getByRole('button', { name: /remove item/i }));

@@ -1,8 +1,11 @@
 import { renderHook, act } from '@testing-library/react';
+
+import type { Item } from '@typings/cart/item';
+
 import useRemove from '../../hooks/items/useRemove';
 
 describe('useRemove hook', () => {
-  const mockItemWithVariation = {
+  const mockItemWithVariation: Item = {
     productId: 1,
     title: 'Cozy sweater',
     slug: 'cozy-sweater',
@@ -19,7 +22,7 @@ describe('useRemove hook', () => {
     quantity: 1,
   };
 
-  const mockItemWithoutVariation = {
+  const mockItemWithoutVariation: Item = {
     productId: 4,
     title: 'Handmade bonnet',
     slug: 'handmade-bonnet',
@@ -36,22 +39,22 @@ describe('useRemove hook', () => {
   });
 
   test('remove item with variation from the cart', () => {
-    const { result } = renderHook(() => useRemove(mockItemWithVariation.id, mockItemWithVariation.variation, removeCartItemMock));
+    const { result } = renderHook(() => useRemove(mockItemWithVariation, removeCartItemMock));
 
     act(() => {
       result.current();
     });
 
-    expect(removeCartItemMock).toHaveBeenCalledWith(mockItemWithVariation.id, mockItemWithVariation.variation.id);
+    expect(removeCartItemMock).toHaveBeenCalledWith(mockItemWithVariation.productId, mockItemWithVariation.variation?.id);
   });
 
   test('remove item with no variation from the cart', () => {
-    const { result } = renderHook(() => useRemove(mockItemWithoutVariation.id, mockItemWithoutVariation.variation, removeCartItemMock));
+    const { result } = renderHook(() => useRemove(mockItemWithoutVariation, removeCartItemMock));
 
     act(() => {
       result.current();
     });
 
-    expect(removeCartItemMock).toHaveBeenCalledWith(mockItemWithoutVariation.id, null);
+    expect(removeCartItemMock).toHaveBeenCalledWith(mockItemWithoutVariation.productId);
   });
 });
