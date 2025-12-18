@@ -38,12 +38,12 @@ export default function useAddCartForm(addCartItem, singleProduct, setSummaryDat
 
     if (singleProduct.variations) {
       if (addCartFormData.variationId) {
-        addCartItem(singleProduct.id, addCartFormData.variationId, addCartFormData.quantity);
+        addCartItem(singleProduct.id, addCartFormData.quantity, addCartFormData.variationId);
 
         setAddCartNotification(`${singleProduct.title} has been added to the cart`);
       }
     } else {
-      addCartItem(singleProduct.id, null, addCartFormData.quantity);
+      addCartItem(singleProduct.id, addCartFormData.quantity);
 
       setAddCartNotification(`${singleProduct.title} has been added to the cart`);
     }

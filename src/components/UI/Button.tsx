@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import type { ButtonHTMLAttributes } from 'react';
 
 const variants = {
   primary:
@@ -7,7 +8,7 @@ const variants = {
 
 type Variant = keyof typeof variants;
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
   children?: string;
   to?: string;
   type?: 'button' | 'submit' | 'reset';

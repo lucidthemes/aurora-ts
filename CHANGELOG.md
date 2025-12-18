@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.11.0] - [Unreleased]
+
+### Changed
+
+#### Components
+
+##### UI
+
+- add extends ButtonHTMLAttributes type to button component
+
+#### Features
+
+##### Cart
+
+- add cart sub folder to types
+- add cart type to cart types
+- add item type to cart types
+- add variation type to cart types
+- add stock field to product type
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert CartContext to TypeScript
+- convert CartObjects to TypeScript
+- convert CartReducer to TypeScript
+- convert tests to TypeScript
+
+##### ProductPost
+
+- reorder addCartItem function parameters
+
 ## [0.10.1] - 2025-12-16
 
 - updated dependencies
