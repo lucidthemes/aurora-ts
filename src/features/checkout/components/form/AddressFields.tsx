@@ -1,7 +1,17 @@
+import type { ChangeEvent } from 'react';
+
 import Input from '@components/Form/Input';
 import Select from '@components/Form/Select';
+import type { CheckoutFormData, CheckoutFormErrors } from '@typings/checkout/form';
 
-export default function AddressFields({ formSection, checkoutFormData, checkoutFormErrors, handleFormChange }) {
+interface AddressFieldsProps {
+  formSection: string;
+  checkoutFormData: CheckoutFormData;
+  checkoutFormErrors: CheckoutFormErrors;
+  handleFormChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, section: 'contact' | 'shipping' | 'billing' | 'note') => void;
+}
+
+export default function AddressFields({ formSection, checkoutFormData, checkoutFormErrors, handleFormChange }: AddressFieldsProps) {
   if (formSection !== 'shipping' && formSection !== 'billing') return null;
 
   const countryOptions = [{ value: 'GB', text: 'United Kingdom (UK)' }];

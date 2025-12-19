@@ -1,8 +1,19 @@
+import type { Dispatch, SetStateAction } from 'react';
+
+import type { PaymentOption } from '@typings/shop/paymentOption';
+
 import usePaymentOptions from '../../hooks/form/usePaymentOptions';
 
-export default function PaymentOptions({ billingSameShipping, paymentOption, setPaymentOption }) {
+interface PaymentOptionsProps {
+  billingSameShipping: boolean;
+  paymentOption: PaymentOption | null;
+  setPaymentOption: Dispatch<SetStateAction<PaymentOption | null>>;
+}
+
+export default function PaymentOptions({ billingSameShipping, paymentOption, setPaymentOption }: PaymentOptionsProps) {
   const { paymentOptions, handlePaymentOptionChange } = usePaymentOptions(paymentOption, setPaymentOption);
-  if (!Array.isArray(paymentOptions) || paymentOptions.length === 0) return null;
+
+  if (!paymentOption || !Array.isArray(paymentOptions) || paymentOptions.length === 0) return null;
 
   const sectionNumber = billingSameShipping ? '4' : '5';
 

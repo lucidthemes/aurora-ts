@@ -1,4 +1,8 @@
-export default function Total({ checkoutTotal }) {
+interface TotalProps {
+  checkoutTotal: number;
+}
+
+export default function Total({ checkoutTotal }: TotalProps) {
   if (!checkoutTotal) return null;
 
   return (

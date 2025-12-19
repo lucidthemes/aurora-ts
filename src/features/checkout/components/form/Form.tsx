@@ -1,5 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import type { Dispatch, SetStateAction } from 'react';
+
 import { useAuthContext } from '@contexts/AuthContext';
+import type { Item } from '@typings/cart/item';
+import type { Coupon } from '@typings/shop/coupon';
+import type { ShippingOption } from '@typings/shop/shippingOption';
+import type { PaymentOption } from '@typings/shop/paymentOption';
+
 import useForm from '../../hooks/form/useForm';
 import ContactInformation from './ContactInformation';
 import ShippingAddress from './ShippingAddress';
@@ -9,6 +16,18 @@ import PaymentOptions from './PaymentOptions';
 import Note from './Note';
 import Terms from './Terms';
 import Button from '@components/UI/Button';
+
+interface FormProps {
+  cartItems: Item[];
+  cartSubTotal: number;
+  cartCoupons: Coupon[];
+  emptyCart: () => void;
+  shippingOption: ShippingOption | null;
+  setShippingOption: Dispatch<SetStateAction<ShippingOption | null>>;
+  paymentOption: PaymentOption | null;
+  setPaymentOption: Dispatch<SetStateAction<PaymentOption | null>>;
+  checkoutTotal: number;
+}
 
 export default function Form({
   cartItems,
@@ -20,7 +39,7 @@ export default function Form({
   paymentOption,
   setPaymentOption,
   checkoutTotal,
-}) {
+}: FormProps) {
   const { loggedInUser } = useAuthContext();
 
   const navigate = useNavigate();

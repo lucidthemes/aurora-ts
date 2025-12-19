@@ -1,8 +1,19 @@
+import type { Dispatch, SetStateAction } from 'react';
+
+import type { ShippingOption } from '@typings/shop/shippingOption';
+
 import useShippingOptions from '../../hooks/form/useShippingOptions';
 
-export default function ShippingOptions({ billingSameShipping, shippingOption, setShippingOption }) {
+interface ShippingOptionsProps {
+  billingSameShipping: boolean;
+  shippingOption: ShippingOption | null;
+  setShippingOption: Dispatch<SetStateAction<ShippingOption | null>>;
+}
+
+export default function ShippingOptions({ billingSameShipping, shippingOption, setShippingOption }: ShippingOptionsProps) {
   const { shippingOptions, handleShippingOptionChange } = useShippingOptions(shippingOption, setShippingOption);
-  if (!Array.isArray(shippingOptions) || shippingOptions.length === 0) return null;
+
+  if (!shippingOption || !Array.isArray(shippingOptions) || shippingOptions.length === 0) return null;
 
   const sectionNumber = billingSameShipping ? '3' : '4';
 

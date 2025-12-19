@@ -1,4 +1,10 @@
-export default function Shipping({ shippingOption }) {
+import type { ShippingOption } from '@typings/shop/shippingOption';
+
+interface ShippingProps {
+  shippingOption: ShippingOption | null;
+}
+
+export default function Shipping({ shippingOption }: ShippingProps) {
   if (!shippingOption) return null;
 
   return (

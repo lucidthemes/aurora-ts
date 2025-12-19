@@ -1,7 +1,25 @@
-import AddressFields from './AddressFields';
-import Checkbox from '@components/Form/Checkbox';
+import type { Dispatch, SetStateAction, ChangeEvent } from 'react';
 
-export default function ShippingAddress({ checkoutFormData, checkoutFormErrors, billingSameShipping, setBillingSameShipping, handleFormChange }) {
+import Checkbox from '@components/Form/Checkbox';
+import type { CheckoutFormData, CheckoutFormErrors } from '@typings/checkout/form';
+
+import AddressFields from './AddressFields';
+
+interface ShippingAddressProps {
+  checkoutFormData: CheckoutFormData;
+  checkoutFormErrors: CheckoutFormErrors;
+  billingSameShipping: boolean;
+  setBillingSameShipping: Dispatch<SetStateAction<boolean>>;
+  handleFormChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, section: 'contact' | 'shipping' | 'billing' | 'note') => void;
+}
+
+export default function ShippingAddress({
+  checkoutFormData,
+  checkoutFormErrors,
+  billingSameShipping,
+  setBillingSameShipping,
+  handleFormChange,
+}: ShippingAddressProps) {
   return (
     <fieldset className="mb-10 flex flex-col gap-y-6">
       <legend className="sr-only">Shipping address</legend>

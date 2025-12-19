@@ -1,6 +1,17 @@
+import type { ChangeEvent } from 'react';
+
+import type { CheckoutFormData, CheckoutFormErrors } from '@typings/checkout/form';
+
 import AddressFields from './AddressFields';
 
-export default function BillingAddress({ checkoutFormData, checkoutFormErrors, billingSameShipping, handleFormChange }) {
+interface BillingAddressProps {
+  checkoutFormData: CheckoutFormData;
+  checkoutFormErrors: CheckoutFormErrors;
+  billingSameShipping: boolean;
+  handleFormChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, section: 'contact' | 'shipping' | 'billing' | 'note') => void;
+}
+
+export default function BillingAddress({ checkoutFormData, checkoutFormErrors, billingSameShipping, handleFormChange }: BillingAddressProps) {
   if (billingSameShipping) return null;
 
   return (
