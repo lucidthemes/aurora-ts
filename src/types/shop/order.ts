@@ -1,24 +1,8 @@
-import { Address } from './address';
-import { Coupon } from './coupon';
-import { ShippingOption } from './shippingOption';
-import { PaymentOption } from './paymentOption';
-
-interface Item {
-  productId: number;
-  title: string;
-  slug: string;
-  image: string;
-  price: number;
-  variation?: {
-    id: number;
-    colourId?: number;
-    sizeId?: number;
-    price: number;
-    stock?: number;
-    SKU: string;
-  };
-  quantity: number;
-}
+import type { Address } from './address';
+import type { Item } from '@typings/cart/item';
+import type { Coupon } from './coupon';
+import type { ShippingOption } from './shippingOption';
+import type { PaymentOption } from './paymentOption';
 
 export interface Order {
   id: number;

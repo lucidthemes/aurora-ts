@@ -2,7 +2,51 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.12.0] - [Unreleased]
+
+### Added
+
+#### Types
+
+- add checkout sub folder to types
+- add form type to checkout types
+
+### Changed
+
+#### Features
+
+##### Cart
+
+- items and item components to make updateCartItem and removeCartItem optional props
+
+##### Checkout
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+- convert orderReceived components to TypeScript
+- convert orderReceived hooks to TypeScript
+- convert orderReceived tests to TypeScript
+
+#### Pages
+
+- status object to OrderReceived for not found, loading, and loaded states
+
+#### Types
+
+- shop order type to use cart item interface
+
 ## [0.11.0] - 2025-12-18
+
+### Added
+
+#### Types
+
+- add cart sub folder to types
+- add cart type to cart types
+- add item type to cart types
+- add variation type to cart types
+- add stock field to product type
 
 ### Changed
 
@@ -16,11 +60,6 @@ All notable changes to this project will be documented in this file.
 
 ##### Cart
 
-- add cart sub folder to types
-- add cart type to cart types
-- add item type to cart types
-- add variation type to cart types
-- add stock field to product type
 - convert components to TypeScript
 - convert hooks to TypeScript
 - convert CartContext to TypeScript

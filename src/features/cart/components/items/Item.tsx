@@ -9,8 +9,8 @@ import Remove from './Remove';
 
 interface ItemProps {
   item: ItemType;
-  updateCartItem: (productId: number, quantity: number, variationId?: number) => void;
-  removeCartItem: (productId: number, variationId?: number) => void;
+  updateCartItem?: (productId: number, quantity: number, variationId?: number) => void;
+  removeCartItem?: (productId: number, variationId?: number) => void;
   attributeMap?: Record<number, Attribute>;
 }
 

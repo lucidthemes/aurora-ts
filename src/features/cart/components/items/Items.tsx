@@ -5,8 +5,8 @@ import Item from './Item';
 
 interface ItemsProps {
   items: ItemType[];
-  updateCartItem: (productId: number, quantity: number, variationId?: number) => void;
-  removeCartItem: (productId: number, variationId?: number) => void;
+  updateCartItem?: (productId: number, quantity: number, variationId?: number) => void;
+  removeCartItem?: (productId: number, variationId?: number) => void;
 }
 
 export default function Items({ items, updateCartItem, removeCartItem }: ItemsProps) {
