@@ -13,6 +13,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+#### Features
+
 ##### Cart
 
 - items and item components to make updateCartItem and removeCartItem optional props
@@ -25,6 +27,10 @@ All notable changes to this project will be documented in this file.
 - convert orderReceived components to TypeScript
 - convert orderReceived hooks to TypeScript
 - convert orderReceived tests to TypeScript
+
+#### Types
+
+- shop order type to use cart item interface
 
 ## [0.11.0] - 2025-12-18
 
