@@ -1,14 +1,17 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useOrderReceived from '../../hooks/orderReceived/useOrderReceived';
 
-vi.mock('@server/shop/getOrder', () => ({
-  getOrderById: vi.fn(),
+vi.mock('@server/products/getAttribute', () => ({
+  getAttributeMap: vi.fn(),
 }));
 
-import { getOrderById } from '@server/shop/getOrder';
+import { getAttributeMap } from '@server/products/getAttribute';
+import type { Order } from '@typings/shop/order';
+import type { Attribute } from '@typings/products/attribute';
 
-describe('useOrderReceived hook', () => {
-  const mockOrder = {
+import useItems from '../../hooks/orderReceived/useItems';
+
+describe('useItems hook', () => {
+  const mockOrder: Order = {
     id: 1001,
     customerId: 1,
     date: '2025-10-23T15:28:51.355Z',
@@ -48,7 +51,6 @@ describe('useOrderReceived hook', () => {
         title: 'Cozy sweater',
         slug: 'cozy-sweater',
         image: '/images/products/product-1.jpg',
-        stock: null,
         price: 20,
         variation: {
           id: 1001,
@@ -65,7 +67,6 @@ describe('useOrderReceived hook', () => {
         title: 'Autumn beanie',
         slug: 'autumn-beanie',
         image: '/images/products/product-5.jpg',
-        stock: null,
         price: 20,
         variation: {
           id: 2002,
@@ -83,7 +84,6 @@ describe('useOrderReceived hook', () => {
         image: '/images/products/product-10.jpg',
         stock: 5,
         price: 20,
-        variation: null,
         quantity: 1,
       },
     ],
@@ -111,47 +111,44 @@ describe('useOrderReceived hook', () => {
     total: 54,
   };
 
-  const mockOrderId = 1001;
+  const mockAttributeMap: Record<number, Attribute> = {
+    1: {
+      id: 1,
+      name: 'Black',
+      slug: 'black',
+      type: 'colour',
+    },
+    2: {
+      id: 2,
+      name: 'Green',
+      slug: 'green',
+      type: 'colour',
+    },
+    4: {
+      id: 4,
+      name: 'Small',
+      slug: 'small',
+      type: 'size',
+    },
+  };
+
+  const mockAttributeIds = mockOrder.items.flatMap((item) => [item.variation?.colourId, item.variation?.sizeId]).filter(Boolean) as number[];
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  test('fetches order data and sets order state', async () => {
-    getOrderById.mockResolvedValue(mockOrder);
+  test('fetches attributes data and sets attributeMap state', async () => {
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
-    const { result } = renderHook(() => useOrderReceived(mockOrderId));
+    const { result } = renderHook(() => useItems(mockOrder.items));
 
-    expect(result.current).toBeNull();
-
-    await waitFor(() => {
-      expect(result.current).toEqual(mockOrder);
-    });
-
-    expect(getOrderById).toHaveBeenCalledWith(mockOrderId);
-  });
-
-  test('sets order state to null if orderId is missing', () => {
-    const { result } = renderHook(() => useOrderReceived());
-
-    expect(result.current).toBeNull();
-
-    expect(getOrderById).not.toHaveBeenCalled();
-  });
-
-  test('sets order state to false if no order found', async () => {
-    getOrderById.mockResolvedValue(false);
-
-    const mockInvalidOrder = 1002;
-
-    const { result } = renderHook(() => useOrderReceived(mockInvalidOrder));
-
-    expect(result.current).toBeNull();
+    expect(result.current).toEqual([]);
 
     await waitFor(() => {
-      expect(result.current).toEqual(false);
+      expect(result.current).toEqual(mockAttributeMap);
     });
 
-    expect(getOrderById).toHaveBeenCalledWith(mockInvalidOrder);
+    expect(getAttributeMap).toHaveBeenCalledWith(mockAttributeIds);
   });
 });

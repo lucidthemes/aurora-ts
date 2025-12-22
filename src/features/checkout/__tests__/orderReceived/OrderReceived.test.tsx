@@ -1,14 +1,17 @@
 import { render, screen, within, waitFor } from '@testing-library/react';
-import OrderReceived from '../../components/orderReceived/OrderReceived';
 
 vi.mock('@server/products/getAttribute', () => ({
   getAttributeMap: vi.fn(),
 }));
 
 import { getAttributeMap } from '@server/products/getAttribute';
+import type { Order } from '@typings/shop/order';
+import type { Attribute } from '@typings/products/attribute';
+
+import OrderReceived from '../../components/orderReceived/OrderReceived';
 
 describe('OrderReceived component', () => {
-  const mockOrder = {
+  const mockOrder: Order = {
     id: 1001,
     customerId: 1,
     date: '2025-10-23T15:28:51.355Z',
@@ -48,7 +51,6 @@ describe('OrderReceived component', () => {
         title: 'Cozy sweater',
         slug: 'cozy-sweater',
         image: '/images/products/product-1.jpg',
-        stock: null,
         price: 20,
         variation: {
           id: 1001,
@@ -65,7 +67,6 @@ describe('OrderReceived component', () => {
         title: 'Autumn beanie',
         slug: 'autumn-beanie',
         image: '/images/products/product-5.jpg',
-        stock: null,
         price: 20,
         variation: {
           id: 2002,
@@ -83,7 +84,6 @@ describe('OrderReceived component', () => {
         image: '/images/products/product-10.jpg',
         stock: 5,
         price: 20,
-        variation: null,
         quantity: 1,
       },
     ],
@@ -111,7 +111,7 @@ describe('OrderReceived component', () => {
     total: 54,
   };
 
-  const mockAttributeMap = {
+  const mockAttributeMap: Record<number, Attribute> = {
     1: {
       id: 1,
       name: 'Black',
@@ -155,7 +155,7 @@ describe('OrderReceived component', () => {
   });
 
   test('renders order details items', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     render(<OrderReceived order={mockOrder} />);
 
@@ -172,14 +172,14 @@ describe('OrderReceived component', () => {
   });
 
   test('renders order details item information', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     render(<OrderReceived order={mockOrder} />);
 
     const itemList = await screen.findByRole('list', { name: /order items/i });
     expect(itemList).toBeInTheDocument();
 
-    const firstListItem = itemList.querySelector(':scope > li:first-child');
+    const firstListItem = itemList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('heading', { name: /cozy sweater/i })).toBeInTheDocument();
