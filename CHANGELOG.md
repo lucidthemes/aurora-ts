@@ -28,6 +28,10 @@ All notable changes to this project will be documented in this file.
 - convert orderReceived hooks to TypeScript
 - convert orderReceived tests to TypeScript
 
+##### ContactForm
+
+- remove return interface from useContactForm hook to let TypeScript infer by itself
+
 #### Pages
 
 - status object to OrderReceived for not found, loading, and loaded states

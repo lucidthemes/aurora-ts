@@ -1,8 +1,9 @@
-import useContactForm from './useContactForm';
 import Notification from '@components/Notification';
 import Input from '@components/Form/Input';
 import Textarea from '@components/Form/Textarea';
 import Button from '@components/UI/Button';
+
+import useContactForm from './useContactForm';
 
 export default function ContactForm() {
   const { contactFormData, contactFormErrors, contactFormNotification, resetContactFormNotification, handleFormChange, handleFormKeyDown, handleFormSubmit } =

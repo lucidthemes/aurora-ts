@@ -1,4 +1,6 @@
-import { useState, ChangeEventHandler, KeyboardEventHandler, FormEventHandler } from 'react';
+import { useState } from 'react';
+import type { ChangeEventHandler, KeyboardEventHandler, FormEventHandler } from 'react';
+
 import { validateEmail } from '@utils/validators';
 
 interface ContactFormData {
@@ -21,17 +23,7 @@ interface ContactFormNotification {
   message: string;
 }
 
-interface useContactFormReturn {
-  contactFormData: ContactFormData;
-  contactFormErrors: ContactFormErrors;
-  contactFormNotification: ContactFormNotification;
-  resetContactFormNotification: () => void;
-  handleFormChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-  handleFormKeyDown: KeyboardEventHandler<HTMLFormElement>;
-  handleFormSubmit: FormEventHandler<HTMLFormElement>;
-}
-
-export default function useContactForm(): useContactFormReturn {
+export default function useContactForm() {
   const [contactFormData, setContactFormData] = useState<ContactFormData>({
     name: '',
     email: '',
