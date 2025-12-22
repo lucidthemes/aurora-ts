@@ -1,6 +1,11 @@
+import type { Order } from '@typings/shop/order';
 import { dateFormat } from '@utils/formatters';
 
-export default function Overview({ order }) {
+interface OverviewProps {
+  order: Order;
+}
+
+export default function Overview({ order }: OverviewProps) {
   return (
     <section aria-label="Overview">
       <div className="flex flex-col gap-y-5 md:grid md:grid-cols-4 md:text-center">

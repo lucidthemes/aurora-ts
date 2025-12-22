@@ -1,8 +1,14 @@
+import type { Order } from '@typings/shop/order';
+
 import Items from './Items';
 import Totals from './Totals';
 import Note from './Note';
 
-export default function OrderDetails({ order }) {
+interface OrderDetailsProps {
+  order: Order;
+}
+
+export default function OrderDetails({ order }: OrderDetailsProps) {
   return (
     <section aria-label="Order details">
       <h2 className="mb-5">Order details</h2>

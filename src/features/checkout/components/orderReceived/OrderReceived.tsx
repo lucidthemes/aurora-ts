@@ -1,8 +1,15 @@
+import type { Order } from '@typings/shop/order';
+
 import Overview from './Overview';
 import OrderDetails from './orderDetails';
 import CustomerDetails from './CustomerDetails';
 
-export default function OrderReceived({ order, location = 'checkout' }) {
+interface OrderReceivedProps {
+  order: Order;
+  location?: string;
+}
+
+export default function OrderReceived({ order, location = 'checkout' }: OrderReceivedProps) {
   if (!order) return null;
 
   const orderReceivedClasses = location === 'checkout' ? 'p-5 md:p-7.5 lg:p-10' : '';

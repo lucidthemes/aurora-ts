@@ -1,6 +1,14 @@
+import type { Item } from '@typings/cart/item';
+import type { Attribute } from '@typings/products/attribute';
+
 import ItemVariation from './ItemVariation';
 
-export default function Item({ item, attributeMap }) {
+interface ItemProps {
+  item: Item;
+  attributeMap?: Record<number, Attribute>;
+}
+
+export default function Item({ item, attributeMap }: ItemProps) {
   if (!item) return null;
 
   return (

@@ -1,8 +1,23 @@
-export default function ItemVariation({ item, variation, attributeMap }) {
+import type { Item } from '@typings/cart/item';
+import type { Variation } from '@typings/cart/variation';
+import type { Attribute } from '@typings/products/attribute';
+
+interface ItemVariationProps {
+  item: Item;
+  variation?: Variation;
+  attributeMap?: Record<number, Attribute>;
+}
+
+export default function ItemVariation({ item, variation, attributeMap }: ItemVariationProps) {
   if (!variation || !attributeMap) return null;
 
-  const colour = attributeMap[item.variation?.colourId];
-  const size = attributeMap[item.variation?.sizeId];
+  const colourId = item.variation?.colourId;
+  const sizeId = item.variation?.sizeId;
+
+  if (!colourId || !sizeId) return null;
+
+  const colour = attributeMap[colourId];
+  const size = attributeMap[sizeId];
 
   if (!colour && !size) return null;
 

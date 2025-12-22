@@ -1,7 +1,13 @@
+import type { Order } from '@typings/shop/order';
+
 import useItems from '../../../hooks/orderReceived/useItems';
 import Item from './Item';
 
-export default function Items({ order }) {
+interface ItemsProps {
+  order: Order;
+}
+
+export default function Items({ order }: ItemsProps) {
   const attributeMap = useItems(order.items);
 
   if (!order.items) return null;

@@ -1,4 +1,11 @@
-export default function Address({ order, section }) {
+import type { Order } from '@typings/shop/order';
+
+interface AddressProps {
+  order: Order;
+  section: 'shipping' | 'billing';
+}
+
+export default function Address({ order, section }: AddressProps) {
   if (!order.checkoutData) return null;
 
   let country = '';

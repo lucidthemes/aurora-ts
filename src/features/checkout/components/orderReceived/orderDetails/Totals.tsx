@@ -1,4 +1,10 @@
-export default function Totals({ order }) {
+import type { Order } from '@typings/shop/order';
+
+interface TotalsProps {
+  order: Order;
+}
+
+export default function Totals({ order }: TotalsProps) {
   return (
     <section className="flex flex-col gap-y-5">
       <h3>Totals</h3>
