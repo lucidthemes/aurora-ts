@@ -1,8 +1,9 @@
 import { renderHook, act } from '@testing-library/react';
-import useSearchForm from '../useSearchForm';
+
 import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
 
-// mock useNavigate
+import useSearchForm from '../useSearchForm';
+
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');

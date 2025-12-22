@@ -1,19 +1,13 @@
-import { useState, ChangeEventHandler, FormEventHandler } from 'react';
+import { useState } from 'react';
+import type { ChangeEventHandler, FormEventHandler } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-interface UseSearchFormReturn {
-  searchFormTerm: string;
-  searchFormError: string;
-  handleFormChange: ChangeEventHandler<HTMLInputElement>;
-  handleFormSubmit: FormEventHandler<HTMLFormElement>;
-}
 
 export default function useSearchForm(
   term: string,
   location: 'page' | 'widget' | 'header',
   headerSearchActive: boolean = false,
   handleHeaderSearchActive: () => void = () => {}
-): UseSearchFormReturn {
+) {
   const [searchFormTerm, setSearchFormTerm] = useState(term || '');
   const [searchFormError, setSearchFormError] = useState('');
   const navigate = useNavigate();

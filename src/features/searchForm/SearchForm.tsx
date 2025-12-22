@@ -1,7 +1,9 @@
-import { RefObject } from 'react';
-import useSearchForm from './useSearchForm';
+import type { RefObject } from 'react';
+
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
+
+import useSearchForm from './useSearchForm';
 
 interface SearchFormProps {
   term?: string;
