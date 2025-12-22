@@ -1,5 +1,5 @@
 import { render, screen, within, fireEvent, waitFor } from '@testing-library/react';
-import Summary from '../../components/summary';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/products/getAttribute', () => ({
   getAttributeMap: vi.fn(),
@@ -11,16 +11,20 @@ vi.mock('@server/shop/getCoupon', () => ({
 
 import { getAttributeMap } from '@server/products/getAttribute';
 import { getCouponByCode } from '@server/shop/getCoupon';
-import { MemoryRouter } from 'react-router-dom';
+import type { Item } from '@typings/cart/item';
+import type { Coupon } from '@typings/shop/coupon';
+import type { ShippingOption } from '@typings/shop/shippingOption';
+import { Attribute } from '@typings/products/attribute';
+
+import Summary from '../../components/summary';
 
 describe('Summary component', () => {
-  const mockCartItems = [
+  const mockCartItems: Item[] = [
     {
       productId: 1,
       title: 'Cozy sweater',
       slug: 'cozy-sweater',
       image: '/images/products/product-1.jpg',
-      stock: null,
       price: 20,
       variation: {
         id: 1001,
@@ -37,7 +41,6 @@ describe('Summary component', () => {
       title: 'Autumn beanie',
       slug: 'autumn-beanie',
       image: '/images/products/product-5.jpg',
-      stock: null,
       price: 20,
       variation: {
         id: 2002,
@@ -55,15 +58,13 @@ describe('Summary component', () => {
       image: '/images/products/product-10.jpg',
       stock: 5,
       price: 20,
-      variationId: null,
-      variation: null,
       quantity: 1,
     },
   ];
 
   const mockCartSubTotal = 60;
 
-  const mockCartCoupons = [
+  const mockCartCoupons: Coupon[] = [
     {
       id: 2,
       code: 'COUPON-10',
@@ -79,7 +80,7 @@ describe('Summary component', () => {
 
   const removeCartCouponMock = vi.fn();
 
-  const mockShippingOption = {
+  const mockShippingOption: ShippingOption = {
     id: 1,
     name: 'Standard',
     amount: 0,
@@ -87,7 +88,7 @@ describe('Summary component', () => {
 
   const mockCheckoutTotal = 54;
 
-  const mockAttributeMap = {
+  const mockAttributeMap: Record<number, Attribute> = {
     1: {
       id: 1,
       name: 'Black',
@@ -108,7 +109,7 @@ describe('Summary component', () => {
     },
   };
 
-  const mockNewValidCoupon = {
+  const mockNewValidCoupon: Coupon = {
     id: 1,
     code: 'COUPON-5',
     type: 'fixed',
@@ -172,7 +173,7 @@ describe('Summary component', () => {
   });
 
   test('renders cart item information', async () => {
-    getAttributeMap.mockResolvedValue(mockAttributeMap);
+    vi.mocked(getAttributeMap).mockResolvedValue(mockAttributeMap);
 
     render(
       <MemoryRouter>
@@ -192,7 +193,7 @@ describe('Summary component', () => {
     const itemList = await screen.findByRole('list', { name: /cart items/i });
     expect(itemList).toBeInTheDocument();
 
-    const firstListItem = itemList.querySelector(':scope > li:first-child');
+    const firstListItem = itemList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('img', { name: /cozy sweater/i })).toBeInTheDocument();
@@ -254,7 +255,7 @@ describe('Summary component', () => {
   });
 
   test('adds new coupon when form successfully submitted', async () => {
-    getCouponByCode.mockResolvedValue(mockNewValidCoupon);
+    vi.mocked(getCouponByCode).mockResolvedValue(mockNewValidCoupon);
 
     render(
       <MemoryRouter>
@@ -347,6 +348,7 @@ describe('Summary component', () => {
         <Summary
           cartItems={mockCartItems}
           cartSubTotal={mockCartSubTotal}
+          cartCoupons={[]}
           cartTotal={mockCartTotal}
           addCartCoupon={addCartCouponMock}
           removeCartCoupon={removeCartCouponMock}

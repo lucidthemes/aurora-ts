@@ -1,18 +1,25 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import usePaymentOptions from '../../hooks/form/usePaymentOptions';
 
 vi.mock('@server/shop/getPaymentOptions', () => ({
   getPaymentOptions: vi.fn(),
 }));
 
 import { getPaymentOptions } from '@server/shop/getPaymentOptions';
+import type { PaymentOption } from '@typings/shop/paymentOption';
+
+import usePaymentOptions from '../../hooks/form/usePaymentOptions';
 
 describe('usePaymentOptions hook', () => {
-  const mockPaymentOption = {};
+  const mockPaymentOption: PaymentOption = {
+    id: 1,
+    name: 'Direct bank transfer',
+    description:
+      'Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.',
+  };
 
   const setPaymentOptionMock = vi.fn();
 
-  const mockPaymentOptions = [
+  const mockPaymentOptions: PaymentOption[] = [
     {
       id: 1,
       name: 'Direct bank transfer',
@@ -31,10 +38,10 @@ describe('usePaymentOptions hook', () => {
     },
   ];
 
-  const mockPaymentOptionChange = {
-    id: 2,
-    name: 'Express',
-    amount: 1.99,
+  const mockPaymentOptionChange: PaymentOption = {
+    id: 3,
+    name: 'Cash on delivery',
+    description: 'Pay with cash upon delivery.',
   };
 
   beforeEach(() => {
@@ -42,7 +49,7 @@ describe('usePaymentOptions hook', () => {
   });
 
   test('fetches payment options data and sets paymentOptions state', async () => {
-    getPaymentOptions.mockResolvedValue(mockPaymentOptions);
+    vi.mocked(getPaymentOptions).mockResolvedValue(mockPaymentOptions);
 
     const { result } = renderHook(() => usePaymentOptions(mockPaymentOption, setPaymentOptionMock));
 

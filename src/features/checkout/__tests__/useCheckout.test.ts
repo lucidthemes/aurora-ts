@@ -1,16 +1,19 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
+
+import type { ShippingOption } from '@typings/shop/shippingOption';
+
 import useCheckout from '../hooks/useCheckout';
 
 describe('useCheckout hook', () => {
   const mockCartTotal = 50;
 
-  const mockStandardShipping = {
+  const mockStandardShipping: ShippingOption = {
     id: 1,
     name: 'Standard',
     amount: 0,
   };
 
-  const mockExpressShipping = {
+  const mockExpressShipping: ShippingOption = {
     id: 2,
     name: 'Express',
     amount: 1.99,

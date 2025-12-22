@@ -1,14 +1,22 @@
+import type { KeyboardEvent } from 'react';
 import { renderHook, act } from '@testing-library/react';
+
+import type { Item } from '@typings/cart/item';
+import type { Coupon } from '@typings/shop/coupon';
+import type { ShippingOption } from '@typings/shop/shippingOption';
+import type { PaymentOption } from '@typings/shop/paymentOption';
+import type { Customer } from '@typings/shop/customer';
+import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
 import useForm from '../../hooks/form/useForm';
 
 describe('useEditForm hook', () => {
-  const mockCartItems = [
+  const mockCartItems: Item[] = [
     {
       productId: 1,
       title: 'Cozy sweater',
       slug: 'cozy-sweater',
       image: '/images/products/product-1.jpg',
-      stock: null,
       price: 20,
       variation: {
         id: 1001,
@@ -25,7 +33,6 @@ describe('useEditForm hook', () => {
       title: 'Autumn beanie',
       slug: 'autumn-beanie',
       image: '/images/products/product-5.jpg',
-      stock: null,
       price: 20,
       variation: {
         id: 2002,
@@ -43,15 +50,13 @@ describe('useEditForm hook', () => {
       image: '/images/products/product-10.jpg',
       stock: 5,
       price: 20,
-      variationId: null,
-      variation: null,
       quantity: 1,
     },
   ];
 
   const mockCartSubTotal = 60;
 
-  const mockCartCoupons = [
+  const mockCartCoupons: Coupon[] = [
     {
       id: 2,
       code: 'COUPON-10',
@@ -63,13 +68,13 @@ describe('useEditForm hook', () => {
 
   const emptyCartMock = vi.fn();
 
-  const mockShippingOption = {
+  const mockShippingOption: ShippingOption = {
     id: 1,
     name: 'Standard',
     amount: 0,
   };
 
-  const mockPaymentOption = {
+  const mockPaymentOption: PaymentOption = {
     id: 1,
     name: 'Direct bank transfer',
     description:
@@ -78,7 +83,7 @@ describe('useEditForm hook', () => {
 
   const mockCheckoutTotal = 60;
 
-  const mockLoggedInUser = {
+  const mockLoggedInUser: Customer = {
     id: 1,
     email: 'test@example.com',
     shipping: {
@@ -107,7 +112,7 @@ describe('useEditForm hook', () => {
 
   const navigateMock = vi.fn();
 
-  const mockNotLoggedInUser = {};
+  const mockNotLoggedInUser: Customer | null = null;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -221,7 +226,7 @@ describe('useEditForm hook', () => {
     );
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'test2@example.com' } }, 'contact');
+      result.current.handleFormChange(createInputChangeEvent('email', 'test2@example.com'), 'contact');
     });
 
     expect(result.current.checkoutFormData.contact.email).toBe('test2@example.com');
@@ -243,11 +248,11 @@ describe('useEditForm hook', () => {
     );
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'firstName', value: 'James' } }, 'shipping');
+      result.current.handleFormChange(createInputChangeEvent('firstName', 'James'), 'shipping');
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'lastName', value: 'Matthew' } }, 'shipping');
+      result.current.handleFormChange(createInputChangeEvent('lastName', 'Matthew'), 'shipping');
     });
 
     expect(result.current.checkoutFormData.shipping.firstName).toBe('James');
@@ -270,11 +275,11 @@ describe('useEditForm hook', () => {
     );
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'firstName', value: 'James' } }, 'billing');
+      result.current.handleFormChange(createInputChangeEvent('firstName', 'James'), 'billing');
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'lastName', value: 'Matthew' } }, 'billing');
+      result.current.handleFormChange(createInputChangeEvent('lastName', 'Matthew'), 'billing');
     });
 
     expect(result.current.checkoutFormData.billing.firstName).toBe('James');
@@ -298,14 +303,14 @@ describe('useEditForm hook', () => {
 
     const preventDefault = vi.fn();
 
-    const mockEvent = {
+    const mockEvent: Partial<KeyboardEvent<HTMLFormElement>> = {
       key: 'Enter',
-      target: { tagName: 'input', type: 'text' },
+      target: { tagName: 'input', type: 'text' } as HTMLInputElement,
       preventDefault,
     };
 
     act(() => {
-      result.current.handleFormKeyDown(mockEvent);
+      result.current.handleFormKeyDown(mockEvent as KeyboardEvent<HTMLFormElement>);
     });
 
     expect(preventDefault).toHaveBeenCalled();
@@ -327,11 +332,11 @@ describe('useEditForm hook', () => {
     );
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: '' } }, 'contact');
+      result.current.handleFormChange(createInputChangeEvent('email', ''), 'contact');
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.checkoutFormErrors.contact.email).toBe('Please enter an email address');
@@ -353,11 +358,11 @@ describe('useEditForm hook', () => {
     );
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'email', value: 'invalid-email' } }, 'contact');
+      result.current.handleFormChange(createInputChangeEvent('email', 'invalid-email'), 'contact');
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.checkoutFormErrors.contact.email).toBe('Please enter a valid email address');
@@ -379,15 +384,15 @@ describe('useEditForm hook', () => {
     );
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'firstName', value: '' } }, 'shipping');
+      result.current.handleFormChange(createInputChangeEvent('firstName', ''), 'shipping');
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'lastName', value: '' } }, 'shipping');
+      result.current.handleFormChange(createInputChangeEvent('lastName', ''), 'shipping');
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.checkoutFormErrors.shipping.firstName).toBe('Please enter a first name');
@@ -416,15 +421,15 @@ describe('useEditForm hook', () => {
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'firstName', value: '' } }, 'billing');
+      result.current.handleFormChange(createInputChangeEvent('firstName', ''), 'billing');
     });
 
     act(() => {
-      result.current.handleFormChange({ target: { name: 'lastName', value: '' } }, 'billing');
+      result.current.handleFormChange(createInputChangeEvent('lastName', ''), 'billing');
     });
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(result.current.billingSameShipping).toBe(false);
@@ -448,7 +453,7 @@ describe('useEditForm hook', () => {
     );
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     expect(emptyCartMock).toHaveBeenCalled();

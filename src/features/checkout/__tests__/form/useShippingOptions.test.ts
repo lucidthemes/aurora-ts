@@ -1,18 +1,20 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useShippingOptions from '../../hooks/form/useShippingOptions';
 
 vi.mock('@server/shop/getShippingOptions', () => ({
   getShippingOptions: vi.fn(),
 }));
 
 import { getShippingOptions } from '@server/shop/getShippingOptions';
+import type { ShippingOption } from '@typings/shop/shippingOption';
+
+import useShippingOptions from '../../hooks/form/useShippingOptions';
 
 describe('useShippingOptions hook', () => {
-  const mockShippingOption = {};
+  const mockShippingOption: ShippingOption = { id: 1, name: 'Standard', amount: 0 };
 
   const setShippingOptionMock = vi.fn();
 
-  const mockShippingOptions = [
+  const mockShippingOptions: ShippingOption[] = [
     {
       id: 1,
       name: 'Standard',
@@ -25,7 +27,7 @@ describe('useShippingOptions hook', () => {
     },
   ];
 
-  const mockShippingOptionChange = {
+  const mockShippingOptionChange: ShippingOption = {
     id: 2,
     name: 'Express',
     amount: 1.99,
@@ -36,7 +38,7 @@ describe('useShippingOptions hook', () => {
   });
 
   test('fetches shipping options data and sets shippingOptions state', async () => {
-    getShippingOptions.mockResolvedValue(mockShippingOptions);
+    vi.mocked(getShippingOptions).mockResolvedValue(mockShippingOptions);
 
     const { result } = renderHook(() => useShippingOptions(mockShippingOption, setShippingOptionMock));
 

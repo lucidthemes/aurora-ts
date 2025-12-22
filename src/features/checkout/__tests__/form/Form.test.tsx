@@ -1,5 +1,5 @@
 import { render, screen, within, fireEvent, waitFor } from '@testing-library/react';
-import Form from '../../components/form';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@contexts/AuthContext', () => ({
   useAuthContext: vi.fn(),
@@ -16,20 +16,24 @@ vi.mock('@server/shop/getPaymentOptions', () => ({
 import { useAuthContext } from '@contexts/AuthContext';
 import { getShippingOptions } from '@server/shop/getShippingOptions';
 import { getPaymentOptions } from '@server/shop/getPaymentOptions';
-import { MemoryRouter } from 'react-router-dom';
+import type { Item } from '@typings/cart/item';
+import type { Coupon } from '@typings/shop/coupon';
+import type { ShippingOption } from '@typings/shop/shippingOption';
+import type { PaymentOption } from '@typings/shop/paymentOption';
+
+import Form from '../../components/form';
 
 describe('Form component', () => {
-  useAuthContext.mockReturnValue({
+  vi.mocked(useAuthContext).mockReturnValue({
     loggedInUser: '',
   });
 
-  const mockCartItems = [
+  const mockCartItems: Item[] = [
     {
       productId: 1,
       title: 'Cozy sweater',
       slug: 'cozy-sweater',
       image: '/images/products/product-1.jpg',
-      stock: null,
       price: 20,
       variation: {
         id: 1001,
@@ -46,7 +50,6 @@ describe('Form component', () => {
       title: 'Autumn beanie',
       slug: 'autumn-beanie',
       image: '/images/products/product-5.jpg',
-      stock: null,
       price: 20,
       variation: {
         id: 2002,
@@ -64,15 +67,13 @@ describe('Form component', () => {
       image: '/images/products/product-10.jpg',
       stock: 5,
       price: 20,
-      variationId: null,
-      variation: null,
       quantity: 1,
     },
   ];
 
   const mockCartSubTotal = 60;
 
-  const mockCartCoupons = [
+  const mockCartCoupons: Coupon[] = [
     {
       id: 2,
       code: 'COUPON-10',
@@ -84,7 +85,7 @@ describe('Form component', () => {
 
   const emptyCartMock = vi.fn();
 
-  const mockShippingOption = {
+  const mockShippingOption: ShippingOption = {
     id: 1,
     name: 'Standard',
     amount: 0,
@@ -92,7 +93,7 @@ describe('Form component', () => {
 
   const setShippingOptionMock = vi.fn();
 
-  const mockPaymentOption = {
+  const mockPaymentOption: PaymentOption = {
     id: 1,
     name: 'Direct bank transfer',
     description:
@@ -103,7 +104,7 @@ describe('Form component', () => {
 
   const mockCheckoutTotal = 54;
 
-  const mockShippingOptions = [
+  const mockShippingOptions: ShippingOption[] = [
     {
       id: 1,
       name: 'Standard',
@@ -116,7 +117,7 @@ describe('Form component', () => {
     },
   ];
 
-  const mockPaymentOptions = [
+  const mockPaymentOptions: PaymentOption[] = [
     {
       id: 1,
       name: 'Direct bank transfer',
@@ -267,7 +268,7 @@ describe('Form component', () => {
   });
 
   test('renders shipping options fieldset when shipping option data is fetched', async () => {
-    getShippingOptions.mockResolvedValue(mockShippingOptions);
+    vi.mocked(getShippingOptions).mockResolvedValue(mockShippingOptions);
 
     render(
       <MemoryRouter>
@@ -293,7 +294,7 @@ describe('Form component', () => {
   });
 
   test('renders payment options fieldset when payment option data is fetched', async () => {
-    getPaymentOptions.mockResolvedValue(mockPaymentOptions);
+    vi.mocked(getPaymentOptions).mockResolvedValue(mockPaymentOptions);
 
     render(
       <MemoryRouter>
