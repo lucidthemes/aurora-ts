@@ -1,16 +1,9 @@
-import { useState, ChangeEventHandler, FormEventHandler } from 'react';
+import { useState } from 'react';
+import type { ChangeEventHandler, FormEventHandler } from 'react';
+
 import { validateEmail } from '@utils/validators';
 
-interface UseNewsletterFormReturn {
-  newsletterFormEmail: string;
-  newsletterFormError: string;
-  newsletterFormNotification: { type: string; message: string };
-  resetNewsletterFormNotification: () => void;
-  handleFormChange: ChangeEventHandler<HTMLInputElement>;
-  handleFormSubmit: FormEventHandler<HTMLFormElement>;
-}
-
-export default function useNewsletterForm(): UseNewsletterFormReturn {
+export default function useNewsletterForm() {
   const [newsletterFormEmail, setNewsletterFormEmail] = useState('');
   const [newsletterFormError, setNewsletterFormError] = useState('');
 

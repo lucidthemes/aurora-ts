@@ -1,6 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
-import useNewsletterForm from '../useNewsletterForm';
+
 import { createInputChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useNewsletterForm from '../useNewsletterForm';
 
 describe('useNewsletterForm hook', () => {
   test('updates email on handleFormChange', () => {

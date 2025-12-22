@@ -1,7 +1,8 @@
-import useNewsletterForm from './useNewsletterForm';
 import Notification from '@components/Notification';
 import Input from '@components/Form/Input';
 import Button from '@components/UI/Button';
+
+import useNewsletterForm from './useNewsletterForm';
 
 interface NewsletterFormProps {
   layout?: string;
