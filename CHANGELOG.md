@@ -32,6 +32,10 @@ All notable changes to this project will be documented in this file.
 
 - remove return interface from useContactForm hook to let TypeScript infer by itself
 
+##### NewsletterForm
+
+- remove return interface from useNewsletterForm hook to let TypeScript infer by itself
+
 #### Pages
 
 - status object to OrderReceived for not found, loading, and loaded states
