@@ -1,6 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
-import useContactForm from '../useContactForm';
+
 import { createInputChangeEvent, createTextAreaChangeEvent, createFormSubmitEvent } from '@utils/tests/events';
+
+import useContactForm from '../useContactForm';
 
 describe('useContactForm hook', () => {
   test('updates form data on handleFormChange', () => {
