@@ -28,6 +28,10 @@ All notable changes to this project will be documented in this file.
 - convert orderReceived hooks to TypeScript
 - convert orderReceived tests to TypeScript
 
+#### Pages
+
+- status object to OrderReceived for not found, loading, and loaded states
+
 #### Types
 
 - shop order type to use cart item interface
