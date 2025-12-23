@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.13.0] - [Unreleased]
+
+### Changed
+
+#### Features
+
+##### InstagramFeed
+
+- convert component to TypeScript
+- convert hook to TypeScript
+- convert tests to TypeScript
+
 ## [0.12.0] - 2025-12-22
 
 ### Added
