@@ -1,4 +1,13 @@
-export default function OverlayLayout({ image, content, layout, heightClasses }) {
+import type { ReactNode } from 'react';
+
+interface OverlayLayoutProps {
+  image: string;
+  content: ReactNode;
+  layout: 'overlay-top' | 'overlay-center' | 'overlay-bottom' | 'split';
+  heightClasses?: string;
+}
+
+export default function OverlayLayout({ image, content, layout, heightClasses }: OverlayLayoutProps) {
   const overlayAlign = layout === 'overlay-top' ? 'start' : layout === 'overlay-bottom' ? 'end' : 'center';
   const overlayWidth = layout === 'overlay-center' ? 'max-w-[80%] md:max-w-[60%] lg:max-w-[40%]' : 'w-full';
 

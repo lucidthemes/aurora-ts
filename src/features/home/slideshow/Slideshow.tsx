@@ -1,19 +1,42 @@
 import React from 'react';
+import type { ReactNode } from 'react';
+
 import useSlideshow from './useSlideshow';
 import Previous from './components/button/Previous';
 import Next from './components/button/Next';
 import Dot from './components/button/Dot';
 
-export function Slideshow({ children, height = 500, loop = true, autoplay = false, multiSlide = '', navPosition = 'outside' }) {
+interface SlideshowProps {
+  children: ReactNode;
+  height?: number;
+  loop?: boolean;
+  autoplay?: boolean;
+  multiSlide?: 2 | 3 | 4;
+  navPosition?: 'inside' | 'outside';
+}
+
+interface SlideChildProps {
+  multiSlide?: 2 | 3 | 4;
+  heightClasses?: string;
+}
+
+export function Slideshow({ children, height = 500, loop = true, autoplay = false, multiSlide, navPosition = 'outside' }: SlideshowProps) {
   const { emblaRef, scrollSnaps, selectedIndex, scrollPrev, scrollNext, scrollTo } = useSlideshow(loop, autoplay);
 
   const heightClasses = height === 500 ? 'md:h-125' : height === 600 ? 'md:h-150' : 'md:h-125';
   const multiSlideClass = multiSlide ? '-mr-10' : '';
 
   // clone and inject props into each child
-  const childrenWithProps = React.Children.map(children, (child) =>
-    React.isValidElement(child) ? React.cloneElement(child, { multiSlide, heightClasses }) : child
-  );
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (!React.isValidElement<SlideChildProps>(child)) {
+      return child;
+    }
+
+    return React.cloneElement(child, {
+      multiSlide,
+      heightClasses,
+    });
+  });
 
   return (
     <div className="embla-carousel relative">

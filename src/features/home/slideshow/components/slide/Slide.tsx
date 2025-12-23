@@ -2,7 +2,18 @@ import Content from './Content';
 import OverlayLayout from './OverlayLayout';
 import SplitLayout from './SplitLayout';
 
-export function Slide({ image, heading, subHeading, link, button = true, layout = 'overlay-center', multiSlide, heightClasses }) {
+interface SlideProps {
+  image: string;
+  heading?: string;
+  subHeading?: string;
+  link?: string;
+  button?: boolean;
+  layout?: 'overlay-top' | 'overlay-center' | 'overlay-bottom' | 'split';
+  multiSlide?: 2 | 3 | 4;
+  heightClasses?: string;
+}
+
+export function Slide({ image, heading, subHeading, link, button = true, layout = 'overlay-center', multiSlide, heightClasses }: SlideProps) {
   let slideWidthClasses = 'flex-[0_0_100%]';
 
   switch (multiSlide) {
