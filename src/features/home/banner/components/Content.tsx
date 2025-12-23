@@ -1,7 +1,15 @@
 import { Link } from 'react-router-dom';
+
 import Button from '@components/UI/Button';
 
-export default function Content({ heading, subHeading, link, align = 'center' }) {
+interface ContentProps {
+  heading?: string;
+  subHeading?: string;
+  link?: string;
+  align?: 'left' | 'center' | 'right';
+}
+
+export default function Content({ heading, subHeading, link, align = 'center' }: ContentProps) {
   const alignClass = align === 'left' ? 'start' : align === 'right' ? 'end' : 'center';
 
   return (
