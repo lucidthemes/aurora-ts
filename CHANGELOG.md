@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 
 #### Features
 
+##### Home
+
+###### Banner
+
+- convert components to TypeScript
+
 ##### InstagramFeed
 
 - convert component to TypeScript

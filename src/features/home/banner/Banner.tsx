@@ -2,7 +2,15 @@ import Content from './components/Content';
 import OverlayLayout from './components/OverlayLayout';
 import SplitLayout from './components/SplitLayout';
 
-export default function Banner({ image, heading, subHeading, link, layout = 'overlay' }) {
+interface BannerProps {
+  image: string;
+  heading?: string;
+  subHeading?: string;
+  link?: string;
+  layout?: 'overlay' | 'split';
+}
+
+export default function Banner({ image, heading, subHeading, link, layout = 'overlay' }: BannerProps) {
   if (layout !== 'overlay' && layout !== 'split') return null;
 
   const contentAlign = layout === 'overlay' ? 'center' : 'left';
