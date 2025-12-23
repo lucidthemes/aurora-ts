@@ -1,7 +1,14 @@
-import useInstagramFeed from './useInstagramFeed';
 import Button from '@components/UI/Button';
 
-export default function InstagramFeed({ limit = 6, columns = 6, link = '' }) {
+import useInstagramFeed from './useInstagramFeed';
+
+interface InstagramFeedProps {
+  limit?: number;
+  columns?: number;
+  link?: string;
+}
+
+export default function InstagramFeed({ limit = 6, columns = 6, link = '' }: InstagramFeedProps) {
   const instagramFeed = useInstagramFeed(limit);
 
   const instagramFeedClasses = columns === 6 ? 'grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-6' : columns === 3 ? 'grid-cols-1 lg:grid-cols-3 gap-2.5' : '';
