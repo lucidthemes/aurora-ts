@@ -1,17 +1,19 @@
 import { render, screen } from '@testing-library/react';
-import InstagramFeed from '../InstagramFeed';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/instagram/getFeed', () => ({
   getFeed: vi.fn(),
 }));
 
 import { getFeed } from '@server/instagram/getFeed';
-import { MemoryRouter } from 'react-router-dom';
+import type { Feed } from '@typings/instagram/feed';
+
+import InstagramFeed from '../InstagramFeed';
 
 describe('InstagramFeed component', () => {
   const mockLimit = 6;
 
-  const mockInstagramFeed = [
+  const mockInstagramFeed: Feed[] = [
     {
       id: 1,
       image: '/images/instagram/instagram-1.jpg',
@@ -43,7 +45,7 @@ describe('InstagramFeed component', () => {
   });
 
   test('renders Instagram feed when feed data is fetched', async () => {
-    getFeed.mockResolvedValue(mockInstagramFeed);
+    vi.mocked(getFeed).mockResolvedValue(mockInstagramFeed);
 
     render(
       <MemoryRouter>
@@ -59,7 +61,7 @@ describe('InstagramFeed component', () => {
   });
 
   test('renders error message if no Instagram feed images found', async () => {
-    getFeed.mockResolvedValue([]);
+    vi.mocked(getFeed).mockResolvedValue([]);
 
     render(
       <MemoryRouter>

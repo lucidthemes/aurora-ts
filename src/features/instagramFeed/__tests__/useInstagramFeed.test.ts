@@ -1,16 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useInstagramFeed from '../useInstagramFeed';
 
 vi.mock('@server/instagram/getFeed', () => ({
   getFeed: vi.fn(),
 }));
 
 import { getFeed } from '@server/instagram/getFeed';
+import type { Feed } from '@typings/instagram/feed';
+
+import useInstagramFeed from '../useInstagramFeed';
 
 describe('useInstagramFeed hook', () => {
   const mockLimit = 6;
 
-  const mockInstagramFeed = [
+  const mockInstagramFeed: Feed[] = [
     {
       id: 1,
       image: '/images/instagram/instagram-1.jpg',
@@ -42,7 +44,7 @@ describe('useInstagramFeed hook', () => {
   });
 
   test('fetches Instagram feed data and sets instagramFeed state', async () => {
-    getFeed.mockResolvedValue(mockInstagramFeed);
+    vi.mocked(getFeed).mockResolvedValue(mockInstagramFeed);
 
     const { result } = renderHook(() => useInstagramFeed(mockLimit));
 
