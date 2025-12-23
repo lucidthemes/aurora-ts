@@ -18,6 +18,10 @@ All notable changes to this project will be documented in this file.
 
 - convert component to TypeScript
 
+###### PromoBox
+
+- convert component to TypeScript
+
 ##### InstagramFeed
 
 - convert component to TypeScript

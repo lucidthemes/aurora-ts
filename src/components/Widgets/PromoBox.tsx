@@ -14,7 +14,7 @@ export default function PromoBoxWidget({ title = '', image, heading, subHeading,
   return (
     <section>
       <WidgetTitle>{title}</WidgetTitle>
-      <PromoBox image={image} heading={heading} headingLevel={4} subHeading={subHeading} link={link} position={position} />
+      <PromoBox image={image} heading={heading} headingLevel="4" subHeading={subHeading} link={link} position={position} />
     </section>
   );
 }
