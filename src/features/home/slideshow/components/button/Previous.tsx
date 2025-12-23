@@ -1,4 +1,9 @@
-export default function Previous({ scrollPrev, navPosition }) {
+interface PreviousProps {
+  scrollPrev: () => void | undefined;
+  navPosition?: 'inside' | 'outside';
+}
+
+export default function Previous({ scrollPrev, navPosition }: PreviousProps) {
   const navPositionClasses = navPosition === 'outside' ? 'md:-left-16' : 'md:left-10';
   return (
     <button

@@ -1,4 +1,9 @@
-export default function Next({ scrollNext, navPosition }) {
+interface NextProps {
+  scrollNext: () => void | undefined;
+  navPosition?: 'inside' | 'outside';
+}
+
+export default function Next({ scrollNext, navPosition }: NextProps) {
   const navPositionClasses = navPosition === 'outside' ? 'md:-right-16' : 'md:right-10';
   return (
     <button

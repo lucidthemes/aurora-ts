@@ -22,6 +22,11 @@ All notable changes to this project will be documented in this file.
 
 - convert component to TypeScript
 
+###### Slideshow
+
+- convert components to TypeScript
+- convert hook to TypeScript
+
 ##### InstagramFeed
 
 - convert component to TypeScript
