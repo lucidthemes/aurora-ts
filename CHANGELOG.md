@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 
 - convert components to TypeScript
 
+###### Newsletter
+
+- convert component to TypeScript
+
 ##### InstagramFeed
 
 - convert component to TypeScript
