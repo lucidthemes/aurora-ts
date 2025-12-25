@@ -1,5 +1,6 @@
-import type { Address } from './address';
 import type { Item } from '@typings/cart/item';
+
+import type { Address } from './address';
 import type { Coupon } from './coupon';
 import type { ShippingOption } from './shippingOption';
 import type { PaymentOption } from './paymentOption';
