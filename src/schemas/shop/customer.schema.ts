@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { AddressSchema } from './address.schema';
 
 export const CustomerSchema = z.object({
