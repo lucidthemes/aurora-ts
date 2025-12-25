@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { PaymentOption } from '@typings/shop/paymentOption';
+
 import { PaymentOptionSchema } from '@schemas/shop/paymentOption.schema';
+import type { PaymentOption } from '@typings/shop/paymentOption';
 
 export async function getPaymentOptions(): Promise<PaymentOption[]> {
   try {

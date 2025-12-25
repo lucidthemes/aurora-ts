@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Author } from '@typings/posts/author';
+
 import { AuthorSchema } from '@schemas/posts/author.schema';
+import type { Author } from '@typings/posts/author';
 
 export async function getAuthor<K extends 'id' | 'slug'>(field: K, value: Author[K]): Promise<Author | undefined> {
   try {

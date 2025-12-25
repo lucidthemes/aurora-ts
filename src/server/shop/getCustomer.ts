@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Customer } from '@typings/shop/customer';
+
 import { CustomerSchema } from '@schemas/shop/customer.schema';
+import type { Customer } from '@typings/shop/customer';
 
 export async function getCustomer<K extends 'id' | 'email'>(field: K, value: Customer[K]): Promise<Customer | undefined> {
   try {

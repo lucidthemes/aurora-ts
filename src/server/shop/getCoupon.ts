@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Coupon } from '@typings/shop/coupon';
+
 import { CouponSchema } from '@schemas/shop/coupon.schema';
+import type { Coupon } from '@typings/shop/coupon';
 
 export async function getCoupon<K extends 'code'>(field: K, value: Coupon[K]): Promise<Coupon | undefined> {
   try {

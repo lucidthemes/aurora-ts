@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Category } from '@typings/posts/category';
+
 import { CategorySchema } from '@schemas/posts/category.schema';
+import type { Category } from '@typings/posts/category';
 
 export async function getCategory<K extends 'id' | 'slug'>(field: K, value: Category[K]): Promise<Category | undefined> {
   try {

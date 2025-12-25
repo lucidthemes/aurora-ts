@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Category } from '@typings/products/category';
+
 import { CategorySchema } from '@schemas/products/category.schema';
+import type { Category } from '@typings/products/category';
 
 export async function getCategories(): Promise<Category[]> {
   try {

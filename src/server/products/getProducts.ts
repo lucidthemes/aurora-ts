@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Product } from '@typings/products/product';
+
 import { ProductSchema } from '@schemas/products/product.schema';
+import type { Product } from '@typings/products/product';
 
 export async function getProducts(limit?: number, category?: number, tag?: number): Promise<Product[]> {
   try {

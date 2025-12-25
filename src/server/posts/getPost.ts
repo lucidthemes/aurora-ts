@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Post } from '@typings/posts/post';
+
 import { PostSchema } from '@schemas/posts/post.schema';
+import type { Post } from '@typings/posts/post';
 
 export async function getPost<K extends 'id' | 'slug'>(field: K, value: Post[K]): Promise<Post | undefined> {
   try {
