@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Tag } from '@typings/posts/tag';
+
 import { TagSchema } from '@schemas/posts/tag.schema';
+import type { Tag } from '@typings/posts/tag';
 
 export async function getTag<K extends 'id' | 'slug'>(field: K, value: Tag[K]): Promise<Tag | undefined> {
   try {

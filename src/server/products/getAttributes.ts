@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Attribute } from '@typings/products/attribute';
+
 import { AttributeSchema } from '@schemas/products/attribute.schema';
+import type { Attribute } from '@typings/products/attribute';
 
 export async function getAttributes<K extends 'type'>(field: K, value: Attribute[K]): Promise<Attribute[]> {
   try {

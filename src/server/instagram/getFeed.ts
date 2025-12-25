@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Feed } from '@typings/instagram/feed';
+
 import { FeedSchema } from '@schemas/instagram/feed.schema';
+import type { Feed } from '@typings/instagram/feed';
 
 export async function getFeed(limit?: number): Promise<Feed[]> {
   try {

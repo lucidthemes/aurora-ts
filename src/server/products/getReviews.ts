@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Review } from '@typings/products/review';
+
 import { ReviewSchema } from '@schemas/products/review.schema';
+import type { Review } from '@typings/products/review';
 
 export async function getReviews<K extends 'productId'>(field: K, value: Review[K]): Promise<Review[]> {
   try {

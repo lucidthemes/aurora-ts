@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Order } from '@typings/shop/order';
+
 import { OrderSchema } from '@schemas/shop/order.schema';
+import type { Order } from '@typings/shop/order';
 
 export async function getOrder<K extends 'id'>(field: K, value: Order[K]): Promise<Order | undefined> {
   try {

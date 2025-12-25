@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { ShippingOption } from '@typings/shop/shippingOption';
+
 import { ShippingOptionSchema } from '@schemas/shop/shippingOption.schema';
+import type { ShippingOption } from '@typings/shop/shippingOption';
 
 export async function getShippingOptions(): Promise<ShippingOption[]> {
   try {

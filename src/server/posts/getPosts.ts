@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { Post } from '@typings/posts/post';
+
 import { PostSchema } from '@schemas/posts/post.schema';
+import type { Post } from '@typings/posts/post';
 
 export async function getPosts(limit?: number, category?: number, tag?: number, author?: number, search?: string): Promise<Post[]> {
   try {
