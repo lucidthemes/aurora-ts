@@ -31,7 +31,7 @@ function addCartItem(state: Cart, cartItemProduct: Product, productId: number, q
 
     if (cartItemProductVariation) {
       newCartItemPrice = cartItemProductVariation.price;
-      if (quantity > cartItemProductVariation.stock) {
+      if (cartItemProductVariation.stock && quantity > cartItemProductVariation.stock) {
         newCartItemQuantity = cartItemProductVariation.stock;
       }
     }
@@ -49,7 +49,7 @@ function addCartItem(state: Cart, cartItemProduct: Product, productId: number, q
 
         if (cartItemProductVariation && item.variation) {
           if (item.variation?.id === variationId) {
-            if (newQuantity > cartItemProductVariation.stock) {
+            if (cartItemProductVariation.stock && newQuantity > cartItemProductVariation.stock) {
               newQuantity = cartItemProductVariation.stock;
             }
 
