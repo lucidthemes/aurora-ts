@@ -31,6 +31,13 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+#### Features
+
+##### Cart
+
+- cartItemProductVariation being possibly undefined in cartReducer
+- item variation stock being possibly undefined in useQuantity hook
+
 #### Types
 
 - cart variation type stock field not being optional
