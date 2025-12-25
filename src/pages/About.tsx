@@ -1,8 +1,8 @@
-import { ContentBlock } from '@typings/contentBlock';
 import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
+import { Sidebar } from '@components/Layout/Sidebar';
 import PageTitle from '@components/UI/PageTitle';
 import PageContent from '@components/UI/PageContent';
-import { Sidebar } from '@components/Layout/Sidebar';
+import type { ContentBlock } from '@typings/contentBlock';
 
 const aboutTitle = 'About';
 

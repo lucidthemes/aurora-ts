@@ -1,6 +1,7 @@
 import { useParams, Navigate } from 'react-router-dom';
-import useSingleProduct from '@features/product/productPost/useSingleProduct';
+
 import Container from '@components/Layout/Container';
+import useSingleProduct from '@features/product/productPost/useSingleProduct';
 import ProductPost from '@features/product/productPost';
 
 export default function SingleProduct() {

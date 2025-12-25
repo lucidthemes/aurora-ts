@@ -1,6 +1,7 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import { useAuthContext } from '@contexts/AuthContext';
+
 import Container from '@components/Layout/Container';
+import { useAuthContext } from '@contexts/AuthContext';
 import LoginForm from '@features/auth/LoginForm';
 import RegisterForm from '@features/auth/RegisterForm';
 
