@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+#### Main
+
+- update import file order
+
 #### Pages
 
 - update import file order
