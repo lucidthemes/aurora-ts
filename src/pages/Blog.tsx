@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { Category } from '@typings/posts/category';
-import { Tag } from '@typings/posts/tag';
-import { Author } from '@typings/posts/author';
+
+import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
+import { Sidebar } from '@components/Layout/Sidebar';
+import BlogList from '@features/blog/blogList';
+import SearchForm from '@features/searchForm';
 import { getCategoryBySlug } from '@server/posts/getCategory';
 import { getTagBySlug } from '@server/posts/getTag';
 import { getAuthorBySlug } from '@server/posts/getAuthor';
-import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
-import BlogList from '@features/blog/blogList';
-import { Sidebar } from '@components/Layout/Sidebar';
-import SearchForm from '@features/searchForm';
+import type { Category } from '@typings/posts/category';
+import type { Tag } from '@typings/posts/tag';
+import type { Author } from '@typings/posts/author';
 
 export function Blog() {
   const [searchParams] = useSearchParams();

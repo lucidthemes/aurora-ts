@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Category } from '@typings/products/category';
-import { Tag } from '@typings/products/tag';
-import { getCategoryBySlug } from '@server/products/getCategory';
-import { getTagBySlug } from '@server/products/getTag';
+
 import Container from '@components/Layout/Container';
 import ProductList from '@features/product/productList/ProductList';
+import { getCategoryBySlug } from '@server/products/getCategory';
+import { getTagBySlug } from '@server/products/getTag';
+import type { Category } from '@typings/products/category';
+import type { Tag } from '@typings/products/tag';
 
 export function Shop() {
   return (

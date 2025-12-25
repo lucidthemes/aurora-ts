@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.14.0] - [Unreleased]
+
+### Changed
+
+#### Pages
+
+- update import file order
+- add import type to pages which import types
+
 ## [0.13.0] - 2025-12-23
 
 ### Changed

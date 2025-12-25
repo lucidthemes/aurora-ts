@@ -1,10 +1,11 @@
 import { useParams, Navigate } from 'react-router-dom';
+
+import Container from '@components/Layout/Container';
+import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
+import { Sidebar } from '@components/Layout/Sidebar';
 import useSinglePost from '@features/blog/blogPost/useSinglePost';
 import Header from '@features/blog/blogPost/header';
-import { PageLayout, PageSidebarLayout } from '@components/Layout/PageLayout';
 import BlogPost from '@features/blog/blogPost';
-import { Sidebar } from '@components/Layout/Sidebar';
-import Container from '@components/Layout/Container';
 
 export default function SinglePost() {
   const { slug } = useParams();
