@@ -3,6 +3,6 @@ export interface Variation {
   colourId?: number;
   sizeId?: number;
   price: number;
-  stock: number;
+  stock?: number;
   SKU: string;
 }
