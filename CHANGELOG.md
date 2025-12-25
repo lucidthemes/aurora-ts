@@ -11,6 +11,10 @@ All notable changes to this project will be documented in this file.
 - update import file order
 - add import type to pages which import types
 
+#### Schemas
+
+- update import file order
+
 ## [0.13.0] - 2025-12-23
 
 ### Changed

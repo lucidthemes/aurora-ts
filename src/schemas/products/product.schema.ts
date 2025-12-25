@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { ContentBlockSchema } from '@schemas/contentBlock.schema';
 
 export const ProductSchema = z.object({
