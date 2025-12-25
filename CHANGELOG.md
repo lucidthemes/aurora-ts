@@ -29,6 +29,12 @@ All notable changes to this project will be documented in this file.
 - update import file order
 - add import type to files which import types
 
+### Fixed
+
+#### Types
+
+- cart variation type stock field not being optional
+
 ## [0.13.0] - 2025-12-23
 
 ### Changed
