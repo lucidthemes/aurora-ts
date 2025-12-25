@@ -1,6 +1,7 @@
-import type { Item } from './item';
-import type { Coupon as CouponType } from '@typings/shop/coupon';
 import type { Product } from '@typings/products/product';
+import type { Coupon as CouponType } from '@typings/shop/coupon';
+
+import type { Item } from './item';
 
 export interface Cart {
   items: Item[];

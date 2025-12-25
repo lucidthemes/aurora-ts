@@ -1,4 +1,4 @@
-import { ContentBlock } from '@typings/contentBlock';
+import type { ContentBlock } from '@typings/contentBlock';
 
 export interface Product {
   id: number;
