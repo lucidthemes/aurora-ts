@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
+import type { ChangeEventHandler } from 'react';
 
-export default function useFilterPrice(priceFilterMinMax, handleFilterListPrices) {
+export default function useFilterPrice(
+  priceFilterMinMax: { minPrice: number; maxPrice: number },
+  handleFilterListPrices: (filterMinPrice: number, filterMaxPrice: number) => void
+) {
   const [filterPrices, setFilterPrices] = useState({
     filterMinPrice: 0,
     filterMaxPrice: 0,
@@ -22,7 +26,7 @@ export default function useFilterPrice(priceFilterMinMax, handleFilterListPrices
     }
   }, [priceFilterMinMax, rangeInputChanged]);
 
-  const handleMinPriceChange = (e) => {
+  const handleMinPriceChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!rangeInputChanged) setRangeInputChanged(true);
 
     const { value, max } = e.target;
@@ -60,7 +64,7 @@ export default function useFilterPrice(priceFilterMinMax, handleFilterListPrices
     });
   };
 
-  const handleMaxPriceChange = (e) => {
+  const handleMaxPriceChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!rangeInputChanged) setRangeInputChanged(true);
 
     const { value, min } = e.target;
