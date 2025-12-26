@@ -33,6 +33,10 @@ All notable changes to this project will be documented in this file.
 
 #### Features
 
+##### BlogPost
+
+- post tags not wrapping onto new line on mobile
+
 ##### Cart
 
 - cartItemProductVariation being possibly undefined in cartReducer
