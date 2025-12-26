@@ -41,6 +41,12 @@ All notable changes to this project will be documented in this file.
 
 ##### Product
 
+###### ProductList
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+
 ###### StarRating
 
 - convert components to TypeScript

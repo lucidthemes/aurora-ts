@@ -1,8 +1,15 @@
-import WidgetTitle from '@components/Widgets/Title';
 import Checkbox from '@components/Form/Checkbox';
+import WidgetTitle from '@components/Widgets/Title';
 import StarRating from '@features/product/starRating';
+import type { ActiveFilters, FilterCounts } from '@typings/products/filter';
 
-export default function FilterRating({ activeFilters, filterCounts, handleFilterListToggle }) {
+interface FilterRatingProps {
+  activeFilters: ActiveFilters;
+  filterCounts: FilterCounts;
+  handleFilterListToggle: (filterKey: string, value: number) => void;
+}
+
+export default function FilterRating({ activeFilters, filterCounts, handleFilterListToggle }: FilterRatingProps) {
   return (
     <section>
       <WidgetTitle>Filter by rating</WidgetTitle>

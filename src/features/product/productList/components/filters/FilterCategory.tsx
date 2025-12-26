@@ -1,8 +1,16 @@
-import useFilterCategory from '../../hooks/filters/useFilterCategory';
-import WidgetTitle from '@components/Widgets/Title';
 import Checkbox from '@components/Form/Checkbox';
+import WidgetTitle from '@components/Widgets/Title';
+import type { ActiveFilters, FilterCounts } from '@typings/products/filter';
 
-export default function FilterCategory({ activeFilters, filterCounts, handleFilterListToggle }) {
+import useFilterCategory from '../../hooks/filters/useFilterCategory';
+
+interface FilterCategoryProps {
+  activeFilters: ActiveFilters;
+  filterCounts: FilterCounts;
+  handleFilterListToggle: (filterKey: string, value: number) => void;
+}
+
+export default function FilterCategory({ activeFilters, filterCounts, handleFilterListToggle }: FilterCategoryProps) {
   const filterCategories = useFilterCategory();
   if (filterCategories.length === 0) return null;
 
