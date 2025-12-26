@@ -2,7 +2,11 @@ import Full from './components/Full';
 import Half from './components/Half';
 import Empty from './components/Empty';
 
-export default function StarRating({ rating }) {
+interface StarRatingProps {
+  rating: number;
+}
+
+export default function StarRating({ rating }: StarRatingProps) {
   if (!rating) return null;
 
   const stars = [];

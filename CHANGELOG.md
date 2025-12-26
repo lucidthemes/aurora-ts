@@ -33,6 +33,13 @@ All notable changes to this project will be documented in this file.
 
 #### Features
 
+##### Product
+
+###### StarRating
+
+- convert components to TypeScript
+- convert test to TypeScript
+
 ##### BlogPost
 
 - post tags not wrapping onto new line on mobile
