@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { getProducts } from '@server/products/getProducts';
 
-export default function useProductList(limit, category, tag) {
-  const [products, setProducts] = useState([]);
+import { getProducts } from '@server/products/getProducts';
+import type { Product } from '@typings/products/product';
+
+export default function useProductList(limit?: number, category?: number, tag?: number) {
+  const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -18,9 +20,9 @@ export default function useProductList(limit, category, tag) {
     fetchProducts();
   }, [limit, category, tag]);
 
-  const productListRef = useRef();
+  const productListRef = useRef<HTMLDivElement | null>(null);
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     productListRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
