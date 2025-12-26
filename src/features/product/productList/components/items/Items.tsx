@@ -1,6 +1,12 @@
+import type { Product } from '@typings/products/product';
+
 import Item from './Item';
 
-export default function Items({ products }) {
+interface ItemsProps {
+  products: Product[];
+}
+
+export default function Items({ products }: ItemsProps) {
   if (!products || products.length === 0) {
     return <p className="rounded-sm bg-white p-5 text-center">No products found</p>;
   }

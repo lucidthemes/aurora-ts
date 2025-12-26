@@ -1,3 +1,5 @@
+import PageTitle from '@components/UI/PageTitle';
+
 import useProductList from './hooks/useProductList';
 import useFilters from './hooks/filters/useFilters';
 import useSort from './hooks/useSort';
@@ -6,22 +8,34 @@ import usePagination from './hooks/usePagination';
 import Filters from './components/filters';
 import Results from './components/Results';
 import Sort from './components/Sort';
-import PageTitle from '@components/UI/PageTitle';
 import Items from './components/items';
 import Pagination from './components/pagination';
 
+interface ProductListProps {
+  limit?: number;
+  category?: number;
+  tag?: number;
+  showFilter?: boolean;
+  showResults?: boolean;
+  showSort?: boolean;
+  pageTitle?: string;
+  pageDescription?: string;
+  showPagination?: boolean;
+  productsPerPage?: number;
+}
+
 export default function ProductList({
   limit,
-  category = null,
-  tag = null,
+  category,
+  tag,
   showFilter = true,
   showResults = true,
   showSort = true,
-  pageTitle = null,
-  pageDescription = null,
+  pageTitle,
+  pageDescription,
   showPagination = true,
   productsPerPage = 9,
-}) {
+}: ProductListProps) {
   // fetch products
   const { products, currentPage, productListRef, handlePageChange, resetPagination } = useProductList(limit, category, tag);
 
@@ -34,7 +48,7 @@ export default function ProductList({
   );
 
   // sort
-  const { sortedProducts, sortOption, handleSortChange } = useSort(filteredProducts, showSort, showPagination, resetPagination);
+  const { sortedProducts, sortOption, handleSortChange } = useSort(filteredProducts, resetPagination, showSort, showPagination);
 
   // paginate
   const { paginatedProducts, totalPages } = usePagination(sortedProducts, currentPage, productsPerPage, showPagination);

@@ -1,6 +1,15 @@
+import type { ChangeEvent } from 'react';
+
 import Select from '@components/Form/Select';
 
-export default function Sort({ sortOption, handleSortChange }) {
+type SortOption = 'date' | 'rating-desc' | 'rating-asc' | 'price-desc' | 'price-asc';
+
+interface SortProps {
+  sortOption: SortOption;
+  handleSortChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+}
+
+export default function Sort({ sortOption, handleSortChange }: SortProps) {
   const sortOptions = [
     { value: 'date', text: 'Sort by latest' },
     { value: 'rating-desc', text: 'Sort by rating: High to low' },
