@@ -13,7 +13,7 @@ export default function Tags({ post }: TagsProps) {
   if (!Array.isArray(tags) || tags.length === 0) return null;
 
   return (
-    <ul className="post-tags flex justify-center gap-x-4" aria-label="Post tags">
+    <ul className="flex flex-wrap justify-center gap-4" aria-label="Post tags">
       {tags.map((tag) => (
         <li key={tag.id} className="flex">
           <Link
