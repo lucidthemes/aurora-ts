@@ -1,8 +1,15 @@
-import useFilterPrice from '../../hooks/filters/useFilterPrice';
-import WidgetTitle from '@components/Widgets/Title';
 import Input from '@components/Form/Input';
+import WidgetTitle from '@components/Widgets/Title';
+import type { PriceFilterMinMax } from '@typings/products/filter';
 
-export default function FilterPrice({ priceFilterMinMax, handleFilterListPrices }) {
+import useFilterPrice from '../../hooks/filters/useFilterPrice';
+
+interface FilterPriceProps {
+  priceFilterMinMax: PriceFilterMinMax;
+  handleFilterListPrices: (filterMinPrice: number, filterMaxPrice: number) => void;
+}
+
+export default function FilterPrice({ priceFilterMinMax, handleFilterListPrices }: FilterPriceProps) {
   const { filterPrices, handleMinPriceChange, handleMaxPriceChange } = useFilterPrice(priceFilterMinMax, handleFilterListPrices);
 
   return (

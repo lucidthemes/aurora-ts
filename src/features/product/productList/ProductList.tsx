@@ -65,6 +65,8 @@ export default function ProductList({
   // layout class based on filter shown/hidden
   const productListClasses = showFilter ? 'basis-3/4' : 'w-full';
 
+  console.log(activeFilters);
+
   return (
     <div ref={productListRef} className="flex flex-col-reverse gap-10 md:flex-row">
       {showFilter && (

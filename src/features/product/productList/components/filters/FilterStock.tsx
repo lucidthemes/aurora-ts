@@ -1,7 +1,14 @@
-import WidgetTitle from '@components/Widgets/Title';
 import Checkbox from '@components/Form/Checkbox';
+import WidgetTitle from '@components/Widgets/Title';
+import type { ActiveFilters, FilterCounts } from '@typings/products/filter';
 
-export default function FilterStock({ activeFilters, filterCounts, handleFilterListToggle }) {
+interface FilterStockProps {
+  activeFilters: ActiveFilters;
+  filterCounts: FilterCounts;
+  handleFilterListToggle: (filterKey: string, value: number | string) => void;
+}
+
+export default function FilterStock({ activeFilters, filterCounts, handleFilterListToggle }: FilterStockProps) {
   return (
     <section>
       <WidgetTitle>Filter by stock status</WidgetTitle>
@@ -17,8 +24,8 @@ export default function FilterStock({ activeFilters, filterCounts, handleFilterL
                 <span>({filterCounts.stock.true || 0})</span>
               </div>
             }
-            checked={activeFilters.stock.includes(true)}
-            onChange={() => handleFilterListToggle('stock', true)}
+            checked={activeFilters.stock.includes('in')}
+            onChange={() => handleFilterListToggle('stock', 'in')}
           />
         </li>
         <li className="flex cursor-pointer items-center gap-x-2.5">
@@ -32,8 +39,8 @@ export default function FilterStock({ activeFilters, filterCounts, handleFilterL
                 <span> ({filterCounts.stock.false || 0})</span>
               </div>
             }
-            checked={activeFilters.stock.includes(false)}
-            onChange={() => handleFilterListToggle('stock', false)}
+            checked={activeFilters.stock.includes('out')}
+            onChange={() => handleFilterListToggle('stock', 'out')}
           />
         </li>
       </ul>
