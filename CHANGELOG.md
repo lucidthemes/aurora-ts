@@ -16,6 +16,12 @@ All notable changes to this project will be documented in this file.
 
 - update import file order
 
+#### Components
+
+##### Form
+
+- allow Checkbox component label prop to accept HTML elements
+
 #### Pages
 
 - update import file order
