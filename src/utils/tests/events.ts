@@ -24,6 +24,12 @@ export function createSelectChangeEvent(name: string, value: string): ChangeEven
   } as unknown as ChangeEvent<HTMLSelectElement>;
 }
 
+export function createRangeChangeEvent(name: string, value: number, min: number, max: number): ChangeEvent<HTMLInputElement> {
+  return {
+    target: { name, value, min, max },
+  } as unknown as ChangeEvent<HTMLInputElement>;
+}
+
 export function createFormSubmitEvent(): FormEvent<HTMLFormElement> {
   return { preventDefault: () => {} } as unknown as FormEvent<HTMLFormElement>;
 }

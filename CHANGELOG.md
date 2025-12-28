@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 #### Utils
 
 - function createSelectChangeEvent in tests events to use for select element testing
+- function createRangeChangeEvent in tests events to use for range element testing
 
 ### Changed
 
