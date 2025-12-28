@@ -27,6 +27,21 @@ All notable changes to this project will be documented in this file.
 
 - allow Checkbox component label prop to accept HTML elements
 
+#### Features
+
+##### Product
+
+###### ProductList
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+
+###### StarRating
+
+- convert components to TypeScript
+- convert test to TypeScript
+
 #### Pages
 
 - update import file order
@@ -49,19 +64,6 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 #### Features
-
-##### Product
-
-###### ProductList
-
-- convert components to TypeScript
-- convert hooks to TypeScript
-- convert tests to TypeScript
-
-###### StarRating
-
-- convert components to TypeScript
-- convert test to TypeScript
 
 ##### BlogPost
 

@@ -1,14 +1,16 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useFilterCategory from '../../hooks/filters/useFilterCategory';
 
 vi.mock('@server/products/getCategories', () => ({
   getCategories: vi.fn(),
 }));
 
 import { getCategories } from '@server/products/getCategories';
+import type { Category } from '@typings/products/category';
+
+import useFilterCategory from '../../hooks/filters/useFilterCategory';
 
 describe('useFilterCategory hook', () => {
-  const mockFilterCategories = [
+  const mockFilterCategories: Category[] = [
     {
       id: 1,
       name: 'Bags',
@@ -58,7 +60,7 @@ describe('useFilterCategory hook', () => {
   });
 
   test('fetches categories data and sets filterCategories state', async () => {
-    getCategories.mockResolvedValue(mockFilterCategories);
+    vi.mocked(getCategories).mockResolvedValue(mockFilterCategories);
 
     const { result } = renderHook(() => useFilterCategory());
 

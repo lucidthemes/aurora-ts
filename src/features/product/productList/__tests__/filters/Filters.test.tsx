@@ -1,9 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import FilterCategory from '../../components/filters/FilterCategory';
-import FilterAttribute from '../../components/filters/FilterAttribute';
-import FilterRating from '../../components/filters/FilterRating';
-import FilterStock from '../../components/filters/FilterStock';
-import FilterPrice from '../../components/filters/FilterPrice';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/products/getCategories', () => ({
   getCategories: vi.fn(),
@@ -15,19 +11,27 @@ vi.mock('@server/products/getAttributes', () => ({
 
 import { getCategories } from '@server/products/getCategories';
 import { getAttributesByType } from '@server/products/getAttributes';
-import { MemoryRouter } from 'react-router-dom';
+import type { ActiveFilters, FilterCounts, PriceFilterMinMax } from '@typings/products/filter';
+import type { Category } from '@typings/products/category';
+import type { Attribute } from '@typings/products/attribute';
+
+import FilterCategory from '../../components/filters/FilterCategory';
+import FilterAttribute from '../../components/filters/FilterAttribute';
+import FilterRating from '../../components/filters/FilterRating';
+import FilterStock from '../../components/filters/FilterStock';
+import FilterPrice from '../../components/filters/FilterPrice';
 
 describe('Filters components', () => {
-  const mockActiveFilters = {
+  const mockActiveFilters: ActiveFilters = {
     category: [],
     colour: [],
     size: [],
     rating: [],
-    stock: [],
-    price: {},
+    stock: {},
+    price: { minPrice: 0, maxPrice: 0 },
   };
 
-  const mockFilterCounts = {
+  const mockFilterCounts: FilterCounts = {
     category: {
       1: 2,
       2: 1,
@@ -54,17 +58,17 @@ describe('Filters components', () => {
       5: 3,
     },
     stock: {
-      true: 9,
-      false: 1,
+      in: 9,
+      out: 1,
     },
   };
 
-  const mockPriceFilterMinMax = {
+  const mockPriceFilterMinMax: PriceFilterMinMax = {
     minPrice: 10,
     maxPrice: 40,
   };
 
-  const mockFilterCategories = [
+  const mockFilterCategories: Category[] = [
     {
       id: 1,
       name: 'Bags',
@@ -109,7 +113,7 @@ describe('Filters components', () => {
     },
   ];
 
-  const mockFilterColours = [
+  const mockFilterColours: Attribute[] = [
     {
       id: 1,
       name: 'Black',
@@ -130,7 +134,7 @@ describe('Filters components', () => {
     },
   ];
 
-  const mockFilterSizes = [
+  const mockFilterSizes: Attribute[] = [
     {
       id: 4,
       name: 'Small',
@@ -153,6 +157,8 @@ describe('Filters components', () => {
 
   const handleFilterListToggleMock = vi.fn();
 
+  const handleFilterListStockMock = vi.fn();
+
   const handleFilterListPricesMock = vi.fn();
 
   beforeEach(() => {
@@ -160,11 +166,11 @@ describe('Filters components', () => {
   });
 
   test('renders category filter when category data is fetched', async () => {
-    getCategories.mockResolvedValue(mockFilterCategories);
+    vi.mocked(getCategories).mockResolvedValue(mockFilterCategories);
 
     render(
       <MemoryRouter>
-        <FilterCategory activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} />
+        <FilterCategory activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} handleFilterListToggle={handleFilterListToggleMock} />
       </MemoryRouter>
     );
 
@@ -180,11 +186,16 @@ describe('Filters components', () => {
   });
 
   test('renders colour filter when attribute data is fetched', async () => {
-    getAttributesByType.mockResolvedValue(mockFilterColours);
+    vi.mocked(getAttributesByType).mockResolvedValue(mockFilterColours);
 
     render(
       <MemoryRouter>
-        <FilterAttribute attributeType="colour" activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} />
+        <FilterAttribute
+          attributeType="colour"
+          activeFilters={mockActiveFilters}
+          filterCounts={mockFilterCounts}
+          handleFilterListToggle={handleFilterListToggleMock}
+        />
       </MemoryRouter>
     );
 
@@ -200,11 +211,16 @@ describe('Filters components', () => {
   });
 
   test('renders size filter when attribute data is fetched', async () => {
-    getAttributesByType.mockResolvedValue(mockFilterSizes);
+    vi.mocked(getAttributesByType).mockResolvedValue(mockFilterSizes);
 
     render(
       <MemoryRouter>
-        <FilterAttribute attributeType="size" activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} />
+        <FilterAttribute
+          attributeType="size"
+          activeFilters={mockActiveFilters}
+          filterCounts={mockFilterCounts}
+          handleFilterListToggle={handleFilterListToggleMock}
+        />
       </MemoryRouter>
     );
 
@@ -222,7 +238,7 @@ describe('Filters components', () => {
   test('renders rating filter', () => {
     render(
       <MemoryRouter>
-        <FilterRating activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} />
+        <FilterRating activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} handleFilterListToggle={handleFilterListToggleMock} />
       </MemoryRouter>
     );
 
@@ -239,7 +255,7 @@ describe('Filters components', () => {
   test('renders stock status filter', () => {
     render(
       <MemoryRouter>
-        <FilterStock activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} />
+        <FilterStock activeFilters={mockActiveFilters} filterCounts={mockFilterCounts} handleFilterListStock={handleFilterListStockMock} />
       </MemoryRouter>
     );
 
@@ -253,7 +269,7 @@ describe('Filters components', () => {
   test('renders price filter', () => {
     render(
       <MemoryRouter>
-        <FilterPrice priceFilterMinMax={mockPriceFilterMinMax} />
+        <FilterPrice priceFilterMinMax={mockPriceFilterMinMax} handleFilterListPrices={handleFilterListPricesMock} />
       </MemoryRouter>
     );
 
@@ -272,7 +288,7 @@ describe('Filters components', () => {
   });
 
   test('update active filters when filter checkbox clicked', async () => {
-    getCategories.mockResolvedValue(mockFilterCategories);
+    vi.mocked(getCategories).mockResolvedValue(mockFilterCategories);
 
     render(
       <MemoryRouter>

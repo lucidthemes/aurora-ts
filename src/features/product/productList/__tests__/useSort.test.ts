@@ -1,8 +1,12 @@
 import { renderHook, act } from '@testing-library/react';
+
+import type { Product } from '@typings/products/product';
+import { createSelectChangeEvent } from '@utils/tests/events';
+
 import useSort from '../hooks/useSort';
 
 describe('useSort hook', () => {
-  const mockProducts = [
+  const mockProducts: Partial<Product>[] = [
     {
       id: 1,
       title: 'Cozy sweater',
@@ -44,31 +48,31 @@ describe('useSort hook', () => {
 
   const resetPaginationMock = vi.fn();
 
-  const mockProductsFilteredByDate = mockProducts.toSorted((a, b) => new Date(b.date) - new Date(a.date));
+  const mockProductsFilteredByDate = mockProducts.toSorted((a, b) => new Date(b.date ?? '').getTime() - new Date(a.date ?? '').getTime());
 
-  const mockProductsFilteredByRatingDesc = mockProducts.toSorted((a, b) => b.averageReview - a.averageReview);
+  const mockProductsFilteredByRatingDesc = mockProducts.toSorted((a, b) => (b.averageReview ?? 0) - (a.averageReview ?? 0));
 
-  const mockProductsFilteredByRatingAsc = mockProducts.toSorted((a, b) => a.averageReview - b.averageReview);
+  const mockProductsFilteredByRatingAsc = mockProducts.toSorted((a, b) => (a.averageReview ?? 0) - (b.averageReview ?? 0));
 
-  const mockProductsFilteredByPriceDesc = mockProducts.toSorted((a, b) => b.price - a.price);
+  const mockProductsFilteredByPriceDesc = mockProducts.toSorted((a, b) => (b.price ?? 0) - (a.price ?? 0));
 
-  const mockProductsFilteredByPriceAsc = mockProducts.toSorted((a, b) => a.price - b.price);
+  const mockProductsFilteredByPriceAsc = mockProducts.toSorted((a, b) => (a.price ?? 0) - (b.price ?? 0));
 
   test('updates sort option on handleSortChange', () => {
-    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts as Product[], resetPaginationMock, mockShowSort, mockShowPagination));
 
     act(() => {
-      result.current.handleSortChange({ target: { value: 'price-desc' } });
+      result.current.handleSortChange(createSelectChangeEvent('sort', 'price-desc'));
     });
 
     expect(result.current.sortOption).toBe('price-desc');
   });
 
   test('sort products using date option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts as Product[], resetPaginationMock, mockShowSort, mockShowPagination));
 
     act(() => {
-      result.current.handleSortChange({ target: { value: 'date' } });
+      result.current.handleSortChange(createSelectChangeEvent('sort', 'date'));
     });
 
     expect(result.current.sortedProducts).toEqual(mockProductsFilteredByDate);
@@ -76,10 +80,10 @@ describe('useSort hook', () => {
   });
 
   test('sort products using rating-desc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts as Product[], resetPaginationMock, mockShowSort, mockShowPagination));
 
     act(() => {
-      result.current.handleSortChange({ target: { value: 'rating-desc' } });
+      result.current.handleSortChange(createSelectChangeEvent('sort', 'rating-desc'));
     });
 
     expect(result.current.sortedProducts).toEqual(mockProductsFilteredByRatingDesc);
@@ -87,10 +91,10 @@ describe('useSort hook', () => {
   });
 
   test('sort products using rating-asc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts as Product[], resetPaginationMock, mockShowSort, mockShowPagination));
 
     act(() => {
-      result.current.handleSortChange({ target: { value: 'rating-asc' } });
+      result.current.handleSortChange(createSelectChangeEvent('sort', 'rating-asc'));
     });
 
     expect(result.current.sortedProducts).toEqual(mockProductsFilteredByRatingAsc);
@@ -98,10 +102,10 @@ describe('useSort hook', () => {
   });
 
   test('sort products using price-desc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts as Product[], resetPaginationMock, mockShowSort, mockShowPagination));
 
     act(() => {
-      result.current.handleSortChange({ target: { value: 'price-desc' } });
+      result.current.handleSortChange(createSelectChangeEvent('sort', 'price-desc'));
     });
 
     expect(result.current.sortedProducts).toEqual(mockProductsFilteredByPriceDesc);
@@ -109,10 +113,10 @@ describe('useSort hook', () => {
   });
 
   test('sort products using price-asc option', () => {
-    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts as Product[], resetPaginationMock, mockShowSort, mockShowPagination));
 
     act(() => {
-      result.current.handleSortChange({ target: { value: 'price-asc' } });
+      result.current.handleSortChange(createSelectChangeEvent('sort', 'price-asc'));
     });
 
     expect(result.current.sortedProducts).toEqual(mockProductsFilteredByPriceAsc);
@@ -120,10 +124,10 @@ describe('useSort hook', () => {
   });
 
   test('pagination reset to first page after sort option change', () => {
-    const { result } = renderHook(() => useSort(mockProducts, mockShowSort, mockShowPagination, resetPaginationMock));
+    const { result } = renderHook(() => useSort(mockProducts as Product[], resetPaginationMock, mockShowSort, mockShowPagination));
 
     act(() => {
-      result.current.handleSortChange({ target: { value: 'date' } });
+      result.current.handleSortChange(createSelectChangeEvent('sort', 'date'));
     });
 
     expect(result.current.sortedProducts).toEqual(mockProductsFilteredByDate);
