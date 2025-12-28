@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
+
+import type { Product } from '@typings/products/product';
+
 import useBreadcrumb from './useBreadcrumbs';
 import Separator from './Separator';
 
-export default function Breadcrumb({ singleProduct }) {
-  const breadcrumbCategory = useBreadcrumb(singleProduct);
+interface BreadcrumbProps {
+  product: Product;
+}
+
+export default function Breadcrumb({ product }: BreadcrumbProps) {
+  const breadcrumbCategory = useBreadcrumb(product);
 
   return (
     <nav aria-label="Breadcrumb">
@@ -22,7 +29,7 @@ export default function Breadcrumb({ singleProduct }) {
             <Separator />
           </li>
         )}
-        <li aria-current="page">{singleProduct.title}</li>
+        <li aria-current="page">{product.title}</li>
       </ol>
     </nav>
   );
