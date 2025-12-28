@@ -1,3 +1,5 @@
+import type { Product } from '@typings/products/product';
+
 import useProductPost from './useProductPost';
 import useNotification from './notification/useNotification';
 import Notification from './notification';
@@ -7,7 +9,11 @@ import Summary from './summary';
 import Tabs from './tabs';
 import Related from './related';
 
-export default function ProductPost({ product }) {
+interface ProductPostProps {
+  product: Product;
+}
+
+export default function ProductPost({ product }: ProductPostProps) {
   const { activeTab, setActiveTab, tabsRef } = useProductPost();
   const { addCartNotification, setAddCartNotification } = useNotification();
 
