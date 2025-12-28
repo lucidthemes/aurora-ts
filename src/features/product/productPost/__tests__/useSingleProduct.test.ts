@@ -1,16 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useSingleProduct from '../useSingleProduct';
 
 vi.mock('@server/products/getProduct', () => ({
   getProductBySlug: vi.fn(),
 }));
 
 import { getProductBySlug } from '@server/products/getProduct';
+import type { Product } from '@typings/products/product';
+
+import useSingleProduct from '../useSingleProduct';
 
 describe('useSingleProduct hook', () => {
   const slug = 'cozy-sweater';
 
-  const mockProduct = {
+  const mockProduct: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     slug: 'cozy-sweater',
@@ -24,7 +26,7 @@ describe('useSingleProduct hook', () => {
   });
 
   test('fetches product data and sets singleProduct state', async () => {
-    getProductBySlug.mockResolvedValue(mockProduct);
+    vi.mocked(getProductBySlug).mockResolvedValue(mockProduct);
 
     const { result } = renderHook(() => useSingleProduct(slug));
 
@@ -38,7 +40,7 @@ describe('useSingleProduct hook', () => {
   });
 
   test('sets singleProduct status to not-found if product not found', async () => {
-    getProductBySlug.mockResolvedValue(null);
+    vi.mocked(getProductBySlug).mockResolvedValue(null);
 
     const { result } = renderHook(() => useSingleProduct(slug));
 
@@ -48,7 +50,7 @@ describe('useSingleProduct hook', () => {
   });
 
   test('sets setSingleProduct status to not-found if slug is missing', () => {
-    const { result } = renderHook(() => useSingleProduct(null));
+    const { result } = renderHook(() => useSingleProduct(undefined));
 
     expect(result.current).toEqual({ status: 'not-found' });
 
