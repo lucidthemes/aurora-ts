@@ -18,6 +18,12 @@ export function createTextAreaChangeEvent(name: string, value: string): ChangeEv
   } as unknown as ChangeEvent<HTMLTextAreaElement>;
 }
 
+export function createSelectChangeEvent(name: string, value: string): ChangeEvent<HTMLSelectElement> {
+  return {
+    target: { name, value },
+  } as unknown as ChangeEvent<HTMLSelectElement>;
+}
+
 export function createFormSubmitEvent(): FormEvent<HTMLFormElement> {
   return { preventDefault: () => {} } as unknown as FormEvent<HTMLFormElement>;
 }

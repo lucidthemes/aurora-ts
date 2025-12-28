@@ -8,7 +8,11 @@ All notable changes to this project will be documented in this file.
 
 #### Types
 
-- add filter type to products types
+- filter type to products types
+
+#### Utils
+
+- function createSelectChangeEvent in tests events to use for select element testing
 
 ### Changed
 
