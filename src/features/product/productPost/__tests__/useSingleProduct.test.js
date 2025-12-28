@@ -28,29 +28,29 @@ describe('useSingleProduct hook', () => {
 
     const { result } = renderHook(() => useSingleProduct(slug));
 
-    expect(result.current).toBeNull();
+    expect(result.current).toEqual({ status: 'loading' });
 
     await waitFor(() => {
-      expect(result.current).toEqual(mockProduct);
+      expect(result.current).toEqual({ status: 'loaded', product: mockProduct });
     });
 
     expect(getProductBySlug).toHaveBeenCalledWith(slug);
   });
 
-  test('sets singleProduct state to false if product not found', async () => {
+  test('sets singleProduct status to not-found if product not found', async () => {
     getProductBySlug.mockResolvedValue(null);
 
     const { result } = renderHook(() => useSingleProduct(slug));
 
     await waitFor(() => {
-      expect(result.current).toBe(false);
+      expect(result.current).toEqual({ status: 'not-found' });
     });
   });
 
-  test('sets setSingleProduct state to null if slug is missing', () => {
+  test('sets setSingleProduct status to not-found if slug is missing', () => {
     const { result } = renderHook(() => useSingleProduct(null));
 
-    expect(result.current).toBeNull();
+    expect(result.current).toEqual({ status: 'not-found' });
 
     expect(getProductBySlug).not.toHaveBeenCalled();
   });

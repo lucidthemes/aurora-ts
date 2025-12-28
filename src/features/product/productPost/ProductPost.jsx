@@ -7,7 +7,7 @@ import Summary from './summary';
 import Tabs from './tabs';
 import Related from './related';
 
-export default function ProductPost({ singleProduct }) {
+export default function ProductPost({ product }) {
   const { activeTab, setActiveTab, tabsRef } = useProductPost();
   const { addCartNotification, setAddCartNotification } = useNotification();
 
@@ -15,18 +15,18 @@ export default function ProductPost({ singleProduct }) {
     <>
       <Notification addCartNotification={addCartNotification} />
       <div className="flex flex-col gap-y-4 rounded-md bg-white p-5 md:p-7.5 lg:p-10">
-        <Breadcrumb singleProduct={singleProduct} />
+        <Breadcrumb singleProduct={product} />
         <div className="flex flex-col gap-10 lg:flex-row">
           <div className="lg:basis-[40%]">
-            <Gallery singleProduct={singleProduct} />
+            <Gallery singleProduct={product} />
           </div>
           <div className="lg:basis-[60%]">
-            <Summary singleProduct={singleProduct} setActiveTab={setActiveTab} tabsRef={tabsRef} setAddCartNotification={setAddCartNotification} />
+            <Summary singleProduct={product} setActiveTab={setActiveTab} tabsRef={tabsRef} setAddCartNotification={setAddCartNotification} />
           </div>
         </div>
       </div>
-      <Tabs singleProduct={singleProduct} activeTab={activeTab} setActiveTab={setActiveTab} tabsRef={tabsRef} />
-      <Related singleProduct={singleProduct} />
+      <Tabs singleProduct={product} activeTab={activeTab} setActiveTab={setActiveTab} tabsRef={tabsRef} />
+      <Related singleProduct={product} />
     </>
   );
 }
