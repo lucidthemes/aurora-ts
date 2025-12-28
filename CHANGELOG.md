@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+#### Pages
+
+- status object to SingleProduct for not found, loading, and loaded states
+
 #### Types
 
 - filter type to products types
