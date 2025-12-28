@@ -1,21 +1,24 @@
 import { render, screen } from '@testing-library/react';
-import Breadcrumb from '../../breadcrumb';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/products/getCategory', () => ({
   getCategoryById: vi.fn(),
 }));
 
 import { getCategoryById } from '@server/products/getCategory';
-import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@typings/products/product';
+import type { Category } from '@typings/products/category';
+
+import Breadcrumb from '../../breadcrumb';
 
 describe('Breadcrumb component', () => {
-  const mockProduct = {
+  const mockProduct: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     category: 6,
   };
 
-  const mockCategory = {
+  const mockCategory: Category = {
     id: 6,
     name: 'Sweaters',
     slug: 'sweaters',
@@ -28,11 +31,11 @@ describe('Breadcrumb component', () => {
   });
 
   test('renders breadcrumb when category data is fetched', async () => {
-    getCategoryById.mockResolvedValue(mockCategory);
+    vi.mocked(getCategoryById).mockResolvedValue(mockCategory);
 
     render(
       <MemoryRouter>
-        <Breadcrumb singleProduct={mockProduct} />
+        <Breadcrumb product={mockProduct as Product} />
       </MemoryRouter>
     );
 

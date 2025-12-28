@@ -41,6 +41,10 @@ All notable changes to this project will be documented in this file.
 - convert hooks to TypeScript
 - convert test to TypeScript
 
+- convert breadcrumb components to TypeScript
+- convert breadcrumb hook to TypeScript
+- convert breadcrumb tests to TypeScript
+
 ###### ProductList
 
 - convert components to TypeScript

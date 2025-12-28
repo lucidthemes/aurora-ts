@@ -1,20 +1,23 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useBreadcrumb from '../../breadcrumb/useBreadcrumbs';
 
 vi.mock('@server/products/getCategory', () => ({
   getCategoryById: vi.fn(),
 }));
 
 import { getCategoryById } from '@server/products/getCategory';
+import type { Product } from '@typings/products/product';
+import type { Category } from '@typings/products/category';
+
+import useBreadcrumb from '../../breadcrumb/useBreadcrumbs';
 
 describe('useBreadcrumb hook', () => {
-  const mockProduct = {
+  const mockProduct: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     category: 6,
   };
 
-  const mockCategory = {
+  const mockCategory: Category = {
     id: 6,
     name: 'Sweaters',
     slug: 'sweaters',
@@ -27,9 +30,9 @@ describe('useBreadcrumb hook', () => {
   });
 
   test('fetches category data and sets breadcrumbCategory state', async () => {
-    getCategoryById.mockResolvedValue(mockCategory);
+    vi.mocked(getCategoryById).mockResolvedValue(mockCategory);
 
-    const { result } = renderHook(() => useBreadcrumb(mockProduct));
+    const { result } = renderHook(() => useBreadcrumb(mockProduct as Product));
 
     expect(result.current).toBeNull();
 
@@ -40,18 +43,10 @@ describe('useBreadcrumb hook', () => {
     expect(getCategoryById).toHaveBeenCalledWith(mockProduct.category);
   });
 
-  test('sets breadcrumbCategory state to null if singleProduct is missing', () => {
-    const { result } = renderHook(() => useBreadcrumb());
-
-    expect(result.current).toBeNull();
-
-    expect(getCategoryById).not.toHaveBeenCalled();
-  });
-
   test('sets breadcrumbCategory state to null if product has no category', () => {
     const productWithoutCategory = { id: 1 };
 
-    const { result } = renderHook(() => useBreadcrumb(productWithoutCategory));
+    const { result } = renderHook(() => useBreadcrumb(productWithoutCategory as Product));
 
     expect(result.current).toBeNull();
 
