@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getAttributesByType } from '@server/products/getAttributes';
 
-export default function useFilterAttribute(attributeType) {
-  const [filterAttributes, setFilterAttributes] = useState([]);
+import { getAttributesByType } from '@server/products/getAttributes';
+import type { Attribute } from '@typings/products/attribute';
+
+export default function useFilterAttribute(attributeType: 'colour' | 'size') {
+  const [filterAttributes, setFilterAttributes] = useState<Attribute[]>([]);
 
   useEffect(() => {
     if (!attributeType) return;

@@ -4,11 +4,43 @@ All notable changes to this project will be documented in this file.
 
 ## [0.14.0] - [Unreleased]
 
+### Added
+
+#### Types
+
+- filter type to products types
+
+#### Utils
+
+- function createSelectChangeEvent in tests events to use for select element testing
+- function createRangeChangeEvent in tests events to use for range element testing
+
 ### Changed
 
 #### Main
 
 - update import file order
+
+#### Components
+
+##### Form
+
+- allow Checkbox component label prop to accept HTML elements
+
+#### Features
+
+##### Product
+
+###### ProductList
+
+- convert components to TypeScript
+- convert hooks to TypeScript
+- convert tests to TypeScript
+
+###### StarRating
+
+- convert components to TypeScript
+- convert test to TypeScript
 
 #### Pages
 
@@ -32,13 +64,6 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 #### Features
-
-##### Product
-
-###### StarRating
-
-- convert components to TypeScript
-- convert test to TypeScript
 
 ##### BlogPost
 

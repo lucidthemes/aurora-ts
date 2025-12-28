@@ -1,5 +1,5 @@
 import { render, screen, within, fireEvent } from '@testing-library/react';
-import ProductList from '../ProductList';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/products/getProducts', () => ({
   getProducts: vi.fn(),
@@ -17,12 +17,17 @@ vi.mock('@server/products/getAttributes', () => ({
 import { getProducts, getProductsMinMaxPrices } from '@server/products/getProducts';
 import { getCategories } from '@server/products/getCategories';
 import { getAttributesByType } from '@server/products/getAttributes';
-import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@typings/products/product';
+import type { PriceFilterMinMax } from '@typings/products/filter';
+import type { Category } from '@typings/products/category';
+import type { Attribute } from '@typings/products/attribute';
+
+import ProductList from '../ProductList';
 
 Element.prototype.scrollIntoView = vi.fn();
 
 describe('ProductList component', () => {
-  const mockProducts = [
+  const mockProducts: Partial<Product>[] = [
     {
       id: 1,
       title: 'Cozy sweater',
@@ -135,12 +140,12 @@ describe('ProductList component', () => {
     },
   ];
 
-  const mockPriceFilterMinMax = {
+  const mockPriceFilterMinMax: PriceFilterMinMax = {
     minPrice: 10,
     maxPrice: 40,
   };
 
-  const mockFilterCategories = [
+  const mockFilterCategories: Category[] = [
     {
       id: 1,
       name: 'Bags',
@@ -185,7 +190,7 @@ describe('ProductList component', () => {
     },
   ];
 
-  const mockFilterColours = [
+  const mockFilterColours: Attribute[] = [
     {
       id: 1,
       name: 'Black',
@@ -209,10 +214,10 @@ describe('ProductList component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    getProducts.mockResolvedValue(mockProducts);
-    getProductsMinMaxPrices.mockResolvedValue(mockPriceFilterMinMax);
-    getCategories.mockResolvedValue(mockFilterCategories);
-    getAttributesByType.mockResolvedValue(mockFilterColours);
+    vi.mocked(getProducts).mockResolvedValue(mockProducts);
+    vi.mocked(getProductsMinMaxPrices).mockResolvedValue(mockPriceFilterMinMax);
+    vi.mocked(getCategories).mockResolvedValue(mockFilterCategories);
+    vi.mocked(getAttributesByType).mockResolvedValue(mockFilterColours);
   });
 
   test('renders list when post data is fetched', async () => {
@@ -239,7 +244,7 @@ describe('ProductList component', () => {
     const productList = await screen.findByRole('list', { name: /products/i });
     expect(productList).toBeInTheDocument();
 
-    const firstListItem = productList.querySelector(':scope > li:first-child');
+    const firstListItem = productList.querySelector(':scope > li:first-child') as HTMLElement;
     expect(firstListItem).toBeInTheDocument();
 
     expect(within(firstListItem).getByRole('img', { name: /cozy sweater/i })).toBeInTheDocument();

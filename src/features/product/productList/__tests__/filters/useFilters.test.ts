@@ -1,14 +1,17 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useFilters from '../../hooks/filters/useFilters';
 
 vi.mock('@server/products/getProducts', () => ({
   getProductsMinMaxPrices: vi.fn(),
 }));
 
 import { getProductsMinMaxPrices } from '@server/products/getProducts';
+import type { Product } from '@typings/products/product';
+import type { PriceFilterMinMax } from '@typings/products/filter';
+
+import useFilters from '../../hooks/filters/useFilters';
 
 describe('useFilters hook', () => {
-  const mockProducts = [
+  const mockProducts: Product[] = [
     {
       id: 1,
       title: 'Cozy sweater',
@@ -286,12 +289,12 @@ describe('useFilters hook', () => {
 
   const resetPaginationMock = vi.fn();
 
-  const mockPriceFilterMinMax = {
+  const mockPriceFilterMinMax: PriceFilterMinMax = {
     minPrice: 10,
     maxPrice: 40,
   };
 
-  const mockFilteredProducts = [
+  const mockFilteredProducts: Product[] = [
     {
       id: 5,
       title: 'Knitted bag',
@@ -329,11 +332,14 @@ describe('useFilters hook', () => {
   });
 
   test('fetches min and max product price values and sets priceFilterMinMax state', async () => {
-    getProductsMinMaxPrices.mockResolvedValue(mockPriceFilterMinMax);
+    vi.mocked(getProductsMinMaxPrices).mockResolvedValue(mockPriceFilterMinMax);
 
     const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
-    expect(result.current.priceFilterMinMax).toEqual(undefined);
+    expect(result.current.priceFilterMinMax).toEqual({
+      maxPrice: 0,
+      minPrice: 0,
+    });
 
     await waitFor(() => {
       expect(result.current.priceFilterMinMax).toEqual(mockPriceFilterMinMax);
@@ -373,101 +379,85 @@ describe('useFilters hook', () => {
           5: 3,
         },
         stock: {
-          true: 9,
-          false: 1,
+          in: 9,
+          out: 1,
         },
       });
     });
   });
 
   test('sets initial filteredProducts state to all products', async () => {
-    let result;
+    const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
-    await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
+    await waitFor(() => {
+      expect(result.current.filteredProducts).toEqual(mockProducts);
     });
-
-    expect(result.current.filteredProducts).toEqual(mockProducts);
   });
 
   test('updates filteredProducts state when a filter option is selected', async () => {
-    vi.useFakeTimers();
-
-    let result;
-
-    await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
-    });
+    const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleFilterListToggle('category', 1);
     });
 
-    expect(result.current.filteredProducts).toEqual(mockFilteredProducts);
-    expect(resetPaginationMock).toHaveBeenCalled();
-
-    vi.useRealTimers();
+    await waitFor(() => {
+      expect(result.current.filteredProducts).toEqual(mockFilteredProducts);
+      expect(resetPaginationMock).toHaveBeenCalled();
+    });
   });
 
   test('recalculates filterCounts values when a filter option is selected', async () => {
-    vi.useFakeTimers();
-
-    let result;
-
-    await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
-    });
+    const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleFilterListToggle('category', 1);
     });
 
-    expect(result.current.filterCounts).toEqual({
-      category: {
-        1: 2,
-      },
-      colour: {},
-      size: {},
-      rating: {
-        1: 0,
-        2: 1,
-        3: 0,
-        4: 0,
-        5: 1,
-      },
-      stock: {
-        false: 1,
-        true: 1,
-      },
+    await waitFor(() => {
+      expect(result.current.filterCounts).toEqual({
+        category: {
+          1: 2,
+        },
+        colour: {},
+        size: {},
+        rating: {
+          1: 0,
+          2: 1,
+          3: 0,
+          4: 0,
+          5: 1,
+        },
+        stock: {
+          in: 1,
+          out: 1,
+        },
+      });
     });
   });
 
   test('updates checkbox active filters on handleFilterListToggle', async () => {
-    let result;
-
-    await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
-    });
+    const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
     act(() => {
-      result.current.handleFilterListToggle('category', 'category-1');
+      result.current.handleFilterListToggle('category', 1);
     });
 
-    expect(result.current.activeFilters.category[0]).toBe('category-1');
+    await waitFor(() => {
+      expect(result.current.activeFilters.category[0]).toBe(1);
+    });
   });
 
   test('updates price filter on handleFilterListPrices', async () => {
-    let result;
-
-    await act(async () => {
-      result = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock)).result;
-    });
+    const { result } = renderHook(() => useFilters(mockProducts, mockShowFilter, mockShowPagination, resetPaginationMock));
 
     act(() => {
       result.current.handleFilterListPrices(10, 40);
     });
 
-    expect(result.current.activeFilters.price.filterMinPrice).toBe(10);
-    expect(result.current.activeFilters.price.filterMaxPrice).toBe(40);
+    await waitFor(() => {
+      expect(result.current.activeFilters.price.minPrice).toBe(10);
+      expect(result.current.activeFilters.price.maxPrice).toBe(40);
+    });
   });
 });

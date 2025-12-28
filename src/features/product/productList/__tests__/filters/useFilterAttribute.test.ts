@@ -1,14 +1,16 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useFilterAttribute from '../../hooks/filters/useFilterAttribute';
 
 vi.mock('@server/products/getAttributes', () => ({
   getAttributesByType: vi.fn(),
 }));
 
 import { getAttributesByType } from '@server/products/getAttributes';
+import type { Attribute } from '@typings/products/attribute';
+
+import useFilterAttribute from '../../hooks/filters/useFilterAttribute';
 
 describe('useFilterAttribute hook', () => {
-  const mockFilterColours = [
+  const mockFilterColours: Attribute[] = [
     {
       id: 1,
       name: 'Black',
@@ -29,7 +31,7 @@ describe('useFilterAttribute hook', () => {
     },
   ];
 
-  const mockFilterSizes = [
+  const mockFilterSizes: Attribute[] = [
     {
       id: 4,
       name: 'Small',
@@ -55,7 +57,7 @@ describe('useFilterAttribute hook', () => {
   });
 
   test('fetches colour attributes data and sets filterAttributes state', async () => {
-    getAttributesByType.mockResolvedValue(mockFilterColours);
+    vi.mocked(getAttributesByType).mockResolvedValue(mockFilterColours);
 
     const { result } = renderHook(() => useFilterAttribute('colour'));
 
@@ -70,7 +72,7 @@ describe('useFilterAttribute hook', () => {
   });
 
   test('fetches size attributes data and sets filterAttributes state', async () => {
-    getAttributesByType.mockResolvedValue(mockFilterSizes);
+    vi.mocked(getAttributesByType).mockResolvedValue(mockFilterSizes);
 
     const { result } = renderHook(() => useFilterAttribute('size'));
 
@@ -82,13 +84,5 @@ describe('useFilterAttribute hook', () => {
     });
 
     expect(getAttributesByType).toHaveBeenCalledWith('size');
-  });
-
-  test('fetch not called if attribute type is missing', () => {
-    const { result } = renderHook(() => useFilterAttribute());
-
-    expect(result.current).toEqual([]);
-
-    expect(getAttributesByType).not.toHaveBeenCalled();
   });
 });

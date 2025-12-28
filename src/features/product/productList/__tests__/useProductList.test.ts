@@ -1,14 +1,16 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useProductList from '../hooks/useProductList';
 
 vi.mock('@server/products/getProducts', () => ({
   getProducts: vi.fn(),
 }));
 
 import { getProducts } from '@server/products/getProducts';
+import type { Product } from '@typings/products/product';
+
+import useProductList from '../hooks/useProductList';
 
 describe('useProductList hook', () => {
-  const mockProducts = [
+  const mockProducts: Partial<Product>[] = [
     {
       id: 1,
       title: 'Cozy sweater',
@@ -49,7 +51,7 @@ describe('useProductList hook', () => {
   });
 
   test('fetches products data and sets products state', async () => {
-    getProducts.mockResolvedValue(mockProducts);
+    vi.mocked(getProducts).mockResolvedValue(mockProducts);
 
     const { result } = renderHook(() => useProductList());
 

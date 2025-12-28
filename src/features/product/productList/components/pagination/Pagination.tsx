@@ -2,7 +2,13 @@ import Previous from './Previous';
 import Next from './Next';
 import Numbers from './Numbers';
 
-export default function Pagination({ totalPages, currentPage, handlePageChange }) {
+interface PaginationProps {
+  totalPages: number;
+  currentPage: number;
+  handlePageChange: (pageNumber: number) => void;
+}
+
+export default function Pagination({ totalPages, currentPage, handlePageChange }: PaginationProps) {
   return (
     <nav aria-label="Product pagination">
       <ul className="mt-10 flex justify-center gap-x-4">

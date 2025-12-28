@@ -1,8 +1,11 @@
 import { renderHook } from '@testing-library/react';
+
+import type { Product } from '@typings/products/product';
+
 import usePagination from '../hooks/usePagination';
 
 describe('usePagination hook', () => {
-  const mockProducts = [
+  const mockProducts: Partial<Product>[] = [
     {
       id: 1,
       title: 'Cozy sweater',
@@ -56,19 +59,19 @@ describe('usePagination hook', () => {
   });
 
   test('slices products down to products per page amount', () => {
-    const { result } = renderHook(() => usePagination(mockProducts, mockCurrentPage, mockProductsPerPage, mockShowPagination));
+    const { result } = renderHook(() => usePagination(mockProducts as Product[], mockCurrentPage, mockProductsPerPage, mockShowPagination));
 
     expect(result.current.paginatedProducts).toHaveLength(mockProductsPerPage);
   });
 
   test('calculates the total number of pages based on products count and products per page', () => {
-    const { result } = renderHook(() => usePagination(mockProducts, mockCurrentPage, mockProductsPerPage, mockShowPagination));
+    const { result } = renderHook(() => usePagination(mockProducts as Product[], mockCurrentPage, mockProductsPerPage, mockShowPagination));
 
     expect(result.current.totalPages).toEqual(2);
   });
 
   test('does not slice products if pagination is disabled', () => {
-    const { result } = renderHook(() => usePagination(mockProducts, mockCurrentPage, mockProductsPerPage, false));
+    const { result } = renderHook(() => usePagination(mockProducts as Product[], mockCurrentPage, mockProductsPerPage, false));
 
     expect(result.current.paginatedProducts).toHaveLength(10);
   });

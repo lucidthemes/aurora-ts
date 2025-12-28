@@ -3,7 +3,7 @@ import Half from './components/Half';
 import Empty from './components/Empty';
 
 interface StarRatingProps {
-  rating: number;
+  rating?: number;
 }
 
 export default function StarRating({ rating }: StarRatingProps) {
