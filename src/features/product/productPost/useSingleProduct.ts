@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getProductBySlug } from '@server/products/getProduct';
 
-export default function useSingleProduct(slug) {
-  const [singleProduct, setSingleProduct] = useState({ status: 'loading' });
+import { getProductBySlug } from '@server/products/getProduct';
+import type { Product } from '@typings/products/product';
+
+type SingleProductState = { status: 'loading' } | { status: 'not-found' } | { status: 'loaded'; product: Product };
+
+export default function useSingleProduct(slug: string | undefined) {
+  const [singleProduct, setSingleProduct] = useState<SingleProductState>({ status: 'loading' });
 
   useEffect(() => {
     const fetchProduct = async () => {

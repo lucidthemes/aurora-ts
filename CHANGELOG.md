@@ -35,6 +35,12 @@ All notable changes to this project will be documented in this file.
 
 ##### Product
 
+###### ProductPost
+
+- convert component to TypeScript
+- convert hooks to TypeScript
+- convert test to TypeScript
+
 ###### ProductList
 
 - convert components to TypeScript
