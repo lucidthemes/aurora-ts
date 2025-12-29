@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 export default function useOverlay() {
   const [overlayActive, setOverlayActive] = useState(false);
   const [overlayExpand, setOverlayExpand] = useState(false);
-  const overlayRef = useRef(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
 
   const handleOverlayActiveChange = () => {
     setOverlayActive((prevState) => {
@@ -32,7 +32,7 @@ export default function useOverlay() {
   };
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setOverlayActive(false);
         setOverlayExpand(false);

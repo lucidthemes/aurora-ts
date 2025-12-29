@@ -1,4 +1,8 @@
-export default function ExpandIcon({ handleOverlayExpandChange }) {
+interface ExpandIconProps {
+  handleOverlayExpandChange: () => void;
+}
+
+export default function ExpandIcon({ handleOverlayExpandChange }: ExpandIconProps) {
   return (
     <button onClick={handleOverlayExpandChange} aria-label="Enter fullscreen gallery">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="h-6 w-6 cursor-pointer fill-white">

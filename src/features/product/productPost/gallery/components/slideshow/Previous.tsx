@@ -1,4 +1,8 @@
-export default function Previous({ scrollPrev }) {
+interface PreviousProps {
+  scrollPrev: () => void | undefined;
+}
+
+export default function Previous({ scrollPrev }: PreviousProps) {
   return (
     <button onClick={scrollPrev} className="cursor-pointer p-5" aria-label="Previous slide">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" className="h-6 fill-white">

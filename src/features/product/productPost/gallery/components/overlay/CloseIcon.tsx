@@ -1,4 +1,8 @@
-export default function CloseIcon({ handleOverlayActiveChange }) {
+interface CloseIconProps {
+  handleOverlayActiveChange: () => void;
+}
+
+export default function CloseIcon({ handleOverlayActiveChange }: CloseIconProps) {
   return (
     <button onClick={handleOverlayActiveChange} aria-label="Close gallery overlay">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="h-6 w-6 cursor-pointer fill-white">
