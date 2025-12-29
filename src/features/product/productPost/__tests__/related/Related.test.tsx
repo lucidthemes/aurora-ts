@@ -1,20 +1,22 @@
 import { render, screen } from '@testing-library/react';
-import Related from '../../related';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@server/products/getProduct', () => ({
   getProductArray: vi.fn(),
 }));
 
 import { getProductArray } from '@server/products/getProduct';
-import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@typings/products/product';
+
+import Related from '../../related';
 
 describe('Related component', () => {
-  const mockProduct = {
+  const mockProduct: Partial<Product> = {
     id: 1,
     relatedProducts: [10, 3, 2],
   };
 
-  const mockRelated = [
+  const mockRelated: Partial<Product>[] = [
     { id: 10, title: 'Yarn scarf', price: 15.0 },
     { id: 3, title: 'Baby mittens', price: 10.0 },
     { id: 2, title: 'Autumn beanie', price: 20.0 },
@@ -25,11 +27,11 @@ describe('Related component', () => {
   });
 
   test('renders related products when product data is fetched', async () => {
-    getProductArray.mockResolvedValue(mockRelated);
+    vi.mocked(getProductArray).mockResolvedValue(mockRelated);
 
     render(
       <MemoryRouter>
-        <Related singleProduct={mockProduct} />
+        <Related product={mockProduct as Product} />
       </MemoryRouter>
     );
 
@@ -45,7 +47,7 @@ describe('Related component', () => {
 
     const { container } = render(
       <MemoryRouter>
-        <Related singleProduct={productWithoutRelated} />
+        <Related product={productWithoutRelated as Product} />
       </MemoryRouter>
     );
 
