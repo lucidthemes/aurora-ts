@@ -32,7 +32,7 @@ export default function ProductPost({ product }: ProductPostProps) {
         </div>
       </div>
       <Tabs singleProduct={product} activeTab={activeTab} setActiveTab={setActiveTab} tabsRef={tabsRef} />
-      <Related singleProduct={product} />
+      <Related product={product} />
     </>
   );
 }

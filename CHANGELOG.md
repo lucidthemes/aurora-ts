@@ -53,6 +53,10 @@ All notable changes to this project will be documented in this file.
 - convert notification hook to TypeScript
 - convert notification test to TypeScript
 
+- convert related components to TypeScript
+- convert related hook to TypeScript
+- convert related tests to TypeScript
+
 ###### ProductList
 
 - convert components to TypeScript
