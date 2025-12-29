@@ -1,4 +1,8 @@
-export default function OpenIcon({ handleOverlayActiveChange }) {
+interface OpenIconProps {
+  handleOverlayActiveChange: () => void;
+}
+
+export default function OpenIcon({ handleOverlayActiveChange }: OpenIconProps) {
   return (
     <button
       className="absolute top-5 right-5 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white"

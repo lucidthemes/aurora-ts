@@ -1,9 +1,22 @@
-export default function Thumbnails({ singleProduct, emblaThumbsRef, selectedSlideIndex, onThumbClick }) {
+import type { EmblaViewportRefType } from 'embla-carousel-react';
+
+import type { Product } from '@typings/products/product';
+
+interface ThumbnailsProps {
+  product: Product;
+  emblaThumbsRef: EmblaViewportRefType;
+  selectedSlideIndex: number;
+  onThumbClick: (index: number) => void;
+}
+
+export default function Thumbnails({ product, emblaThumbsRef, selectedSlideIndex, onThumbClick }: ThumbnailsProps) {
+  if (!product.gallery) return null;
+
   return (
     <div className="embla-thumbs">
       <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
         <div className="embla-thumbs__container grid grid-cols-4 gap-5">
-          {singleProduct.gallery.map((imgUrl, index) => {
+          {product.gallery.map((imgUrl, index) => {
             const selectedThumbnailClass = index === selectedSlideIndex ? 'border-boulder' : 'border-pearl-bush';
             return (
               <button

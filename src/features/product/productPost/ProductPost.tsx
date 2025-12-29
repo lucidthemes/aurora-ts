@@ -24,7 +24,7 @@ export default function ProductPost({ product }: ProductPostProps) {
         <Breadcrumb product={product} />
         <div className="flex flex-col gap-10 lg:flex-row">
           <div className="lg:basis-[40%]">
-            <Gallery singleProduct={product} />
+            <Gallery product={product} />
           </div>
           <div className="lg:basis-[60%]">
             <Summary singleProduct={product} setActiveTab={setActiveTab} tabsRef={tabsRef} setAddCartNotification={setAddCartNotification} />

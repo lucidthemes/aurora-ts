@@ -1,4 +1,8 @@
-export default function CompressIcon({ handleOverlayExpandChange }) {
+interface CompressIconProps {
+  handleOverlayExpandChange: () => void;
+}
+
+export default function CompressIcon({ handleOverlayExpandChange }: CompressIconProps) {
   return (
     <button onClick={handleOverlayExpandChange} aria-label="Leave fullscreen gallery">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" className="h-6 w-6 cursor-pointer fill-white">

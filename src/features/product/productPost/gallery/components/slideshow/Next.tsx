@@ -1,4 +1,8 @@
-export default function Next({ scrollNext }) {
+interface NextProps {
+  scrollNext: () => void | undefined;
+}
+
+export default function Next({ scrollNext }: NextProps) {
   return (
     <button onClick={scrollNext} className="cursor-pointer p-5" aria-label="Next slide">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" className="h-6 fill-white">
