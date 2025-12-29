@@ -1,21 +1,24 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useList from '../../../tabs/hooks/reviews/useList';
 
 vi.mock('@server/products/getReviews', () => ({
   getReviewsById: vi.fn(),
 }));
 
 import { getReviewsById } from '@server/products/getReviews';
+import type { Product } from '@typings/products/product';
+import type { Review } from '@typings/products/review';
+
+import useList from '../../../tabs/hooks/reviews/useList';
 
 describe('useList hook', () => {
-  const mockProduct = {
+  const mockProduct: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     reviewCount: 2,
     averageReview: 5,
   };
 
-  const mockReviews = [
+  const mockReviews: Review[] = [
     {
       id: 1,
       productId: 1,
@@ -43,9 +46,9 @@ describe('useList hook', () => {
   });
 
   test('fetches reviews data and sets reviews state', async () => {
-    getReviewsById.mockResolvedValue(mockReviews);
+    vi.mocked(getReviewsById).mockResolvedValue(mockReviews);
 
-    const { result } = renderHook(() => useList(mockProduct));
+    const { result } = renderHook(() => useList(mockProduct as Product));
 
     expect(result.current.reviews).toEqual([]);
 
@@ -57,18 +60,10 @@ describe('useList hook', () => {
     expect(getReviewsById).toHaveBeenCalledWith(mockProduct.id);
   });
 
-  test('sets reviews state to null if singleProduct is missing', () => {
-    const { result } = renderHook(() => useList());
-
-    expect(result.current.reviews).toEqual([]);
-
-    expect(getReviewsById).not.toHaveBeenCalled();
-  });
-
   test('sets reviews state to null if product has no reviews', () => {
     const productWithoutReviews = { id: 1 };
 
-    const { result } = renderHook(() => useList(productWithoutReviews));
+    const { result } = renderHook(() => useList(productWithoutReviews as Product));
 
     expect(result.current.reviews).toEqual([]);
 

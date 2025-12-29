@@ -1,6 +1,6 @@
 import type { ChangeEvent, FormEvent, MouseEvent } from 'react';
 
-export function createInputChangeEvent(name: string, value: string): ChangeEvent<HTMLInputElement> {
+export function createInputChangeEvent(name: string, value: string | number): ChangeEvent<HTMLInputElement> {
   return {
     target: { name, value },
   } as unknown as ChangeEvent<HTMLInputElement>;
