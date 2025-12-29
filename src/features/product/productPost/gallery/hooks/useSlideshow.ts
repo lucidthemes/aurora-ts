@@ -1,12 +1,18 @@
 import { useEffect, useCallback } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 
-export default function useSlideshow(selectedSlideIndex, setSelectedSlideIndex, setSelectedOverlayIndex, overlay) {
+export default function useSlideshow(
+  selectedSlideIndex: number,
+  setSelectedSlideIndex: Dispatch<SetStateAction<number>>,
+  setSelectedOverlayIndex: Dispatch<SetStateAction<number>>,
+  overlay?: boolean
+) {
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel({ loop: true, align: 'start' });
   const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({ active: false });
 
   const onThumbClick = useCallback(
-    (index) => {
+    (index: number) => {
       if (!emblaMainApi || !emblaThumbsApi) return;
       emblaMainApi.scrollTo(index);
     },
@@ -40,11 +46,11 @@ export default function useSlideshow(selectedSlideIndex, setSelectedSlideIndex, 
   const scrollNext = useCallback(() => emblaMainApi && emblaMainApi.scrollNext(), [emblaMainApi]);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (overlay) {
-        if (event.key === 'ArrowLeft') {
+        if (e.key === 'ArrowLeft') {
           scrollPrev();
-        } else if (event.key === 'ArrowRight') {
+        } else if (e.key === 'ArrowRight') {
           scrollNext();
         }
       }
