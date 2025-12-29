@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-type ActiveTab = 'description' | 'reviews';
+import type { ActiveTab } from '@typings/products/tab';
 
 export default function useProductPost() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('description');

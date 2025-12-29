@@ -1,6 +1,12 @@
+import type { Review } from '@typings/products/review';
+
 import ListItem from './ListItem';
 
-export default function List({ reviews }) {
+interface ListProps {
+  reviews: Review[];
+}
+
+export default function List({ reviews }: ListProps) {
   return (
     <>
       {Array.isArray(reviews) && reviews.length > 0 ? (

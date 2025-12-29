@@ -1,18 +1,29 @@
-import useForm from '../../hooks/reviews/useForm';
-import SectionHeading from '@components/UI/SectionHeading';
-import FormStars from './FormStars';
+import type { Dispatch, SetStateAction } from 'react';
+
 import Textarea from '@components/Form/Textarea';
 import Input from '@components/Form/Input';
+import SectionHeading from '@components/UI/SectionHeading';
 import Button from '@components/UI/Button';
+import type { Product } from '@typings/products/product';
+import type { Review } from '@typings/products/review';
 
-export default function Form({ singleProduct, reviews, setReviews }) {
-  const { reviewFormData, reviewFormErrors, handleFormChange, handleFormKeyDown, handleFormSubmit } = useForm(singleProduct, reviews, setReviews);
+import useForm from '../../hooks/reviews/useForm';
+import FormStars from './FormStars';
+
+interface FormProps {
+  product: Product;
+  reviews: Review[];
+  setReviews: Dispatch<SetStateAction<Review[]>>;
+}
+
+export default function Form({ product, reviews, setReviews }: FormProps) {
+  const { reviewFormData, reviewFormErrors, handleFormChange, handleFormKeyDown, handleFormSubmit } = useForm(product, reviews, setReviews);
 
   return (
     <div>
-      <SectionHeading heading="Add a review" headingLevel={3} />
+      <SectionHeading heading="Add a review" headingLevel="3" />
       <form onKeyDown={handleFormKeyDown} onSubmit={handleFormSubmit} className="flex flex-col gap-y-6" aria-label="Add review" noValidate>
-        <FormStars reviewFormData={reviewFormData} error={reviewFormErrors.rating} handleFormChange={handleFormChange} />
+        <FormStars rating={reviewFormData.rating} error={reviewFormErrors.rating} handleFormChange={handleFormChange} />
         <Textarea
           name="review"
           value={reviewFormData.review}

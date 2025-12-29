@@ -1,21 +1,24 @@
 import { render, screen, within, fireEvent, waitFor } from '@testing-library/react';
-import Reviews from '../../../tabs/components/reviews/Reviews';
 
 vi.mock('@server/products/getReviews', () => ({
   getReviewsById: vi.fn(),
 }));
 
 import { getReviewsById } from '@server/products/getReviews';
+import type { Product } from '@typings/products/product';
+import type { Review } from '@typings/products/review';
+
+import Reviews from '../../../tabs/components/reviews/Reviews';
 
 describe('Reviews component', () => {
-  const mockProduct = {
+  const mockProduct: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     reviewCount: 2,
     averageReview: 5,
   };
 
-  const mockReviews = [
+  const mockReviews: Review[] = [
     {
       id: 1,
       productId: 1,
@@ -43,9 +46,9 @@ describe('Reviews component', () => {
   });
 
   test('renders reviews list when data is fetched', async () => {
-    getReviewsById.mockResolvedValue(mockReviews);
+    vi.mocked(getReviewsById).mockResolvedValue(mockReviews);
 
-    render(<Reviews singleProduct={mockProduct} />);
+    render(<Reviews product={mockProduct as Product} activeTab="reviews" />);
 
     const reviewsList = await screen.findByRole('list', { name: /reviews/i });
     expect(reviewsList).toBeInTheDocument();
@@ -55,7 +58,7 @@ describe('Reviews component', () => {
   });
 
   test('renders form input fields and submit button', async () => {
-    render(<Reviews singleProduct={mockProduct} />);
+    render(<Reviews product={mockProduct as Product} activeTab="reviews" />);
 
     await waitFor(() => {
       expect(screen.getByRole('form', { name: /add review/i })).toBeInTheDocument();
@@ -67,9 +70,9 @@ describe('Reviews component', () => {
   });
 
   test('adds new review when form successfully submitted', async () => {
-    getReviewsById.mockResolvedValue(mockReviews);
+    vi.mocked(getReviewsById).mockResolvedValue(mockReviews);
 
-    render(<Reviews singleProduct={mockProduct} />);
+    render(<Reviews product={mockProduct as Product} activeTab="reviews" />);
 
     const reviewsList = await screen.findByRole('list', { name: /reviews/i });
     expect(reviewsList).toBeInTheDocument();
@@ -96,7 +99,7 @@ describe('Reviews component', () => {
   });
 
   test('shows form error messages for missing fields', async () => {
-    render(<Reviews singleProduct={mockProduct} />);
+    render(<Reviews product={mockProduct as Product} activeTab="reviews" />);
 
     await waitFor(() => {
       expect(screen.getByRole('form', { name: /add review/i })).toBeInTheDocument();

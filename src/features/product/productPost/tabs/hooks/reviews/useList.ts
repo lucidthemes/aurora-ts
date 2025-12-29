@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
-import { getReviewsById } from '@server/products/getReviews';
 
-export default function useList(singleProduct) {
-  const [reviews, setReviews] = useState([]);
+import { getReviewsById } from '@server/products/getReviews';
+import type { Product } from '@typings/products/product';
+import type { Review } from '@typings/products/review';
+
+export default function useList(product: Product) {
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     const fetchReviews = async () => {
-      if (!singleProduct?.reviewCount) {
+      if (!product?.reviewCount) {
         setReviews([]);
         return;
       }
 
       try {
-        const productReviews = await getReviewsById(singleProduct.id);
+        const productReviews = await getReviewsById(product.id);
         setReviews(productReviews);
       } catch (error) {
         console.error('Failed to fetch reviews.', error);
@@ -20,7 +23,7 @@ export default function useList(singleProduct) {
     };
 
     fetchReviews();
-  }, [singleProduct]);
+  }, [product]);
 
   return { reviews, setReviews };
 }

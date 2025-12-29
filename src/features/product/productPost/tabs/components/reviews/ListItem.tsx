@@ -1,7 +1,12 @@
-import { dateFormat } from '@utils/formatters';
 import StarRating from '@features/product/starRating';
+import type { Review } from '@typings/products/review';
+import { dateFormat } from '@utils/formatters';
 
-export default function ListItem({ review }) {
+interface ListItemProps {
+  review: Review;
+}
+
+export default function ListItem({ review }: ListItemProps) {
   return (
     <li>
       <div className="flex flex-col gap-y-5 border-b border-pearl-bush pb-10">
