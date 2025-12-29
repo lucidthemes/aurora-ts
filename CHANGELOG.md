@@ -49,6 +49,10 @@ All notable changes to this project will be documented in this file.
 - convert gallery hooks to TypeScript
 - convert gallery test to TypeScript
 
+- convert notification component to TypeScript
+- convert notification hook to TypeScript
+- convert notification test to TypeScript
+
 ###### ProductList
 
 - convert components to TypeScript

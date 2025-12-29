@@ -1,6 +1,10 @@
 import Button from '@components/UI/Button';
 
-export default function Notification({ addCartNotification }) {
+interface NotificationProps {
+  addCartNotification: string;
+}
+
+export default function Notification({ addCartNotification }: NotificationProps) {
   if (!addCartNotification) return null;
 
   return (
