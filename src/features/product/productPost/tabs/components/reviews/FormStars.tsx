@@ -1,10 +1,18 @@
+import type { ChangeEventHandler } from 'react';
+
 import useFormStars from '../../hooks/reviews/useFormStars';
 
-export default function FormStars({ reviewFormData, error, handleFormChange }) {
+interface FormStars {
+  rating: number;
+  error: string;
+  handleFormChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+}
+
+export default function FormStars({ rating, error, handleFormChange }: FormStars) {
   const { hoveredRating, handleMouseEnter, handleMouseLeave } = useFormStars();
 
-  const renderStar = (star) => {
-    const isSelected = reviewFormData.rating >= star || hoveredRating >= star;
+  const renderStar = (star: number) => {
+    const isSelected = rating >= star || hoveredRating >= star;
 
     if (isSelected) {
       return (
@@ -38,7 +46,7 @@ export default function FormStars({ reviewFormData, error, handleFormChange }) {
               type="radio"
               name="rating"
               value={star}
-              checked={Number(reviewFormData.rating) === star}
+              checked={Number(rating) === star}
               onChange={handleFormChange}
               className="sr-only"
               aria-label={`Rate ${star} out of 5`}

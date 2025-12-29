@@ -31,7 +31,7 @@ export default function ProductPost({ product }: ProductPostProps) {
           </div>
         </div>
       </div>
-      <Tabs singleProduct={product} activeTab={activeTab} setActiveTab={setActiveTab} tabsRef={tabsRef} />
+      <Tabs product={product} activeTab={activeTab} setActiveTab={setActiveTab} tabsRef={tabsRef} />
       <Related product={product} />
     </>
   );
