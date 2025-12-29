@@ -1,6 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Gallery from '../../gallery';
 import { MemoryRouter } from 'react-router-dom';
+
+import type { Product } from '@typings/products/product';
+
+import Gallery from '../../gallery';
 
 vi.mock('embla-carousel-react', () => ({
   __esModule: true,
@@ -19,7 +22,7 @@ vi.mock('embla-carousel-react', () => ({
 }));
 
 describe('Gallery component', () => {
-  const mockProduct = {
+  const mockProduct: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     image: '/images/products/product-1.jpg',
@@ -29,7 +32,7 @@ describe('Gallery component', () => {
   test('renders gallery images', () => {
     render(
       <MemoryRouter>
-        <Gallery singleProduct={mockProduct} />
+        <Gallery product={mockProduct as Product} />
       </MemoryRouter>
     );
 
@@ -40,7 +43,7 @@ describe('Gallery component', () => {
   test('renders gallery zoom overlay when open icon clicked', () => {
     render(
       <MemoryRouter>
-        <Gallery singleProduct={mockProduct} />
+        <Gallery product={mockProduct as Product} />
       </MemoryRouter>
     );
 
