@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import Notification from '../../notification';
 import { MemoryRouter } from 'react-router-dom';
+
+import Notification from '../../notification';
 
 describe('Notification component', () => {
   const mockAddCartNotification = 'Cozy sweater has been added to the cart';
