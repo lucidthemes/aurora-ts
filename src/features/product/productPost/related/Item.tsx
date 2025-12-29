@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
-import StarRating from '@features/product/starRating';
 
-export default function Item({ product }) {
+import StarRating from '@features/product/starRating';
+import type { Product } from '@typings/products/product';
+
+interface ItemProps {
+  product: Product;
+}
+
+export default function Item({ product }: ItemProps) {
   return (
     <li className="nth-3:hidden lg:nth-3:block">
       <div className="flex flex-col gap-y-5">

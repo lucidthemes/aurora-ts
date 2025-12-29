@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
-import { getProductArray } from '@server/products/getProduct';
 
-export default function useRelated(singleProduct) {
-  const [relatedProducts, setRelatedProducts] = useState([]);
+import { getProductArray } from '@server/products/getProduct';
+import type { Product } from '@typings/products/product';
+
+export default function useRelated(product: Product) {
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchRelated = async () => {
-      if (!singleProduct?.relatedProducts) {
+      if (!product?.relatedProducts) {
         setRelatedProducts([]);
         return;
       }
 
       try {
-        const products = await getProductArray(singleProduct.relatedProducts);
+        const products = await getProductArray(product.relatedProducts);
         setRelatedProducts(products);
       } catch (error) {
         console.error('Failed to fetch related products.', error);
@@ -20,7 +22,7 @@ export default function useRelated(singleProduct) {
     };
 
     fetchRelated();
-  }, [singleProduct]);
+  }, [product]);
 
   return relatedProducts;
 }
