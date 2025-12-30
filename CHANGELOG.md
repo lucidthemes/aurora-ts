@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
 
 - filter type to products types
 - tab type to products types
+- summary type to products types
 
 #### Utils
 
@@ -61,6 +62,10 @@ All notable changes to this project will be documented in this file.
 - convert tabs components to TypeScript
 - convert tabs hooks to TypeScript
 - convert tabs tests to TypeScript
+
+- convert summary components to TypeScript
+- convert summary hooks to TypeScript
+- convert summary tests to TypeScript
 
 ###### ProductList
 

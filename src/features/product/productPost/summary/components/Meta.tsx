@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
 
-export default function Meta({ summaryData }) {
+import type { SummaryData } from '@typings/products/summary';
+
+interface MetaProps {
+  summaryData: SummaryData;
+}
+
+export default function Meta({ summaryData }: MetaProps) {
   return (
     <div className="flex flex-col gap-y-2.5">
       {summaryData.SKU && <p>SKU: {summaryData.SKU}</p>}
-      {Object.keys(summaryData.category).length > 0 && (
+      {summaryData.category && (
         <p>
           Category:{' '}
           <Link to={`/product-category/${summaryData.category.slug}`} className="transition-colors duration-300 ease-in-out hover:text-shark focus:text-shark">

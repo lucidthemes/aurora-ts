@@ -1,6 +1,16 @@
+import type { Dispatch, SetStateAction } from 'react';
+
+import type { SummaryData, AddCartFormData } from '@typings/products/summary';
+
 import useQuantity from '../../hooks/addCartForm/useQuantity';
 
-export default function Quantity({ summaryData, addCartFormData, setAddCartFormData }) {
+interface QuantityProps {
+  summaryData: SummaryData;
+  addCartFormData: AddCartFormData;
+  setAddCartFormData: Dispatch<SetStateAction<AddCartFormData>>;
+}
+
+export default function Quantity({ summaryData, addCartFormData, setAddCartFormData }: QuantityProps) {
   const { handleQuantityDecrease, handleQuantityIncrease, handleQuantityChange } = useQuantity(summaryData, addCartFormData, setAddCartFormData);
 
   return (

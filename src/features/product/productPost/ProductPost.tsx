@@ -27,7 +27,7 @@ export default function ProductPost({ product }: ProductPostProps) {
             <Gallery product={product} />
           </div>
           <div className="lg:basis-[60%]">
-            <Summary singleProduct={product} setActiveTab={setActiveTab} tabsRef={tabsRef} setAddCartNotification={setAddCartNotification} />
+            <Summary product={product} setActiveTab={setActiveTab} tabsRef={tabsRef} setAddCartNotification={setAddCartNotification} />
           </div>
         </div>
       </div>
