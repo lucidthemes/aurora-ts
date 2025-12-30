@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import Summary from '../../summary';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@features/cart/CartContext', () => ({
   useCartContext: vi.fn(),
@@ -21,16 +21,27 @@ import { useCartContext } from '@features/cart/CartContext';
 import { getCategoryById } from '@server/products/getCategory';
 import { getTagsArray } from '@server/products/getTags';
 import { getAttributeArray } from '@server/products/getAttribute';
-import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@typings/products/product';
+import type { Category } from '@typings/products/category';
+import type { Tag } from '@typings/products/tag';
+import type { Attribute } from '@typings/products/attribute';
+
+import Summary from '../../summary';
 
 describe('Summary component', () => {
   const addCartItemMock = vi.fn();
 
-  useCartContext.mockReturnValue({
+  const setActiveTabMock = vi.fn();
+
+  const tabsRefMock = vi.fn();
+
+  const setAddCartNotificationMock = vi.fn();
+
+  vi.mocked(useCartContext).mockReturnValue({
     addCartItem: addCartItemMock,
   });
 
-  const mockProduct = {
+  const mockProduct: Product = {
     id: 1,
     title: 'Cozy sweater',
     slug: 'cozy-sweater',
@@ -137,7 +148,7 @@ describe('Summary component', () => {
     relatedProducts: [10, 3, 2],
   };
 
-  const mockCategory = {
+  const mockCategory: Category = {
     id: 6,
     name: 'Sweaters',
     slug: 'sweaters',
@@ -145,7 +156,7 @@ describe('Summary component', () => {
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
   };
 
-  const mockTags = [
+  const mockTags: Tag[] = [
     {
       id: 4,
       name: 'Clothing',
@@ -169,7 +180,7 @@ describe('Summary component', () => {
     },
   ];
 
-  const mockAttributes = [
+  const mockAttributes: Attribute[] = [
     {
       id: 1,
       name: 'Black',
@@ -211,15 +222,15 @@ describe('Summary component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    getCategoryById.mockResolvedValue(mockCategory);
-    getTagsArray.mockResolvedValue(mockTags);
-    getAttributeArray.mockResolvedValue(mockAttributes);
+    vi.mocked(getCategoryById).mockResolvedValue(mockCategory);
+    vi.mocked(getTagsArray).mockResolvedValue(mockTags);
+    vi.mocked(getAttributeArray).mockResolvedValue(mockAttributes);
   });
 
   test('renders title', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -232,7 +243,7 @@ describe('Summary component', () => {
   test('renders rating', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -244,7 +255,7 @@ describe('Summary component', () => {
   test('renders short description', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -256,7 +267,7 @@ describe('Summary component', () => {
   test('renders price', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -268,7 +279,7 @@ describe('Summary component', () => {
   test('renders SKU', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -280,7 +291,7 @@ describe('Summary component', () => {
   test('renders category when data is fetched', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -294,7 +305,7 @@ describe('Summary component', () => {
   test('renders tags when data is fetched', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -310,7 +321,7 @@ describe('Summary component', () => {
   test('renders add to cart form for products in stock', async () => {
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockProduct} />
+        <Summary product={mockProduct} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 
@@ -324,7 +335,7 @@ describe('Summary component', () => {
 
     render(
       <MemoryRouter>
-        <Summary singleProduct={mockOutOfStock} />
+        <Summary product={mockOutOfStock} setActiveTab={setActiveTabMock} tabsRef={tabsRefMock} setAddCartNotification={setAddCartNotificationMock} />
       </MemoryRouter>
     );
 

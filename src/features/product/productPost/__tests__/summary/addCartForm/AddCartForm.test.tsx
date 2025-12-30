@@ -1,5 +1,5 @@
 import { render, screen, within, fireEvent } from '@testing-library/react';
-import AddCartForm from '../../../summary/components/addCartForm';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@features/cart/CartContext', () => ({
   useCartContext: vi.fn(),
@@ -11,10 +11,14 @@ vi.mock('@server/products/getAttribute', () => ({
 
 import { useCartContext } from '@features/cart/CartContext';
 import { getAttributeArray } from '@server/products/getAttribute';
-import { MemoryRouter } from 'react-router-dom';
+import type { Product } from '@typings/products/product';
+import type { Attribute } from '@typings/products/attribute';
+import type { SummaryData } from '@typings/products/summary';
+
+import AddCartForm from '../../../summary/components/addCartForm';
 
 describe('AddCartForm component', () => {
-  const mockProductWithVariations = {
+  const mockProductWithVariations: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     price: 20,
@@ -82,7 +86,7 @@ describe('AddCartForm component', () => {
     ],
   };
 
-  const mockProductVariations = [
+  const mockProductVariations: Attribute[] = [
     {
       id: 1,
       name: 'Black',
@@ -121,12 +125,12 @@ describe('AddCartForm component', () => {
     },
   ];
 
-  const mockupSummaryDataForProductWithVariations = {
+  const mockupSummaryDataForProductWithVariations: SummaryData = {
     price: 20,
     SKU: 'CS',
   };
 
-  const mockProductNoVariations = {
+  const mockProductNoVariations: Partial<Product> = {
     id: 4,
     title: 'Handmade bonnet',
     price: 20,
@@ -135,7 +139,7 @@ describe('AddCartForm component', () => {
     SKU: 'HB',
   };
 
-  const mockupSummaryDataForProductNoVariations = {
+  const mockupSummaryDataForProductNoVariations: SummaryData = {
     price: 20,
     maxQuantity: 5,
     SKU: 'HB',
@@ -147,7 +151,7 @@ describe('AddCartForm component', () => {
 
   const addCartItemMock = vi.fn();
 
-  useCartContext.mockReturnValue({
+  vi.mocked(useCartContext).mockReturnValue({
     addCartItem: addCartItemMock,
   });
 
@@ -156,11 +160,16 @@ describe('AddCartForm component', () => {
   });
 
   test('renders form with select fields for variations when variation data is fetched', async () => {
-    getAttributeArray.mockResolvedValue(mockProductVariations);
+    vi.mocked(getAttributeArray).mockResolvedValue(mockProductVariations);
 
     render(
       <MemoryRouter>
-        <AddCartForm singleProduct={mockProductWithVariations} summaryData={mockupSummaryDataForProductWithVariations} setSummaryData={setSummaryDataMock} />
+        <AddCartForm
+          product={mockProductWithVariations as Product}
+          summaryData={mockupSummaryDataForProductWithVariations}
+          setSummaryData={setSummaryDataMock}
+          setAddCartNotification={setAddCartNotificationMock}
+        />
       </MemoryRouter>
     );
 
@@ -192,7 +201,12 @@ describe('AddCartForm component', () => {
   test('renders form with no variations', async () => {
     render(
       <MemoryRouter>
-        <AddCartForm singleProduct={mockProductNoVariations} summaryData={mockupSummaryDataForProductNoVariations} setSummaryData={setSummaryDataMock} />
+        <AddCartForm
+          product={mockProductNoVariations as Product}
+          summaryData={mockupSummaryDataForProductNoVariations}
+          setSummaryData={setSummaryDataMock}
+          setAddCartNotification={setAddCartNotificationMock}
+        />
       </MemoryRouter>
     );
 
@@ -210,12 +224,12 @@ describe('AddCartForm component', () => {
   });
 
   test('adds product with variation to the cart', async () => {
-    getAttributeArray.mockResolvedValue(mockProductVariations);
+    vi.mocked(getAttributeArray).mockResolvedValue(mockProductVariations);
 
     render(
       <MemoryRouter>
         <AddCartForm
-          singleProduct={mockProductWithVariations}
+          product={mockProductWithVariations as Product}
           summaryData={mockupSummaryDataForProductNoVariations}
           setSummaryData={setSummaryDataMock}
           setAddCartNotification={setAddCartNotificationMock}
@@ -245,7 +259,7 @@ describe('AddCartForm component', () => {
     render(
       <MemoryRouter>
         <AddCartForm
-          singleProduct={mockProductNoVariations}
+          product={mockProductNoVariations as Product}
           summaryData={mockupSummaryDataForProductNoVariations}
           setSummaryData={setSummaryDataMock}
           setAddCartNotification={setAddCartNotificationMock}

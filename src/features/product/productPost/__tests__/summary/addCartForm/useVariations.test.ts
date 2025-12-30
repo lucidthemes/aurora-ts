@@ -1,14 +1,23 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import useVariations from '../../../summary/hooks/addCartForm/useVariations';
 
 vi.mock('@server/products/getAttribute', () => ({
   getAttributeArray: vi.fn(),
 }));
 
 import { getAttributeArray } from '@server/products/getAttribute';
+import type { Product } from '@typings/products/product';
+import type { Attribute } from '@typings/products/attribute';
+import { createSelectChangeEvent } from '@utils/tests/events';
+
+import useVariations from '../../../summary/hooks/addCartForm/useVariations';
+
+interface AttributeArray {
+  type: string;
+  options: Attribute[];
+}
 
 describe('useVariations hook', () => {
-  const mockSingleProduct = {
+  const mockSingleProduct: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     price: 20,
@@ -76,14 +85,9 @@ describe('useVariations hook', () => {
     ],
   };
 
-  const mockAddCartFormData = {
-    variationId: '',
-    quantity: 2,
-  };
-
   const setAddCartFormDataMock = vi.fn();
 
-  const mockAttributes = [
+  const mockAttributes: Attribute[] = [
     {
       id: 1,
       name: 'Black',
@@ -127,27 +131,27 @@ describe('useVariations hook', () => {
   });
 
   test('fetches variation attributes data and sets attributeArray state', async () => {
-    getAttributeArray.mockResolvedValue(mockAttributes);
+    vi.mocked(getAttributeArray).mockResolvedValue(mockAttributes);
 
     await act(async () => {
-      renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock));
+      renderHook(() => useVariations(mockSingleProduct as Product, setAddCartFormDataMock));
     });
 
-    const mockAttributeIds = mockSingleProduct.variationAttributes.flatMap((variation) => variation.options).filter(Boolean);
+    const mockAttributeIds = mockSingleProduct.variationAttributes?.flatMap((variation) => variation.options).filter(Boolean);
 
     expect(getAttributeArray).toHaveBeenCalledWith(mockAttributeIds);
   });
 
   test('shows all variations when selectedVariations is empty', async () => {
-    getAttributeArray.mockResolvedValue(mockAttributes);
+    vi.mocked(getAttributeArray).mockResolvedValue(mockAttributes);
 
-    const { result } = renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock));
+    const { result } = renderHook(() => useVariations(mockSingleProduct as Product, setAddCartFormDataMock));
 
-    const mockAttributeIds = mockSingleProduct.variationAttributes.flatMap((variation) => variation.options).filter(Boolean);
+    const mockAttributeIds = mockSingleProduct.variationAttributes?.flatMap((variation) => variation.options).filter(Boolean);
 
     expect(getAttributeArray).toHaveBeenCalledWith(mockAttributeIds);
 
-    const mockFilteredVariations = [
+    const mockFilteredVariations: AttributeArray[] = [
       {
         type: 'colour',
         options: [
@@ -202,20 +206,20 @@ describe('useVariations hook', () => {
   });
 
   test('updates size variations when selectedVariations has a colour varation set', async () => {
-    getAttributeArray.mockResolvedValue(mockAttributes);
+    vi.mocked(getAttributeArray).mockResolvedValue(mockAttributes);
 
-    const { result } = renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock));
+    const { result } = renderHook(() => useVariations(mockSingleProduct as Product, setAddCartFormDataMock));
 
-    const mockAttributeIds = mockSingleProduct.variationAttributes.flatMap((variation) => variation.options).filter(Boolean);
+    const mockAttributeIds = mockSingleProduct.variationAttributes?.flatMap((variation) => variation.options).filter(Boolean);
 
     expect(getAttributeArray).toHaveBeenCalledWith(mockAttributeIds);
 
     act(() => {
-      result.current.handleProductVariationChange({ target: { name: 'colour', value: '3' } });
+      result.current.handleProductVariationChange(createSelectChangeEvent('colour', 3));
     });
 
     // selected colour red which only has 1 size variation
-    const mockFilteredVariations = [
+    const mockFilteredVariations: AttributeArray[] = [
       {
         type: 'colour',
         options: [
@@ -258,20 +262,20 @@ describe('useVariations hook', () => {
   });
 
   test('updates colour variations when selectedVariations has a size varation set', async () => {
-    getAttributeArray.mockResolvedValue(mockAttributes);
+    vi.mocked(getAttributeArray).mockResolvedValue(mockAttributes);
 
-    const { result } = renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock));
+    const { result } = renderHook(() => useVariations(mockSingleProduct as Product, setAddCartFormDataMock));
 
-    const mockAttributeIds = mockSingleProduct.variationAttributes.flatMap((variation) => variation.options).filter(Boolean);
+    const mockAttributeIds = mockSingleProduct.variationAttributes?.flatMap((variation) => variation.options).filter(Boolean);
 
     expect(getAttributeArray).toHaveBeenCalledWith(mockAttributeIds);
 
     act(() => {
-      result.current.handleProductVariationChange({ target: { name: 'size', value: '6' } });
+      result.current.handleProductVariationChange(createSelectChangeEvent('size', 6));
     });
 
     // selected size large which only has 1 colour variation
-    const mockFilteredVariations = [
+    const mockFilteredVariations: AttributeArray[] = [
       {
         type: 'colour',
         options: [
@@ -314,36 +318,30 @@ describe('useVariations hook', () => {
   });
 
   test('updates selectedVariations using handleProductVariationChange for both colour and size', async () => {
-    let result;
+    const { result } = renderHook(() => useVariations(mockSingleProduct as Product, setAddCartFormDataMock));
 
-    await act(async () => {
-      result = renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock)).result;
+    act(() => {
+      result.current.handleProductVariationChange(createSelectChangeEvent('colour', 1));
     });
 
     act(() => {
-      result.current.handleProductVariationChange({ target: { name: 'colour', value: '1' } });
-    });
-
-    act(() => {
-      result.current.handleProductVariationChange({ target: { name: 'size', value: '4' } });
+      result.current.handleProductVariationChange(createSelectChangeEvent('size', 4));
     });
   });
 
   test('get the variationId of the selected variations and update addCartFormData', async () => {
-    let result;
+    const { result } = renderHook(() => useVariations(mockSingleProduct as Product, setAddCartFormDataMock));
 
-    await act(async () => {
-      result = renderHook(() => useVariations(mockSingleProduct, mockAddCartFormData, setAddCartFormDataMock)).result;
+    act(() => {
+      result.current.handleProductVariationChange(createSelectChangeEvent('colour', 1));
     });
 
     act(() => {
-      result.current.handleProductVariationChange({ target: { name: 'colour', value: '1' } });
+      result.current.handleProductVariationChange(createSelectChangeEvent('size', 4));
     });
 
-    act(() => {
-      result.current.handleProductVariationChange({ target: { name: 'size', value: '4' } });
+    await waitFor(() => {
+      expect(setAddCartFormDataMock).toHaveBeenCalled();
     });
-
-    expect(setAddCartFormDataMock).toHaveBeenCalled();
   });
 });

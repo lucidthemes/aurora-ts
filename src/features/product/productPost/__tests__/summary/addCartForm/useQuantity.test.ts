@@ -1,8 +1,12 @@
 import { renderHook, act } from '@testing-library/react';
+
+import type { SummaryData, AddCartFormData } from '@typings/products/summary';
+import { createInputChangeEvent, createMouseClickEvent } from '@utils/tests/events';
+
 import useQuantity from '../../../summary/hooks/addCartForm/useQuantity';
 
 describe('useQuantity hook', () => {
-  const mockSummaryData = {
+  const mockSummaryData: SummaryData = {
     price: 20,
     SKU: 'CS',
     category: {
@@ -37,8 +41,7 @@ describe('useQuantity hook', () => {
     ],
   };
 
-  const mockAddCartFormData = {
-    variationId: '',
+  const mockAddCartFormData: AddCartFormData = {
     quantity: 2,
   };
 
@@ -52,7 +55,7 @@ describe('useQuantity hook', () => {
     const { result } = renderHook(() => useQuantity(mockSummaryData, mockAddCartFormData, setAddCartFormDataMock));
 
     act(() => {
-      result.current.handleQuantityDecrease({ preventDefault: () => {} });
+      result.current.handleQuantityDecrease(createMouseClickEvent());
     });
 
     expect(setAddCartFormDataMock).toHaveBeenCalled();
@@ -62,7 +65,7 @@ describe('useQuantity hook', () => {
     const { result } = renderHook(() => useQuantity(mockSummaryData, mockAddCartFormData, setAddCartFormDataMock));
 
     act(() => {
-      result.current.handleQuantityIncrease({ preventDefault: () => {} });
+      result.current.handleQuantityIncrease(createMouseClickEvent());
     });
 
     expect(setAddCartFormDataMock).toHaveBeenCalled();
@@ -72,7 +75,7 @@ describe('useQuantity hook', () => {
     const { result } = renderHook(() => useQuantity(mockSummaryData, mockAddCartFormData, setAddCartFormDataMock));
 
     act(() => {
-      result.current.handleQuantityChange({ target: { value: '3' } });
+      result.current.handleQuantityChange(createInputChangeEvent('quantity', 3));
     });
 
     expect(setAddCartFormDataMock).toHaveBeenCalled();
