@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes } from 'react';
 
 interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
-  options: { value: string; text: string }[];
+  options: { value: string | number; text: string }[];
   placeholderDisabled?: boolean;
   label?: string;
   labelSrOnly?: boolean;

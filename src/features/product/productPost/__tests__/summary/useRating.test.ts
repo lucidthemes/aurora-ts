@@ -1,10 +1,17 @@
 import { renderHook, act } from '@testing-library/react';
+
+import type { RefObject } from 'react';
+
 import useRating from '../../summary/hooks/useRating';
 
 describe('useRating hook', () => {
   const setActiveTabMock = vi.fn();
 
-  const tabsRefMock = { current: { scrollIntoView: vi.fn() } };
+  const tabsRefMock = {
+    current: {
+      scrollIntoView: vi.fn(),
+    },
+  } as RefObject<HTMLDivElement | null>;
 
   test('sets active tab to reviews on handleSummaryRatingClick', () => {
     const { result } = renderHook(() => useRating(setActiveTabMock, tabsRefMock));
@@ -14,7 +21,7 @@ describe('useRating hook', () => {
     });
 
     expect(setActiveTabMock).toHaveBeenCalledWith('reviews');
-    expect(tabsRefMock.current.scrollIntoView).toHaveBeenCalledWith({
+    expect(tabsRefMock.current?.scrollIntoView).toHaveBeenCalledWith({
       behavior: 'smooth',
       block: 'start',
     });

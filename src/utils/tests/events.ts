@@ -18,7 +18,7 @@ export function createTextAreaChangeEvent(name: string, value: string): ChangeEv
   } as unknown as ChangeEvent<HTMLTextAreaElement>;
 }
 
-export function createSelectChangeEvent(name: string, value: string): ChangeEvent<HTMLSelectElement> {
+export function createSelectChangeEvent(name: string, value: string | number): ChangeEvent<HTMLSelectElement> {
   return {
     target: { name, value },
   } as unknown as ChangeEvent<HTMLSelectElement>;
@@ -35,5 +35,5 @@ export function createFormSubmitEvent(): FormEvent<HTMLFormElement> {
 }
 
 export function createMouseClickEvent(): MouseEvent<HTMLButtonElement> {
-  return {} as unknown as MouseEvent<HTMLButtonElement>;
+  return { preventDefault: () => {} } as unknown as MouseEvent<HTMLButtonElement>;
 }

@@ -1,5 +1,4 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useSummary from '../../summary/hooks/useSummary';
 
 vi.mock('@server/products/getCategory', () => ({
   getCategoryById: vi.fn(),
@@ -11,9 +10,15 @@ vi.mock('@server/products/getTags', () => ({
 
 import { getCategoryById } from '@server/products/getCategory';
 import { getTagsArray } from '@server/products/getTags';
+import type { Product } from '@typings/products/product';
+import type { SummaryData } from '@typings/products/summary';
+import type { Category } from '@typings/products/category';
+import type { Tag } from '@typings/products/tag';
+
+import useSummary from '../../summary/hooks/useSummary';
 
 describe('useSummary hook', () => {
-  const mockProduct = {
+  const mockProduct: Product = {
     id: 1,
     title: 'Cozy sweater',
     slug: 'cozy-sweater',
@@ -26,15 +31,13 @@ describe('useSummary hook', () => {
     stock: 5,
   };
 
-  const initialSummaryDataState = {
+  const initialSummaryDataState: SummaryData = {
     price: 20.0,
     maxQuantity: 5,
     SKU: 'CS',
-    category: {},
-    tags: [],
   };
 
-  const mockCategory = {
+  const mockCategory: Category = {
     id: 6,
     name: 'Sweaters',
     slug: 'sweaters',
@@ -42,7 +45,7 @@ describe('useSummary hook', () => {
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque nibh enim, quis euismod enim lacinia nec. Phasellus quam diam, semper in erat eu, efficitur molestie purus. Sed a elementum mi. Sed interdum mattis risus, sit amet eleifend ligula luctus ut. Sed ullamcorper lorem aliquam, tincidunt lorem et, ultrices est.',
   };
 
-  const mockTags = [
+  const mockTags: Tag[] = [
     {
       id: 4,
       name: 'Clothing',
@@ -77,13 +80,10 @@ describe('useSummary hook', () => {
   });
 
   test('fetches category and tags data', async () => {
-    getCategoryById.mockResolvedValue(mockCategory);
-    getTagsArray.mockResolvedValue(mockTags);
+    vi.mocked(getCategoryById).mockResolvedValue(mockCategory);
+    vi.mocked(getTagsArray).mockResolvedValue(mockTags);
 
     const { result } = renderHook(() => useSummary(mockProduct));
-
-    expect(result.current.summaryData.category).toEqual({});
-    expect(result.current.summaryData.tags).toEqual([]);
 
     await waitFor(() => {
       expect(result.current.summaryData.category).toEqual(mockCategory);
@@ -97,9 +97,7 @@ describe('useSummary hook', () => {
   test('fetch not called if product has no category', () => {
     const productWithoutCategory = { id: 1 };
 
-    const { result } = renderHook(() => useSummary(productWithoutCategory));
-
-    expect(result.current.summaryData.category).toEqual({});
+    renderHook(() => useSummary(productWithoutCategory as Product));
 
     expect(getCategoryById).not.toHaveBeenCalled();
   });
@@ -107,9 +105,7 @@ describe('useSummary hook', () => {
   test('fetch not called if product has no tags', () => {
     const productWithoutTags = { id: 1 };
 
-    const { result } = renderHook(() => useSummary(productWithoutTags));
-
-    expect(result.current.summaryData.tags).toEqual([]);
+    renderHook(() => useSummary(productWithoutTags as Product));
 
     expect(getTagsArray).not.toHaveBeenCalled();
   });

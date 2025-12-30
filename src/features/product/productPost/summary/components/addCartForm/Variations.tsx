@@ -1,15 +1,32 @@
-import useVariations from '../../hooks/addCartForm/useVariations';
-import Select from '@components/Form/Select';
+import type { Dispatch, SetStateAction } from 'react';
 
-export default function Variations({ singleProduct, addCartFormData, setAddCartFormData }) {
-  const { productVariations, handleProductVariationChange } = useVariations(singleProduct, addCartFormData, setAddCartFormData);
+import Select from '@components/Form/Select';
+import type { Product } from '@typings/products/product';
+import type { AddCartFormData } from '@typings/products/summary';
+import type { Attribute } from '@typings/products/attribute';
+
+import useVariations from '../../hooks/addCartForm/useVariations';
+
+interface VariationsProps {
+  product: Product;
+  setAddCartFormData: Dispatch<SetStateAction<AddCartFormData>>;
+}
+
+interface VariationOptions {
+  value: number;
+  text: string;
+}
+
+export default function Variations({ product, setAddCartFormData }: VariationsProps) {
+  const { productVariations, handleProductVariationChange } = useVariations(product, setAddCartFormData);
 
   return (
     <>
       {productVariations.length > 0 &&
         productVariations.map((variation, index) => {
-          let variationOptions = [];
-          variation.options.map((option) => variationOptions.push({ value: option.id, text: option.name }));
+          let variationOptions: VariationOptions[] = [];
+          variation.options.map((option: Attribute) => variationOptions.push({ value: option.id, text: option.name }));
+
           return (
             <div key={index} className="flex gap-x-5">
               <div className="basis-[20%] content-center">

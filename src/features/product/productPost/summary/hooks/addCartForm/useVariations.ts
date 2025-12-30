@@ -1,14 +1,30 @@
 import { useState, useEffect } from 'react';
-import { getAttributeArray } from '@server/products/getAttribute';
+import type { Dispatch, SetStateAction, ChangeEventHandler } from 'react';
 
-export default function useVariations(singleProduct, addCartFormData, setAddCartFormData) {
-  const [productVariations, setProductVariations] = useState([]);
-  const [selectedVariations, setSelectedVariations] = useState({});
-  const [attributeArray, setAttributeArray] = useState([]);
+import { getAttributeArray } from '@server/products/getAttribute';
+import type { Product } from '@typings/products/product';
+import { AddCartFormData } from '@typings/products/summary';
+import type { Attribute } from '@typings/products/attribute';
+import type { Variation } from '@typings/cart/variation';
+
+interface AttributeArray {
+  type: string;
+  options: Attribute[];
+}
+
+interface SelectedVariations {
+  colour?: number;
+  size?: number;
+}
+
+export default function useVariations(product: Product, setAddCartFormData: Dispatch<SetStateAction<AddCartFormData>>) {
+  const [attributeArray, setAttributeArray] = useState<AttributeArray[]>([]);
+  const [productVariations, setProductVariations] = useState<AttributeArray[]>([]);
+  const [selectedVariations, setSelectedVariations] = useState<SelectedVariations>({});
 
   // fetch product variation attributes and load into attributes array
   useEffect(() => {
-    const variations = singleProduct.variationAttributes;
+    const variations = product.variationAttributes;
 
     if (!variations || !Array.isArray(variations)) return;
 
@@ -19,7 +35,9 @@ export default function useVariations(singleProduct, addCartFormData, setAddCart
         const attributes = await getAttributeArray(attributeIds);
 
         const formatted = variations.map((variation) => {
-          const variationOptions = variation.options.map((optionId) => attributes.find((attr) => attr.id === optionId)).filter(Boolean);
+          const variationOptions = variation.options
+            .map((optionId) => attributes.find((attr) => attr.id === optionId))
+            .filter((attr): attr is Attribute => attr !== undefined);
 
           return {
             type: variation.type,
@@ -34,13 +52,13 @@ export default function useVariations(singleProduct, addCartFormData, setAddCart
     };
 
     fetchAttributes();
-  }, [singleProduct]);
+  }, [product]);
 
   // filter variations based on selected variations
   useEffect(() => {
     if (!attributeArray) return;
 
-    const filteredVariations = attributeArray.map((variationGroup) => {
+    const filteredVariations: AttributeArray[] = attributeArray.map((variationGroup) => {
       const { type, options } = variationGroup;
 
       const filteredOptions = options.filter((option) => {
@@ -54,7 +72,7 @@ export default function useVariations(singleProduct, addCartFormData, setAddCart
         if (type === 'colour') {
           if (selectedVariations.size) {
             // get colours that match with selected size
-            return singleProduct.variations.some((v) => v.sizeId === selectedVariations.size && v.colourId === optionId);
+            return product.variations?.some((v) => v.sizeId === selectedVariations.size && v.colourId === optionId);
           }
 
           // no size selected, show all colours
@@ -64,7 +82,7 @@ export default function useVariations(singleProduct, addCartFormData, setAddCart
         if (type === 'size') {
           if (selectedVariations.colour) {
             // get sizes that match with selected colour
-            return singleProduct.variations.some((v) => v.colourId === selectedVariations.colour && v.sizeId === optionId);
+            return product.variations?.some((v) => v.colourId === selectedVariations.colour && v.sizeId === optionId);
           }
 
           // no colour selected, show all sizes
@@ -84,43 +102,45 @@ export default function useVariations(singleProduct, addCartFormData, setAddCart
       setProductVariations(filteredVariations);
     };
 
-    updateProductVariations(filteredVariations);
+    updateProductVariations();
   }, [attributeArray, selectedVariations]);
 
-  const handleProductVariationChange = (e) => {
+  const handleProductVariationChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { name, value } = e.target;
 
     const updatedSelectedVariations = { ...selectedVariations };
 
+    const key = name as keyof SelectedVariations;
+
     if (value === '' || value === null) {
-      delete updatedSelectedVariations[name];
+      delete updatedSelectedVariations[key];
     } else {
-      updatedSelectedVariations[name] = Number(value);
+      updatedSelectedVariations[key] = Number(value);
     }
 
     setSelectedVariations(updatedSelectedVariations);
 
-    const variationAttributes = singleProduct.variationAttributes;
+    const variationAttributes = product.variationAttributes;
 
     if (variationAttributes?.length === Object.keys(updatedSelectedVariations).length) {
-      let filteredVariation = [];
+      let filteredVariation: Variation[] = [];
 
       // product has colour and size variations
       if (updatedSelectedVariations.colour && updatedSelectedVariations.size) {
-        const filteredColourSize = singleProduct.variations.filter(
+        const filteredColourSize = product.variations?.filter(
           (variation) => variation.colourId === updatedSelectedVariations.colour && variation.sizeId === updatedSelectedVariations.size
         );
         if (filteredColourSize) filteredVariation = filteredColourSize;
       } else {
         // product has only colour variations
         if (updatedSelectedVariations.colour) {
-          const filteredColour = singleProduct.variations.filter((variation) => variation.colourId === updatedSelectedVariations.colour);
+          const filteredColour = product.variations?.filter((variation) => variation.colourId === updatedSelectedVariations.colour);
           if (filteredColour) filteredVariation = filteredColour;
         }
 
         // product has only size variations
         if (updatedSelectedVariations.size) {
-          const filteredSize = singleProduct.variations.filter((variation) => variation.sizeId === updatedSelectedVariations.size);
+          const filteredSize = product.variations?.filter((variation) => variation.sizeId === updatedSelectedVariations.size);
           if (filteredSize) filteredVariation = filteredSize;
         }
       }
@@ -132,10 +152,11 @@ export default function useVariations(singleProduct, addCartFormData, setAddCart
         }));
       }
     } else {
-      setAddCartFormData((prevState) => ({
-        ...prevState,
-        variationId: '',
-      }));
+      setAddCartFormData((prevState) => {
+        delete prevState.variationId;
+        const updatedData = { ...prevState };
+        return updatedData;
+      });
     }
   };
 

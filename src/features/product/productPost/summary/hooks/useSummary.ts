@@ -1,27 +1,28 @@
 import { useState, useEffect } from 'react';
+
 import { getCategoryById } from '@server/products/getCategory';
 import { getTagsArray } from '@server/products/getTags';
+import type { Product } from '@typings/products/product';
+import type { SummaryData } from '@typings/products/summary';
 
-export default function useSummary(singleProduct) {
-  const [summaryData, setSummaryData] = useState({
-    price: singleProduct.price,
-    maxQuantity: singleProduct.stock,
-    SKU: singleProduct.SKU,
-    category: {},
-    tags: [],
+export default function useSummary(product: Product) {
+  const [summaryData, setSummaryData] = useState<SummaryData>({
+    price: product.price,
+    maxQuantity: product.stock,
+    SKU: product.SKU,
   });
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const categoryId = singleProduct.category;
+        const categoryId = product.category;
 
         if (!categoryId) return;
 
         const category = await getCategoryById(categoryId);
         if (category) {
-          setSummaryData((prevData) => ({
-            ...prevData,
+          setSummaryData((prevState) => ({
+            ...prevState,
             category: category,
           }));
         }
@@ -34,14 +35,14 @@ export default function useSummary(singleProduct) {
 
     const fetchTagArray = async () => {
       try {
-        const tagIds = singleProduct.tags;
+        const tagIds = product.tags;
 
         if (!tagIds) return;
 
         const tagArray = await getTagsArray(tagIds);
         if (tagArray) {
-          setSummaryData((prevData) => ({
-            ...prevData,
+          setSummaryData((prevState) => ({
+            ...prevState,
             tags: tagArray,
           }));
         }
@@ -51,7 +52,7 @@ export default function useSummary(singleProduct) {
     };
 
     fetchTagArray();
-  }, [singleProduct]);
+  }, [product]);
 
   return { summaryData, setSummaryData };
 }

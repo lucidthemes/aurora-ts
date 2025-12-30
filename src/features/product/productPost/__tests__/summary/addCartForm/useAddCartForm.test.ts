@@ -1,10 +1,14 @@
 import { renderHook, act } from '@testing-library/react';
+
+import type { Product } from '@typings/products/product';
+import { createFormSubmitEvent } from '@utils/tests/events';
+
 import useAddCartForm from '../../../summary/hooks/addCartForm/useAddCartForm';
 
 describe('useAddCartForm hook', () => {
   const addCartItemMock = vi.fn();
 
-  const mockProductWithVariations = {
+  const mockProductWithVariations: Partial<Product> = {
     id: 1,
     title: 'Cozy sweater',
     price: 20,
@@ -72,7 +76,7 @@ describe('useAddCartForm hook', () => {
     ],
   };
 
-  const mockProductNoVariations = {
+  const mockProductNoVariations: Partial<Product> = {
     id: 4,
     title: 'Handmade bonnet',
     price: 20,
@@ -90,7 +94,7 @@ describe('useAddCartForm hook', () => {
   });
 
   test('updates summaryData and addCartFormData when variationId is set or changed', () => {
-    const { result } = renderHook(() => useAddCartForm(addCartItemMock, mockProductWithVariations, setSummaryDataMock, setAddCartNotificationMock));
+    const { result } = renderHook(() => useAddCartForm(addCartItemMock, mockProductWithVariations as Product, setSummaryDataMock, setAddCartNotificationMock));
 
     act(() => {
       result.current.setAddCartFormData({ variationId: 1001, quantity: 1 });
@@ -102,7 +106,7 @@ describe('useAddCartForm hook', () => {
   });
 
   test('adds product with variation to the cart', () => {
-    const { result } = renderHook(() => useAddCartForm(addCartItemMock, mockProductWithVariations, setSummaryDataMock, setAddCartNotificationMock));
+    const { result } = renderHook(() => useAddCartForm(addCartItemMock, mockProductWithVariations as Product, setSummaryDataMock, setAddCartNotificationMock));
 
     act(() => {
       result.current.setAddCartFormData({ variationId: 1001, quantity: 1 });
@@ -111,7 +115,7 @@ describe('useAddCartForm hook', () => {
     expect(result.current.addCartFormData.variationId).toBe(1001);
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     // singleProduct.id, addCartFormData.quantity, addCartFormData.variationId
@@ -121,10 +125,10 @@ describe('useAddCartForm hook', () => {
   });
 
   test('adds product without variation to the cart', () => {
-    const { result } = renderHook(() => useAddCartForm(addCartItemMock, mockProductNoVariations, setSummaryDataMock, setAddCartNotificationMock));
+    const { result } = renderHook(() => useAddCartForm(addCartItemMock, mockProductNoVariations as Product, setSummaryDataMock, setAddCartNotificationMock));
 
     act(() => {
-      result.current.handleFormSubmit({ preventDefault: () => {} });
+      result.current.handleFormSubmit(createFormSubmitEvent());
     });
 
     // singleProduct.id, addCartFormData.quantity
