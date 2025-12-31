@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2025-12-31
+
+### Added
+
+- types folder for typing components, hooks, and tests
+- schemas folder for Zod schemas used to validate fetched data
+
+### Changed
+
+- refactored all components, hooks, and tests from JSX to TypeScript
+- updated the project configuration to support TypeScript
+
 ## [0.14.1] - 2025-12-30
 
 - updated dependencies
