@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+#### Cart
+
+- quantity button icons not being centred on mobile
+
 #### ProductPost
 
 - add to cart quantity button icons not being centred on mobile
