@@ -8,9 +8,11 @@ export default function Notification({ addCartNotification }: NotificationProps)
   if (!addCartNotification) return null;
 
   return (
-    <div className="flex items-center justify-between rounded-md bg-white p-10" role="status">
+    <div className="flex flex-col gap-y-5 rounded-md bg-white p-5 md:flex-row md:items-center md:justify-between md:p-7.5 lg:p-10" role="status">
       <p>{addCartNotification}</p>
-      <Button to={`/cart`}>View cart</Button>
+      <Button to={`/cart`} className="text-center">
+        View cart
+      </Button>
     </div>
   );
 }

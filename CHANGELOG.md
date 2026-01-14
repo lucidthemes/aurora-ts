@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 #### ProductPost
 
 - add to cart quantity button icons not being centred on mobile
+- add to cart notification button not being below text on mobile
 - tab buttons not spanning full width on mobile
 
 ## [1.0.0] - 2025-12-31
