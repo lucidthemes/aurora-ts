@@ -19,7 +19,7 @@ export default function ListItem({ tabName, activeTab, setActiveTab, product }: 
         role="tab"
         aria-selected={activeTab === tabName}
         aria-controls={`${tabName}-panel`}
-        className={`flex cursor-pointer gap-x-2 px-7.5 py-4 transition-colors duration-300 ease-in-out ${activeBgColorClass}`}
+        className={`flex w-full cursor-pointer gap-x-2 px-7.5 py-4 transition-colors duration-300 ease-in-out ${activeBgColorClass}`}
         onClick={() => setActiveTab(tabName)}
       >
         <span className="flex gap-x-1 text-xs tracking-xwide text-shark uppercase">

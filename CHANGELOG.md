@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1] - 2026-01-14
+
+### Changed
+
+- updated dependencies
+
+### Fixed
+
+#### ProductPost
+
+- tab buttons not spanning full width on mobile
+
 ## [1.0.0] - 2025-12-31
 
 ### Added
